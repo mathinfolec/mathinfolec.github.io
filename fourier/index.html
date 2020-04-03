@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+
+<head>
+    <title>Fourier</title>
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="./init.js"></script>
+    <script src="./funcs.js"></script>
+    <script src="./main.js"></script>
+    <script src="./handleTick.js"></script>
+</head>
+
+<body>
+    <div id="fourierFormula">
+        \(f(x) \sim 2\sum_{k=1}^n(-1)^{k-1}\frac{\sin{kx}}{k}\)
+        <span id="fourierN"></span>
+        <button onclick="onoff()">START/STOP</button>
+    </div>
+    <canvas id="canvas" width="600" height="600"></canvas>
+</body>
