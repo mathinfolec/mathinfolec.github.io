@@ -8,15 +8,21 @@
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="./init.js"></script>
     <script src="./funcs.js"></script>
+
     <script src="./main.js"></script>
     <script src="./handleTick.js"></script>
 </head>
 
 <body>
     <div id="fourierFormula">
-        \(f(x) \sim 2\sum_{k=1}^n(-1)^{k-1}\frac{\sin{kx}}{k}\)
-        <span id="fourierN"></span>
+        \(f(x) \sim \frac{a_0}{2}+ \sum_{n=1}^{\infty} a_n\cos{nx}+b_n\sin{nx}\)
+        <span id="fourierN">(step -)</span>
         <button onclick="onoff()">START/STOP</button>
     </div>
-    <canvas id="canvas" width="600" height="600"></canvas>
+    <canvas id="canvas" width="1000" height="500"></canvas>
+    <details>
+        <summary>Formula</summary>
+        <div id="fourier">f(x)=???</div>
+    </details>
+
 </body>
