@@ -10,7 +10,7 @@ parts["flow_if"] = {
         type: "process-let",
         prop: {
             valName: "a",
-            initVal: null
+            initVal: 5
         },
         x: 100,
         y: 100,

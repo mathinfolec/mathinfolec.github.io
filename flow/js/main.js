@@ -1,5 +1,5 @@
 function print(x) {
-    document.getElementById(Flow.getOutId(curId)).innerHTML += x + "<br/>";
+    document.getElementById(main.getOutId(curId)).innerHTML += x + "<br/>";
 }
 function execFunc(id) {
     console.log("execFunc(" + id + ")");
@@ -10,6 +10,7 @@ function range(a, b, c) {
     for (let i = a; i < b; i += c) {
         arr.push(i);
     }
+    console.log(arr);
     return arr;
 }
 window.addEventListener("load", function () {

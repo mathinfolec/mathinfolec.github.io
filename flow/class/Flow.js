@@ -28,8 +28,8 @@ class Flow {
         }
         this.#width = options[id].width;
         this.#height = options[id].height;
-        this.#cId = Flow.getCanvasId(this.#id);
-        this.#oId = Flow.getOutId(this.#id);
+        this.#cId = this.getCanvasId(this.#id);
+        this.#oId = this.getOutId(this.#id);
         this.drawCanvas();
     }
     draw() {
@@ -56,7 +56,7 @@ class Flow {
         let s = new createjs.Shape();
         let t = new createjs.Text("", fontSize + "px monospace", "black");
         data.w = 150;
-        data.h = 50;
+        data.h = fontSize * 2;
         let input;
         let tId;
         let wRate = 1.3;
@@ -74,14 +74,14 @@ class Flow {
                 s.y = data.y;
                 t.text = "let " + data.prop.valName + " =     ";
                 input = document.createElement("input");
-                tId = Flow.getInputId(this.#id, pId);
+                tId = this.getInputId(this.#id, pId);
                 input.id = tId;
                 input.setAttribute("type", "text");
                 if (data.prop.initVal != null) {
                     input.setAttribute("value", data.prop.initVal);
                 }
                 input.style.position = "absolute";
-                document.getElementById(Flow.getCanvasAreaId(this.#id)).appendChild(input);
+                document.getElementById(this.getCanvasAreaId(this.#id)).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * fontSize / 2) + "px";
                 document.getElementById(tId).style.width = (fontSize * 3 / 2) + "px";
@@ -93,14 +93,14 @@ class Flow {
                 s.y = data.y;
                 t.text = "          ";
                 input = document.createElement("input");
-                tId = Flow.getInputId(this.#id, pId);
+                tId = this.getInputId(this.#id, pId);
                 input.id = tId;
                 input.setAttribute("type", "text");
                 if (typeof data.prop.defValue != "undefined") {
                     input.setAttribute("value", data.prop.defValue);
                 }
                 input.style.position = "absolute";
-                document.getElementById(Flow.getCanvasAreaId(this.#id)).appendChild(input);
+                document.getElementById(this.getCanvasAreaId(this.#id)).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * fontSize / 2) + "px";
                 document.getElementById(tId).style.width = (fontSize * t.text.length / 2) + "px";
@@ -112,7 +112,7 @@ class Flow {
                 s.y = data.y;
                 t.text = "if(" + data.name + ")";
                 break;
-            case "for-start":
+            case "for-range":
                 s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
                 s.x = data.x;
                 s.y = data.y;
@@ -139,36 +139,36 @@ class Flow {
         c.addChild(t);
         return c;
     }
-    static getCanvasId(id) {
+    getCanvasId(id) {
         return id + "_canvas";
     }
-    static getOutId(id) {
+    getOutId(id) {
         return id + "_out";
     }
-    static getCanvasAreaId(id) {
+    getCanvasAreaId(id) {
         return id + "_canvasdiv";
     }
-    static getInputId(id, pId) {
+    getInputId(id, pId) {
         return id + "_input_" + pId;
     }
-    static getCodeId(id) {
+    getCodeId(id) {
         return id + "_code";
     }
     drawCanvas() {
-        document.getElementById("main").innerHTML += "<div id=\"" + this.#id + "\"></div><div class=\"clear\"><hr/>";
+        document.getElementById("main").innerHTML += "<div id='" + this.#id + "'></div><div class='clear'><hr/>";
         let d = document.getElementById(this.#id);
         d.innerHTML = "<h2>" + this.#title + "</h2>";
-        d.innerHTML += "<div id=\"" + Flow.getCanvasAreaId(this.#id) + "\" style=\"position: relative;\"></div>";
-        d.innerHTML += "<canvas width=" + this.#width + " height=" + this.#height + " id=\"" + this.#cId + "\"></canvas></div>";
-        d.innerHTML += "<button onclick=\"execFunc(\'" + this.#id + "\')\" >実行</button>";
-        d.innerHTML += "<div id=\"" + this.#oId + "\">Output</div>";
-        document.getElementById(this.#oId).style.height = this.#height + "px";
+        d.innerHTML += "<div id='" + this.getCanvasAreaId(this.#id) + "' style='position: relative;'></div>";
+        d.innerHTML += "<canvas width=" + this.#width + " height=" + this.#height + " id='" + this.#cId + "'></canvas></div>";
+        d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">実行</button>";
+        d.innerHTML += "<div id='" + this.#oId + "' class='out'></div>";
+        document.getElementById(this.#oId).style.height = (this.#height - 30) + "px";
     }
-    static getFunc(str = "") {
+    getFunc(str = "") {
         return Function("\"use strict\";" + str + ";");
     }
-    static clearOut(id) {
-        document.getElementById(Flow.getOutId(id)).innerHTML = "";
+    clearOut(id) {
+        document.getElementById(this.getOutId(id)).innerHTML = "";
     }
     getExecStr(fromId, toId) {
         //console.log("getExecStr(" + fromId + "," + toId + ")");
@@ -193,14 +193,14 @@ class Flow {
                     pId = this.#parts[pId].next;
                     break;
                 case "process-let":
-                    s += "let " + this.#parts[pId].prop.valName + " = " + document.getElementById(Flow.getInputId(this.#id, pId)).value + ";";
+                    s += "let " + this.#parts[pId].prop.valName + " = " + document.getElementById(this.getInputId(this.#id, pId)).value + ";";
                     pId = this.#parts[pId].next;
                     break;
                 case "process-any":
-                    s += document.getElementById(Flow.getInputId(this.#id, pId)).value + ";";
+                    s += document.getElementById(this.getInputId(this.#id, pId)).value + ";";
                     pId = this.#parts[pId].next;
                     break;
-                case "for-start":
+                case "for-range":
                     s += "for(" + this.#parts[pId].name + "){";
                     pId = this.#parts[pId].next;
                     break;
@@ -217,11 +217,11 @@ class Flow {
     }
     exec() {
         curId = this.#id;
-        Flow.clearOut(this.#id);
+        this.clearOut(this.#id);
         try {
             let s = this.getExecStr(this.#startId, this.#endId);
             console.log(s);
-            let f = Flow.getFunc(this.getExecStr(this.#startId, this.#endId));
+            let f = this.getFunc(this.getExecStr(this.#startId, this.#endId));
             return f();
         } catch (e) {
             //window.alert(e);

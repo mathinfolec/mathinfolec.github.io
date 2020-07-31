@@ -14,8 +14,8 @@ parts["flow_for"] = {
         next: "2"
     },
     2: {
-        type: "for-start",
-        name: "i in range(0,10,1)",
+        type: "for-range",
+        name: "i of range(0,10,1)",
         x: 100,
         y: 180,
         next: "3",

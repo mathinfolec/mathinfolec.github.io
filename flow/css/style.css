@@ -6,3 +6,7 @@ canvas {
 .clear {
     clear: both;
 }
+.out{
+    overflow-x:hidden;
+    overflow-y:scroll;
+}

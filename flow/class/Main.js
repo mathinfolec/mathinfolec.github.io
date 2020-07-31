@@ -17,4 +17,9 @@ class Main {
     exec(id) {
         this.#flows[id].exec();
     }
+    getOutId(id) {
+        //console.log(id);
+        //console.log(this.#flows[id]);
+        return this.#flows[id].getOutId(id);
+    }
 }
