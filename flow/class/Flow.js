@@ -3,14 +3,17 @@ class Flow {
     #title;
     #parts = {};
     #objs = {};
-    #width;
-    #height;
+    #width = 0;
+    #height = 0;
     #cId;
     #oId;
     #stage = null;
     #startId;
     #endId;
     #isDrawn = false;
+    #fontSize = 16;
+    #maxDepth = 0;
+    #maxPadding = 0;
     constructor(id) {
         this.#id = id;
         this.#title = options[id].title;
@@ -30,6 +33,7 @@ class Flow {
         this.#height = options[id].height;
         this.#cId = this.getCanvasId(this.#id);
         this.#oId = this.getOutId(this.#id);
+        this.preset();
         this.drawCanvas();
     }
     draw() {
@@ -49,14 +53,104 @@ class Flow {
         this.#stage.update();
         this.#isDrawn = true;
     }
+    preset() {
+        let queue = [this.#startId];
+        this.#parts[this.#startId].depth = 0;
+        this.#parts[this.#startId].padding = 0;
+        let maxDepth = 0;
+        let maxPadding = 0;
+        console.log(this.#parts);
+        while (queue.length) {
+            let id = queue.shift();
+            let i;
+            switch (this.#parts[id].type) {
+                case "terminal-start":
+                case "process":
+                case "process-let":
+                case "process-any":
+                case "for-end":
+                    i = this.#parts[id].next;
+                    this.#parts[i].depth = this.#parts[id].depth + 1;
+                    if (typeof this.#parts[i].padding == "undefined") {
+                        this.#parts[i].padding = this.#parts[id].padding;
+                    }
+                    else {
+                        this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
+                    }
+                    maxDepth = this.#parts[i].depth;
+                    maxPadding = Math.max(maxPadding, this.#parts[i].padding);
+                    queue.push(i);
+                    break;
+                case "for-range":
+                    i = this.#parts[id].next;
+                    this.#parts[i].depth = this.#parts[id].depth + 1;
+                    if (typeof this.#parts[i].padding == "undefined") {
+                        this.#parts[i].padding = this.#parts[id].padding;
+                    }
+                    else {
+                        this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
+                    } maxDepth = this.#parts[i].depth;
+                    maxPadding = Math.max(maxPadding, this.#parts[i].padding);
+                    queue.push(i);
+                    i = this.#parts[id].end;
+                    if (typeof this.#parts[i].padding == "undefined") {
+                        this.#parts[i].padding = this.#parts[id].padding;
+                    }
+                    else {
+                        this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
+                    }
+                    break;
+                case "if-else":
+                    i = this.#parts[id].next[0];
+                    this.#parts[i].depth = this.#parts[id].depth + 1;
+                    if (typeof this.#parts[i].padding == "undefined") {
+                        this.#parts[i].padding = this.#parts[id].padding;
+                    }
+                    else {
+                        this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
+                    }
+                    queue.push(i);
+                    i = this.#parts[id].next[1];
+                    if (i == this.#parts[id].conv) {
+                        this.#parts[i].depth = this.#parts[id].depth + 2;
+                        if (typeof this.#parts[i].padding == "undefined") {
+                            this.#parts[i].padding = this.#parts[id].padding;
+                        }
+                        else {
+                            this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
+                        }
+                    }
+                    else {
+                        this.#parts[i].depth = this.#parts[id].depth + 1;
+                        if (typeof this.#parts[i].padding == "undefined") {
+                            this.#parts[i].padding = this.#parts[id].padding + 1;
+                        }
+                        else {
+                            this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding + 1);
+                        }
+                    }
+                    maxDepth = this.#parts[i].depth;
+                    maxPadding = Math.max(maxPadding, this.#parts[i].padding);
+                    queue.push(i);
+                    break;
+                case "terminal-end":
+                    break;
+            }
+            console.log(id + "," + this.#parts[id].padding);
+        }
+        this.#maxDepth = maxDepth;
+        this.#maxPadding = maxPadding;
+        console.log("maxPadding=" + maxPadding);
+    }
     getObj(pId) {
-        let fontSize = 18;
+        this.#parts[pId].x = this.getX(this.#parts[pId].padding);
+        this.#parts[pId].y = this.getY(this.#parts[pId].depth);
+        this.#parts[pId].w = 150;
+        this.#parts[pId].h = this.getH();
         let data = this.#parts[pId];
         let c = new createjs.Container();
         let s = new createjs.Shape();
-        let t = new createjs.Text("", fontSize + "px monospace", "black");
-        data.w = 150;
-        data.h = fontSize * 2;
+        let t = new createjs.Text("", this.#fontSize + "px monospace", "black");
         let input;
         let tId;
         let wRate = 1.3;
@@ -64,14 +158,10 @@ class Flow {
             case "terminal-start":
             case "terminal-end":
                 s.graphics.beginFill("pink").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = data.name;
                 break;
             case "process-let":
                 s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = "let " + data.prop.valName + " =     ";
                 input = document.createElement("input");
                 tId = this.getInputId(this.#id, pId);
@@ -82,15 +172,13 @@ class Flow {
                 }
                 input.style.position = "absolute";
                 document.getElementById(this.getCanvasAreaId(this.#id)).appendChild(input);
-                document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-                document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * fontSize / 2) + "px";
-                document.getElementById(tId).style.width = (fontSize * 3 / 2) + "px";
-                document.getElementById(tId).style.height = fontSize + "px";
+                document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
+                document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * this.#fontSize / 2) + "px";
+                document.getElementById(tId).style.width = (this.#fontSize * 3 / 2) + "px";
+                document.getElementById(tId).style.height = this.#fontSize + "px";
                 break;
             case "process-any":
                 s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = "          ";
                 input = document.createElement("input");
                 tId = this.getInputId(this.#id, pId);
@@ -101,42 +189,37 @@ class Flow {
                 }
                 input.style.position = "absolute";
                 document.getElementById(this.getCanvasAreaId(this.#id)).appendChild(input);
-                document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-                document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * fontSize / 2) + "px";
-                document.getElementById(tId).style.width = (fontSize * t.text.length / 2) + "px";
-                document.getElementById(tId).style.height = fontSize + "px";
+                document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
+                document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * this.#fontSize / 2) + "px";
+                document.getElementById(tId).style.width = (this.#fontSize * t.text.length / 2) + "px";
+                document.getElementById(tId).style.height = this.#fontSize + "px";
                 break;
             case "if-else":
                 s.graphics.beginFill("green").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = "if(" + data.name + ")";
                 break;
             case "for-range":
                 s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = "for(" + data.name + ")";
                 break;
             case "for-end":
                 s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = "";
                 break;
             default:
                 s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
-                s.x = data.x;
-                s.y = data.y;
                 t.text = data.name;
                 break;
         }
         t.textAlign = "center";
         t.textBaseline = "middle";
-        t.x = data.x + data.w / 2;
-        t.y = data.y + data.h / 2;
+        t.x = data.w / 2;
+        t.y = data.h / 2;
         c.addChild(s);
         c.addChild(t);
+        c.x = data.x;
+        c.y = data.y;
+        console.log(pId + "," + data.depth);
         return c;
     }
     getCanvasId(id) {
@@ -154,7 +237,21 @@ class Flow {
     getCodeId(id) {
         return id + "_code";
     }
+    getX(padding) {
+        return 20 + padding * (this.getW() + 20);
+    }
+    getY(depth) {
+        return 20 + depth * this.#fontSize * 4;
+    }
+    getW() {
+        return 150;
+    }
+    getH() {
+        return this.#fontSize * 2;
+    }
     drawCanvas() {
+        this.#width = this.getX(this.#maxPadding) + this.getW() + 20;
+        this.#height = this.getY(this.#maxDepth) + this.getH() + 20;
         document.getElementById("main").innerHTML += "<div id='" + this.#id + "'></div><div class='clear'><hr/>";
         let d = document.getElementById(this.#id);
         d.innerHTML = "<h2>" + this.#title + "</h2>";
