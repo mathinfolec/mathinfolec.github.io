@@ -50,12 +50,16 @@ class Flow {
         this.#isDrawn = true;
     }
     getObj(pId) {
+        let fontSize = 18;
         let data = this.#parts[pId];
         let c = new createjs.Container();
         let s = new createjs.Shape();
-        let t = new createjs.Text("", "20px sans-serif", "black");
+        let t = new createjs.Text("", fontSize + "px monospace", "black");
         data.w = 150;
         data.h = 50;
+        let input;
+        let tId;
+        let wRate = 1.3;
         switch (data.type) {
             case "terminal-start":
             case "terminal-end":
@@ -68,27 +72,57 @@ class Flow {
                 s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
                 s.x = data.x;
                 s.y = data.y;
-                let input = document.createElement("input");
-                let tId = Flow.getInputId(this.#id, pId);
+                t.text = "let " + data.prop.valName + " =     ";
+                input = document.createElement("input");
+                tId = Flow.getInputId(this.#id, pId);
                 input.id = tId;
                 input.setAttribute("type", "text");
-                input.setAttribute("size", "20");
                 if (data.prop.initVal != null) {
                     input.setAttribute("value", data.prop.initVal);
                 }
-                input.setAttribute("width", "20px");
                 input.style.position = "absolute";
                 document.getElementById(Flow.getCanvasAreaId(this.#id)).appendChild(input);
-                document.getElementById(tId).style.top = (data.x + (data.h - 20) / 2) + "px";
-                document.getElementById(tId).style.left = (data.y + data.w / 2 + 20) + "px";
-                document.getElementById(tId).style.width = "40px";
-                t.text = "let " + data.prop.valName + " =       ";
+                document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
+                document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * fontSize / 2) + "px";
+                document.getElementById(tId).style.width = (fontSize * 3 / 2) + "px";
+                document.getElementById(tId).style.height = fontSize + "px";
+                break;
+            case "process-any":
+                s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
+                s.x = data.x;
+                s.y = data.y;
+                t.text = "          ";
+                input = document.createElement("input");
+                tId = Flow.getInputId(this.#id, pId);
+                input.id = tId;
+                input.setAttribute("type", "text");
+                if (typeof data.prop.defValue != "undefined") {
+                    input.setAttribute("value", data.prop.defValue);
+                }
+                input.style.position = "absolute";
+                document.getElementById(Flow.getCanvasAreaId(this.#id)).appendChild(input);
+                document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
+                document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * fontSize / 2) + "px";
+                document.getElementById(tId).style.width = (fontSize * t.text.length / 2) + "px";
+                document.getElementById(tId).style.height = fontSize + "px";
                 break;
             case "if-else":
                 s.graphics.beginFill("green").drawRect(0, 0, data.w, data.h);
                 s.x = data.x;
                 s.y = data.y;
                 t.text = "if(" + data.name + ")";
+                break;
+            case "for-start":
+                s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
+                s.x = data.x;
+                s.y = data.y;
+                t.text = "for(" + data.name + ")";
+                break;
+            case "for-end":
+                s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
+                s.x = data.x;
+                s.y = data.y;
+                t.text = "";
                 break;
             default:
                 s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
@@ -160,6 +194,18 @@ class Flow {
                     break;
                 case "process-let":
                     s += "let " + this.#parts[pId].prop.valName + " = " + document.getElementById(Flow.getInputId(this.#id, pId)).value + ";";
+                    pId = this.#parts[pId].next;
+                    break;
+                case "process-any":
+                    s += document.getElementById(Flow.getInputId(this.#id, pId)).value + ";";
+                    pId = this.#parts[pId].next;
+                    break;
+                case "for-start":
+                    s += "for(" + this.#parts[pId].name + "){";
+                    pId = this.#parts[pId].next;
+                    break;
+                case "for-end":
+                    s += "}";
                     pId = this.#parts[pId].next;
                     break;
                 default:
