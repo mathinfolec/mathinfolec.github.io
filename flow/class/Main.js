@@ -1,5 +1,6 @@
 class Main {
     #flows = {}
+    #curId = null;
     constructor() {
         for (let i in parts) {
             console.log(i);
@@ -17,9 +18,26 @@ class Main {
     exec(id) {
         this.#flows[id].exec();
     }
+    step(id) {
+        this.#flows[id].step();
+    }
+    resetStep(id) {
+        this.#flows[id].resetStep();
+    }
+    autoStep(id) {
+        this.#flows[id].autoStep();
+    }
     getOutId(id) {
-        //console.log(id);
-        //console.log(this.#flows[id]);
         return this.#flows[id].getOutId(id);
+    }
+    getCurId() {
+        return this.#curId;
+    }
+    setCurId(id) {
+        this.#curId = id;
+    }
+    getCurOutId() {
+        if (this.#curId == null) return null;
+        return this.#flows[this.#curId].getOutId(this.#curId);
     }
 }

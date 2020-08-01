@@ -14,6 +14,9 @@ class Flow {
     #fontSize = 16;
     #maxDepth = 0;
     #maxPadding = 0;
+    #curpId;
+    #execStr = "";
+    #isAuto = false;
     constructor(id) {
         this.#id = id;
         this.#title = options[id].title;
@@ -24,6 +27,7 @@ class Flow {
             }
             if (parts[id][i].type == "terminal-start") {
                 this.#startId = i;
+                this.#curpId = i;
             }
             else if (parts[id][i].type == "terminal-end") {
                 this.#endId = i;
@@ -92,13 +96,24 @@ class Flow {
                     } maxDepth = this.#parts[i].depth;
                     maxPadding = Math.max(maxPadding, this.#parts[i].padding);
                     queue.push(i);
+                    // connect for-range and for-end
                     i = this.#parts[id].end;
+                    this.#parts[i].start = id;
                     if (typeof this.#parts[i].padding == "undefined") {
                         this.#parts[i].padding = this.#parts[id].padding;
                     }
                     else {
                         this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
                     }
+                    // set array for loop
+                    let rangeStrArr = (this.#parts[id].name).trim().split("of");
+                    this.#parts[id].prop = {
+                        valName: rangeStrArr[0].trim(),
+                        range: rangeStrArr[1].trim(),
+                        isInited: true,
+                        remains: Function("return " + rangeStrArr[1] + ";")()
+                    };
+                    console.log(this.#parts[id].prop);
                     break;
                 case "if-else":
                     i = this.#parts[id].next[0];
@@ -257,7 +272,10 @@ class Flow {
         d.innerHTML = "<h2>" + this.#title + "</h2>";
         d.innerHTML += "<div id='" + this.getCanvasAreaId(this.#id) + "' style='position: relative;'></div>";
         d.innerHTML += "<canvas width=" + this.#width + " height=" + this.#height + " id='" + this.#cId + "'></canvas></div>";
-        d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">実行</button>";
+        d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">一括実行</button>";
+        d.innerHTML += "<button onclick=\"stepFunc('" + this.#id + "')\">１ステップ</button>";
+        d.innerHTML += "<button onclick=\"autoFunc('" + this.#id + "')\">オートステップ</button>";
+        d.innerHTML += "<button onclick=\"resetFunc('" + this.#id + "')\">リセット</button>";
         d.innerHTML += "<div id='" + this.#oId + "' class='out'></div>";
         document.getElementById(this.#oId).style.height = (this.#height - 30) + "px";
     }
@@ -313,7 +331,7 @@ class Flow {
         return s;
     }
     exec() {
-        curId = this.#id;
+        main.setCurId(this.#id);
         this.clearOut(this.#id);
         try {
             let s = this.getExecStr(this.#startId, this.#endId);
@@ -326,7 +344,94 @@ class Flow {
             print(e);
         }
     }
+    step() {
+        main.setCurId(this.#id);
+        console.log("step:" + this.#curpId);
+        let data = this.#parts[this.#curpId];
+        let f;
+        let isCont = true;
+        this.clearOut(this.#id);
+        for (let i in this.#objs) {
+            this.#objs[i].alpha = (i == this.#curpId ? 1 : 0.5);
+        }
+        switch (data.type) {
+            case "terminal-start":
+                this.#execStr = "\"use strict\";";
+                this.#curpId = data.next;
+                break;
+            case "terminal-end":
+                isCont = false;
+                break;
+            case "process":
+                this.#execStr += data.name + ";";
+                this.#curpId = data.next;
+                break;
+            case "process-let":
+                this.#execStr += "let " + data.prop.valName + "=" + document.getElementById(this.getInputId(this.#id, this.#curpId)).value + ";";
+                this.#curpId = data.next;
+                break;
+            case "process-any":
+                this.#execStr += document.getElementById(this.getInputId(this.#id, this.#curpId)).value + ";";
+                this.#curpId = data.next;
+                break;
+            case "if-else":
+                f = Function(this.#execStr + "return (" + data.name + ");");
+                if (f()) {
+                    this.#curpId = data.next[0];
+                }
+                else {
+                    this.#curpId = data.next[1];
+                }
+                break;
+            case "for-range":
+                if (!data.prop.isInited) {
+                    this.#parts[this.#curpId].prop.remains = Function("return " + this.#parts[this.#curpId].prop.range + ";")();
+                    this.#parts[this.#curpId].prop.isInited = true;
+                }
+                this.#execStr += data.prop.valName + "=" + data.prop.remains.shift() + ";";
+                this.#curpId = data.next;
+                break;
+            case "for-end":
+                if (this.#parts[data.start].prop.remains.length) {
+                    this.#curpId = data.start;
+                }
+                else {
+                    this.#curpId = data.next;
+                }
+                break;
+        }
+        //console.log(this.#execStr);
+        f = Function(this.#execStr);
+        if (data.type != "if-else") {
+            f();
+        }
+        return isCont;
+    }
+    initStep() {
+        for (let i in this.#objs) {
+            this.#objs[i].alpha = 1;
+        }
+    }
+    resetStep() {
+        this.#curpId = this.#startId;
+        this.#execStr = "\"use strict\";";
+        this.clearOut(this.#id);
+        this.#isAuto = false;
+        for (let i in this.#parts) {
+            if (this.#parts[i].type == "for-range") {
+                this.#parts[i].prop.isInited = false;
+                this.#parts[i].prop.remains = [];
+            }
+        }
+        this.initStep();
+    }
+    autoStep() {
+        this.#isAuto = !this.#isAuto;
+    }
     update() {
+        if (this.#isAuto) {
+            this.#isAuto = this.step();
+        }
         this.#stage.update();
     }
     getId() {
