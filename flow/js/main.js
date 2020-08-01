@@ -23,8 +23,13 @@ function range(a, b, c) {
     return arr;
 }
 window.addEventListener("load", function () {
-    main = new Main();
-    console.log(main);
+    try {
+        main = new Main();
+        console.log(main);
+    } catch (e) {
+        document.getElementById("caution").innerHTML = "※動作環境を満たしていません※";
+        document.getElementById("caution-detail").innerHTML = e;
+    }
     createjs.Ticker.addEventListener("tick", function () {
         main.update();
     });

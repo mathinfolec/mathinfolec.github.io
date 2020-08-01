@@ -10,3 +10,8 @@ canvas {
     overflow-x:hidden;
     overflow-y:scroll;
 }
+#caution{
+    color:red;
+    font-size: large;
+    text-align:center;
+}
