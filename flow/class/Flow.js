@@ -69,6 +69,7 @@ class Flow {
             // this.#stage.addChild(this.#objs[i]);
         }
         let queue = [];
+        let dones = [];
         queue.push(this.#startId);
         while (queue.length) {
             let i = queue.shift();
@@ -79,16 +80,23 @@ class Flow {
             else if (this.#parts[i].type == "if-else" || this.#parts[i].type == "if-blank") {
                 ni = this.#parts[i].next[0];
                 this.drawLine(i, ni, true);
-                queue.push(ni);
+                if (dones.indexOf(ni) < 0 && queue.indexOf(ni) < 0) {
+                    queue.push(ni);
+                }
                 ni = this.#parts[i].next[1];
                 this.drawLine(i, ni, false);
-                queue.push(ni);
+                if (dones.indexOf(ni) < 0 && queue.indexOf(ni) < 0) {
+                    queue.push(ni);
+                }
             }
             else {
                 ni = this.#parts[i].next;
                 this.drawLine(i, ni);
-                queue.push(ni);
+                if (dones.indexOf(ni) < 0 && queue.indexOf(ni) < 0) {
+                    queue.push(ni);
+                }
             }
+            dones.push(i);
         }
         for (let i in this.#parts) {
             this.#stage.addChild(this.#objs[i]);
@@ -122,34 +130,34 @@ class Flow {
         l.graphics.setStrokeStyle(1);
         if (fp == tp) {
             l.graphics.beginStroke("black")
-                .moveTo(this.getX(fp) + this.getW() / 2, this.getY(fd) + this.getH())
-                .lineTo(this.getX(tp) + this.getW() / 2, this.getY(td));
+                .moveTo(this.getX(fp) + this.getW() / 2, this.getY(fd) + this.getH() / 2)
+                .lineTo(this.getX(tp) + this.getW() / 2, this.getY(td) + this.getH() / 2);
             if (tf != null) {
-                t.x = this.getX(fp) + this.getW() / 2;
+                t.x = this.getX(fp) + this.getW() / 4;
                 t.y = (this.getY(fd) + this.getH() + this.getY(td)) / 2;
             }
         }
         else if (fp > tp) {
             l.graphics.beginStroke("black")
-                .moveTo(this.getX(fp) + this.getW() / 2, this.getY(fd) + this.getH())
+                .moveTo(this.getX(fp) + this.getW() / 2, this.getY(fd) + this.getH() / 2)
                 .lineTo(this.getX(fp) + this.getW() / 2, this.getY(td) + this.getH() / 2)
-                .lineTo(this.getX(tp) + this.getW(), this.getY(td) + this.getH() / 2);
+                .lineTo(this.getX(tp) + this.getW() / 2, this.getY(td) + this.getH() / 2);
             if (tf != null) {
                 t.x = this.getX(fp) + this.getW() / 2;
-                t.y = (this.getY(fd) + this.getH() + this.getY(td) + this.getH() / 2) / 2;
+                t.y = this.getY(fd);
             }
         }
         else if (fp < tp) {
             l.graphics.beginStroke("black")
-                .moveTo(this.getX(fp) + this.getW(), this.getY(fd) + this.getH() / 2)
+                .moveTo(this.getX(fp) + this.getW() / 2, this.getY(fd) + this.getH() / 2)
                 .lineTo(this.getX(tp) + this.getW() / 2, this.getY(fd) + this.getH() / 2)
-                .lineTo(this.getX(tp) + this.getW() / 2, this.getY(td));
+                .lineTo(this.getX(tp) + this.getW() / 2, this.getY(td) + this.getH() / 2);
             if (tf != null) {
                 t.x = (this.getX(fp) + this.getW() + this.getX(tp) + this.getW() / 2) / 2;
-                t.y = this.getY(fd) + this.getH() / 2;
+                t.y = this.getY(fd);
             }
         }
-
+        l.alpha = 0.8;
         this.#stage.addChild(l);
         if (tf != null) {
             b.x = t.x - this.#fontSize * 2;
@@ -173,6 +181,7 @@ class Flow {
                 case "process-let":
                 case "process-any":
                 case "for-end":
+                case "nothing":
                     i = this.#parts[id].next;
                     this.#parts[i].depth = this.#parts[id].depth + 1;
                     if (typeof this.#parts[i].padding == "undefined") {
@@ -213,8 +222,8 @@ class Flow {
                         this.#parts[id].prop = {
                             valName: rangeStrArr[0].trim(),
                             range: rangeStrArr[1].trim(),
-                            isInited: true,
-                            remains: Function("return " + rangeStrArr[1] + ";")()
+                            isInited: false,
+                            remains: []
                         };
                     }
                     else if (this.#parts[id].type = "for-range-blank") {
@@ -304,7 +313,7 @@ class Flow {
                 document.getElementById(this.#caId).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * this.#fontSize / 2) + "px";
-                document.getElementById(tId).style.width = (this.#fontSize * 3 / 2) + "px";
+                document.getElementById(tId).style.width = (this.#fontSize * 6 / 2) + "px";
                 document.getElementById(tId).style.height = this.#fontSize + "px";
                 break;
             case "process-any":
@@ -358,8 +367,10 @@ class Flow {
                 document.getElementById(this.#caId).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * this.#fontSize / 2) + "px";
-                document.getElementById(tId).style.width = (this.#fontSize * 10 / 2) + "px";
+                document.getElementById(tId).style.width = (this.#fontSize * 10.5 / 2) + "px";
                 document.getElementById(tId).style.height = this.#fontSize + "px";
+                break;
+            case "nothing":
                 break;
             case "for-range":
                 s.graphics.beginFill("lightblue")
@@ -538,6 +549,9 @@ class Flow {
                     s += this.getInput(pId) + ";";
                     pId = this.#parts[pId].next;
                     break;
+                case "nothing":
+                    pId = this.#parts[pId].next;
+                    break;
                 case "for-range":
                     s += "for(" + this.#parts[pId].name + "){";
                     pId = this.#parts[pId].next;
@@ -647,13 +661,17 @@ class Flow {
                         this.#curpId = data.next[1];
                     }
                     break;
+                case "nothing":
+                    this.#curpId = data.next;
+                    this.step();
+                    break;
                 case "for-range":
                 case "for-range-blank":
                     if (!data.prop.isInited) {
                         if (data.type == "for-range-blank") {
                             this.#parts[this.#curpId].prop.range = "range(" + this.getInput(this.#curpId) + ")";
                         }
-                        this.#parts[this.#curpId].prop.remains = Function("return " + this.#parts[this.#curpId].prop.range + ";")();
+                        this.#parts[this.#curpId].prop.remains = this.getFunc("return " + this.#parts[this.#curpId].prop.range + ";")();
                         this.#parts[this.#curpId].prop.isInited = true;
                     }
                     console.log(data.prop.remains);
