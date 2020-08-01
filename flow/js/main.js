@@ -17,12 +17,11 @@ function resetFunc(id) {
 function autoFunc(id) {
     main.autoStep(id);
 }
-function range(a, b, c) {
+function range(a, b) {
     let arr = [];
-    for (let i = a; i < b; i += c) {
+    for (let i = a; i < b; i++) {
         arr.push(i);
     }
-    console.log(arr);
     return arr;
 }
 window.addEventListener("load", function () {

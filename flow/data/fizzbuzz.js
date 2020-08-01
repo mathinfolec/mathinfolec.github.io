@@ -11,23 +11,17 @@ parts["fizzbuzz"] = {
     },
     3: {
         type: "for-range",
-        name: "i of range(1,31,1)",
+        name: "i of range(1,31)",
         next: 4,
         end: 11
     },
     4: {
         type: "if-blank",
-        prop: {
-            initVal: "i % 15 == 0"
-        },
         next: [5, 6],
         conv: 11
     },
     5: {
         type: "process-any",
-        prop: {
-            initVal: "print('FizzBuzz')"
-        },
         next: 11
     },
     6: {
@@ -67,6 +61,15 @@ parts["fizzbuzz"] = {
     }
 };
 options["fizzbuzz"] = {
-    title: "サンプル4(FizzBuzz)",
-    vals: ["i"]
+    title: "FizzBuzz問題",
+    vals: ["i"],
+    exp: "FizzBuzz問題はプログラミングの世界で非常に有名な問題です。これが解けるかどうかで「プログラムを書ける人か」判断されることもあります。<br/>"
+        + "次の条件を満たすフローチャートを書いてみましょう。(少し表現を簡単にしています。)"
+        + "<ul><li>1以上30以下の自然数iに対してループ処理を行う。</li>"
+        + "<li>iが3の倍数かつ5の倍数なら'FizzBuzz'と出力する。</li>"
+        + "<li>iが3の倍数だが5の倍数ではないなら'Fizz'と出力する。</li>"
+        + "<li>iが5の倍数だが3の倍数ではないなら'Buzz'と出力する。</li>"
+        + "<li>また、iが3の倍数でも5の倍数でもないならiの値を出力する。</li></ul>"
+        + "(ヒント)"
+        + "<ul><li>iが3の倍数⇔iを3で割った余りが0</li></ul>"
 };

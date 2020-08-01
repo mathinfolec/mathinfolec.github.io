@@ -3,11 +3,14 @@ class Flow {
     #title;
     #parts = {};
     #objs = {};
+    #exp = "";
     #width = 0;
     #height = 0;
     #cId;
+    #eId;
     #vId;
     #oId;
+    #caId;
     #stage = null;
     #startId;
     #endId;
@@ -27,6 +30,9 @@ class Flow {
                 this.#vals.push(options[id].vals[i]);
             }
         }
+        if (typeof options[id].exp != "undefined") {
+            this.#exp = options[id].exp;
+        }
         for (let i in parts[id]) {
             this.#parts[i] = {};
             for (let j in parts[id][i]) {
@@ -41,8 +47,10 @@ class Flow {
             }
         }
         this.#cId = this.getCanvasId();
+        this.#eId = this.getExpId();
         this.#vId = this.getValsId();
         this.#oId = this.getOutId();
+        this.#caId = this.getCanvasAreaId();
         this.preset();
         this.drawCanvas();
     }
@@ -57,7 +65,8 @@ class Flow {
         this.#stage.addChild(bg);
         for (let i in this.#parts) {
             this.#objs[i] = this.getObj(i);
-            this.#stage.addChild(this.#objs[i]);
+            // stage.addChild() comes later
+            // this.#stage.addChild(this.#objs[i]);
         }
         let queue = [];
         queue.push(this.#startId);
@@ -81,6 +90,10 @@ class Flow {
                 queue.push(ni);
             }
         }
+        for (let i in this.#parts) {
+            this.#stage.addChild(this.#objs[i]);
+        }
+        document.getElementById(this.#eId).innerHTML = this.#exp;
         console.log("finish initialization " + this.#id);
         this.#stage.update();
         this.#isDrawn = true;
@@ -95,7 +108,7 @@ class Flow {
         let t = null;
         if (tf != null) {
             b = new createjs.Shape();
-            b.graphics.beginFill("white").drawRect(0, 0, this.#fontSize * 4, this.#fontSize * 1.2);
+            b.graphics.beginFill("white").drawRoundRect(0, 0, this.#fontSize * 4, this.#fontSize * 1.2, this.#fontSize * 0.5, this.#fontSize * 0.5);
             b.alpha = 0.6;
             if (tf) {
                 t = new createjs.Text("true", this.#fontSize + "px sans-serif", "red");
@@ -151,7 +164,6 @@ class Flow {
         this.#parts[this.#startId].padding = 0;
         let maxDepth = 0;
         let maxPadding = 0;
-        console.log(this.#parts);
         while (queue.length) {
             let id = queue.shift();
             let i;
@@ -174,6 +186,7 @@ class Flow {
                     queue.push(i);
                     break;
                 case "for-range":
+                case "for-range-blank":
                     i = this.#parts[id].next;
                     this.#parts[i].depth = this.#parts[id].depth + 1;
                     if (typeof this.#parts[i].padding == "undefined") {
@@ -181,7 +194,8 @@ class Flow {
                     }
                     else {
                         this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
-                    } maxDepth = this.#parts[i].depth;
+                    }
+                    maxDepth = this.#parts[i].depth;
                     maxPadding = Math.max(maxPadding, this.#parts[i].padding);
                     queue.push(i);
                     // connect for-range and for-end
@@ -194,14 +208,21 @@ class Flow {
                         this.#parts[i].padding = Math.min(this.#parts[i].padding, this.#parts[id].padding);
                     }
                     // set array for loop
-                    let rangeStrArr = (this.#parts[id].name).trim().split("of");
-                    this.#parts[id].prop = {
-                        valName: rangeStrArr[0].trim(),
-                        range: rangeStrArr[1].trim(),
-                        isInited: true,
-                        remains: Function("return " + rangeStrArr[1] + ";")()
-                    };
-                    console.log(this.#parts[id].prop);
+                    if (this.#parts[id].type == "for-range") {
+                        let rangeStrArr = (this.#parts[id].name).trim().split("of");
+                        this.#parts[id].prop = {
+                            valName: rangeStrArr[0].trim(),
+                            range: rangeStrArr[1].trim(),
+                            isInited: true,
+                            remains: Function("return " + rangeStrArr[1] + ";")()
+                        };
+                    }
+                    else if (this.#parts[id].type = "for-range-blank") {
+                        console.log("set prop for for-range-blank");
+                        this.#parts[id].prop.range = null;
+                        this.#parts[id].prop.isInited = false;
+                        this.#parts[id].prop.remains = [];
+                    }
                     break;
                 case "if-else":
                 case "if-blank":
@@ -243,7 +264,6 @@ class Flow {
         }
         this.#maxDepth = maxDepth;
         this.#maxPadding = maxPadding;
-        console.log("maxPadding=" + maxPadding);
     }
     getObj(pId) {
         this.#parts[pId].x = this.getX(this.#parts[pId].padding);
@@ -260,7 +280,11 @@ class Flow {
         switch (data.type) {
             case "terminal-start":
             case "terminal-end":
-                s.graphics.beginFill("pink").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("pink").drawRoundRect(0, 0, data.w, data.h, data.h / 2, data.h / 2);
+                t.text = data.name;
+                break;
+            case "process":
+                s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
                 t.text = data.name;
                 break;
             case "process-let":
@@ -277,7 +301,7 @@ class Flow {
                     input.setAttribute("value", 0);
                 }
                 input.style.position = "absolute";
-                document.getElementById(this.getCanvasAreaId()).appendChild(input);
+                document.getElementById(this.#caId).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * this.#fontSize / 2) + "px";
                 document.getElementById(tId).style.width = (this.#fontSize * 3 / 2) + "px";
@@ -297,18 +321,28 @@ class Flow {
                     input.setAttribute("value", "");
                 }
                 input.style.position = "absolute";
-                document.getElementById(this.getCanvasAreaId()).appendChild(input);
+                document.getElementById(this.#caId).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * this.#fontSize / 2) + "px";
                 document.getElementById(tId).style.width = (this.#fontSize * t.text.length / 2) + "px";
                 document.getElementById(tId).style.height = this.#fontSize + "px";
                 break;
             case "if-else":
-                s.graphics.beginFill("lightgreen").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("lightgreen")
+                    .moveTo(-data.w / 6, data.h / 2)
+                    .lineTo(data.w / 2, -data.h / 6)
+                    .lineTo(data.w + data.w / 6, data.h / 2)
+                    .lineTo(data.w / 2, data.h + data.h / 6)
+                    .lineTo(-data.w / 6, data.h / 2);
                 t.text = "if(" + data.name + ")";
                 break;
             case "if-blank":
-                s.graphics.beginFill("lightgreen").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("lightgreen")
+                    .moveTo(-data.w / 15, data.h / 2)
+                    .lineTo(data.w / 2, -data.h / 10)
+                    .lineTo(data.w + data.w / 15, data.h / 2)
+                    .lineTo(data.w / 2, data.h + data.h / 10)
+                    .lineTo(-data.w / 15, data.h / 2);
                 t.text = "if(            )";
                 input = document.createElement("input");
                 tId = this.getInputId(pId);
@@ -321,22 +355,63 @@ class Flow {
                     input.setAttribute("value", "true");
                 }
                 input.style.position = "absolute";
-                document.getElementById(this.getCanvasAreaId()).appendChild(input);
+                document.getElementById(this.#caId).appendChild(input);
                 document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
                 document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * this.#fontSize / 2) + "px";
                 document.getElementById(tId).style.width = (this.#fontSize * 10 / 2) + "px";
                 document.getElementById(tId).style.height = this.#fontSize + "px";
                 break;
             case "for-range":
-                s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("lightblue")
+                    .moveTo(data.h / 3, 0)
+                    .lineTo(data.w - data.h / 3, 0)
+                    .lineTo(data.w, data.h / 3)
+                    .lineTo(data.w, data.h)
+                    .lineTo(0, data.h)
+                    .lineTo(0, data.h / 3)
+                    .lineTo(data.h / 3, 0);
                 t.text = "for(" + data.name + ")";
                 break;
+            case "for-range-blank":
+                s.graphics.beginFill("lightblue")
+                    .moveTo(data.h / 3, 0)
+                    .lineTo(data.w - data.h / 3, 0)
+                    .lineTo(data.w, data.h / 3)
+                    .lineTo(data.w, data.h)
+                    .lineTo(0, data.h)
+                    .lineTo(0, data.h / 3)
+                    .lineTo(data.h / 3, 0);
+                t.text = "for(" + data.prop.valName + " of range(      ))";
+                input = document.createElement("input");
+                tId = this.getInputId(pId);
+                input.id = tId;
+                input.setAttribute("type", "text");
+                if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
+                    input.setAttribute("value", data.prop.initVal);
+                }
+                else {
+                    input.setAttribute("value", "0,10,1");
+                }
+                input.style.position = "absolute";
+                document.getElementById(this.#caId).appendChild(input);
+                document.getElementById(tId).style.top = (data.y + (data.h - this.#fontSize * wRate) / 2) + "px";
+                document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 8) * this.#fontSize / 2) + "px";
+                document.getElementById(tId).style.width = (this.#fontSize * 5 / 2) + "px";
+                document.getElementById(tId).style.height = this.#fontSize + "px";
+                break;
             case "for-end":
-                s.graphics.beginFill("lightblue").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("lightblue")
+                    .moveTo(0, 0)
+                    .lineTo(data.w, 0)
+                    .lineTo(data.w, data.h - data.h / 3)
+                    .lineTo(data.w - data.h / 3, data.h)
+                    .lineTo(data.h / 3, data.h)
+                    .lineTo(0, data.h - data.h / 3)
+                    .lineTo(0, 0);
                 t.text = "";
                 break;
             default:
-                s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
+                s.graphics.beginFill("white").drawRect(0, 0, data.w, data.h);
                 t.text = data.name;
                 break;
         }
@@ -352,6 +427,9 @@ class Flow {
     }
     getCanvasId() {
         return this.#id + "_canvas";
+    }
+    getExpId() {
+        return this.#id + "_exp";
     }
     getValsId() {
         return this.#id + "_vals";
@@ -389,11 +467,12 @@ class Flow {
         document.getElementById("main").innerHTML += "<div id='" + this.#id + "'></div><div class='clear'><hr/>";
         let d = document.getElementById(this.#id);
         d.innerHTML = "<h2>" + this.#title + "</h2>";
-        d.innerHTML += "<div id='" + this.getCanvasAreaId() + "' style='position: relative;'></div>";
+        d.innerHTML += "<div id='" + this.#eId + "'>xxx</div>";
+        d.innerHTML += "<div id='" + this.#caId + "' style='position: relative;'></div>";
         d.innerHTML += "<canvas width=" + this.#width + " height=" + this.#height + " id='" + this.#cId + "'></canvas></div>";
-        d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">一括実行</button>";
-        d.innerHTML += "<button onclick=\"stepFunc('" + this.#id + "')\">１ステップ</button>";
-        d.innerHTML += "<button onclick=\"autoFunc('" + this.#id + "')\">オートステップ</button>";
+        //d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">一括実行</button>";
+        d.innerHTML += "<button onclick=\"autoFunc('" + this.#id + "')\">実行</button>";
+        d.innerHTML += "<button onclick=\"stepFunc('" + this.#id + "')\">ステップ</button>";
         d.innerHTML += "<button onclick=\"resetFunc('" + this.#id + "')\">リセット</button>";
         d.innerHTML += "<div id='" + this.#vId + "' class='out'></div>";
         d.innerHTML += "<hr/>";
@@ -418,8 +497,8 @@ class Flow {
         document.getElementById(this.#vId).innerHTML = "";
     }
     clearOut() {
-        document.getElementById(this.getValsId()).innerHTML = "";
-        document.getElementById(this.getOutId()).innerHTML = "";
+        document.getElementById(this.#vId).innerHTML = "";
+        document.getElementById(this.#oId).innerHTML = "";
     }
     getExecStr(fromId, toId) {
         //console.log("getExecStr(" + fromId + "," + toId + ")");
@@ -461,6 +540,10 @@ class Flow {
                     break;
                 case "for-range":
                     s += "for(" + this.#parts[pId].name + "){";
+                    pId = this.#parts[pId].next;
+                    break;
+                case "for-range-blank":
+                    s += "for(" + this.#parts[pId].prop.valName + " of range(" + this.getInput(pId) + ")){";
                     pId = this.#parts[pId].next;
                     break;
                 case "for-end":
@@ -565,10 +648,15 @@ class Flow {
                     }
                     break;
                 case "for-range":
+                case "for-range-blank":
                     if (!data.prop.isInited) {
+                        if (data.type == "for-range-blank") {
+                            this.#parts[this.#curpId].prop.range = "range(" + this.getInput(this.#curpId) + ")";
+                        }
                         this.#parts[this.#curpId].prop.remains = Function("return " + this.#parts[this.#curpId].prop.range + ";")();
                         this.#parts[this.#curpId].prop.isInited = true;
                     }
+                    console.log(data.prop.remains);
                     this.setVal(data.prop.valName, data.prop.remains.shift());
                     this.#curpId = data.next;
                     break;
@@ -632,7 +720,7 @@ class Flow {
         this.clearOut();
         this.#isAuto = false;
         for (let i in this.#parts) {
-            if (this.#parts[i].type == "for-range") {
+            if (this.#parts[i].type == "for-range" || this.#parts[i].type == "for-range-blank") {
                 this.#parts[i].prop.isInited = false;
                 this.#parts[i].prop.remains = [];
             }
