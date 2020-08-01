@@ -15,6 +15,12 @@ class Main {
             this.#flows[i].update();
         }
     }
+    print(x) {
+        document.getElementById(this.getCurOutId()).innerHTML += x + "<br/>";
+    }
+    updateVals(vals) {
+        this.#flows[this.#curId].updateVals(vals);
+    }
     exec(id) {
         this.#flows[id].exec();
     }
@@ -25,10 +31,18 @@ class Main {
         this.#flows[id].resetStep();
     }
     autoStep(id) {
-        this.#flows[id].autoStep();
+        for (let i in this.#flows) {
+            if (i == id) {
+                this.#flows[i].autoStep();
+            }
+            else {
+                this.#flows[i].stopAutoStep();
+            }
+        }
+
     }
     getOutId(id) {
-        return this.#flows[id].getOutId(id);
+        return this.#flows[id].getOutId();
     }
     getCurId() {
         return this.#curId;

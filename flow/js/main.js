@@ -1,5 +1,8 @@
-function print(x) {
-    document.getElementById(main.getCurOutId()).innerHTML += x + "<br/>";
+function print(x = "") {
+    main.print(x);
+}
+function updateVals(vals) {
+    main.updateVals(vals);
 }
 function execFunc(id) {
     console.log("execFunc(" + id + ")");

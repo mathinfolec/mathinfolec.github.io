@@ -2,58 +2,53 @@ parts["flow_if"] = {
     1: {
         type: "terminal-start",
         name: "start",
-        x: 100,
-        y: 20,
-        next: "0"
+        next: 2
     },
-    0: {
+    2: {
         type: "process-let",
         prop: {
             valName: "a",
             initVal: 5
         },
-        x: 100,
-        y: 100,
-        next: "2"
-    },
-    2: {
-        type: "if-else",
-        name: "a < 5",
-        x: 100,
-        y: 180,
-        next: ["3", "4"],
-        conv: "5"
+        next: 3
     },
     3: {
-        type: "process",
-        name: "print('YES')",
-        x: 20,
-        y: 260,
-        next: "5"
+        type: "process-let",
+        prop: {
+            valName: "b",
+            initVal: 10
+        },
+        next: 4
     },
     4: {
-        type: "process",
-        name: "print('NO')",
-        x: 180,
-        y: 260,
-        next: "5"
+        type: "if-blank",
+        prop: {
+            initVal: "a < b"
+        },
+        next: [5, 6],
+        conv: 7
     },
     5: {
         type: "process",
-        name: "print(a)",
-        x: 100,
-        y: 340,
-        next: "6"
+        name: "print('YES')",
+        next: 7
     },
     6: {
+        type: "process",
+        name: "print('NO')",
+        next: 7
+    },
+    7: {
+        type: "process",
+        name: "print(a*b)",
+        next: "8"
+    },
+    8: {
         type: "terminal-end",
-        name: "end",
-        x: 100,
-        y: 400
+        name: "end"
     }
 };
 options["flow_if"] = {
     title: "サンプル2",
-    width: 400,
-    height: 500
+    vals: ["a", "b"],
 };
