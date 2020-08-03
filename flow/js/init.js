@@ -1,3 +1,10 @@
-let main;
+let curId;
+let isAuto = false;
 let parts = {};
 let options = {};
+let vals = {};
+let curVals = {};
+let objs = {};
+let stages = {};
+let curpIds = {};
+let fontSize = 16;

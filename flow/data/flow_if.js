@@ -50,5 +50,5 @@ parts["flow_if"] = {
 };
 options["flow_if"] = {
     title: "サンプル2",
-    vals: ["a", "b"],
+    vals: ["a", "b"]
 };
