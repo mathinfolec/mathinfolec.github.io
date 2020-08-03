@@ -18,6 +18,7 @@ step = function (id) {
                 break;
             case "terminal-end":
                 isCont = false;
+                isAuto = false;
                 break;
             case "process":
                 if (data.name.indexOf("let ") > -1) {
