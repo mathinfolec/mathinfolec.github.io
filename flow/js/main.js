@@ -12,18 +12,18 @@ function range(a, b) {
     return arr;
 }
 window.addEventListener("load", function () {
-    //try {
-    for (let i in parts) {
-        setOptions(i);
-        drawCanvas(i);
+    try {
+        for (let i in parts) {
+            setOptions(i);
+            drawCanvas(i);
+        }
+        for (let i in parts) {
+            draw(i);
+        }
+    } catch (e) {
+        document.getElementById("caution").innerHTML = "※動作環境を満たしていません※";
+        document.getElementById("caution-detail").innerHTML = e;
     }
-    for (let i in parts) {
-        draw(i);
-    }
-    //} catch (e) {
-    //document.getElementById("caution").innerHTML = "※動作環境を満たしていません※";
-    //document.getElementById("caution-detail").innerHTML = e;
-    //}
     createjs.Ticker.addEventListener("tick", function () {
         if (isAuto) {
             step(curId);
