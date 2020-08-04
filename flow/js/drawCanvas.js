@@ -7,7 +7,6 @@ drawCanvas = function (id) {
     d.innerHTML += "<div id='" + getExpId(id) + "'></div>";
     d.innerHTML += "<div id='" + getCanvasAreaId(id) + "' style='position: relative;'></div>";
     d.innerHTML += "<canvas width=" + options[id].width + " height=" + options[id].height + " id='" + getCanvasId(id) + "'></canvas></div>";
-    //d.innerHTML += "<button onclick=\"execFunc('" + this.#id + "')\">一括実行</button>";
     d.innerHTML += "<button onclick=\"autoStep('" + id + "')\">実行</button>";
     d.innerHTML += "<button onclick=\"step('" + id + "')\">ステップ</button>";
     d.innerHTML += "<button onclick=\"resetStep('" + id + "')\">リセット</button>";
@@ -17,7 +16,5 @@ drawCanvas = function (id) {
     if (typeof options[id].vals != "undefined") {
         document.getElementById(this.getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
     }
-    //document.getElementById(this.#oId).style.height = (this.#height - 30) + "px";
     document.getElementById("toc-ol").innerHTML += "<li><a href='#" + id + "'>" + options[id].title + "</a></li>";
-    console.log(document.getElementById("toc-ol").innerHTML)
 }

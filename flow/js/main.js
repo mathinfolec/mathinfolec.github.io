@@ -31,7 +31,7 @@ window.addEventListener("load", function () {
             draw(i);
         }
     } catch (e) {
-        document.getElementById("caution").innerHTML = "※動作環境を満たしていません※";
+        document.getElementById("caution").innerHTML = "エラーが発生しました。リロードするかブラウザを変えてください。";
         document.getElementById("caution-detail").innerHTML = e;
     }
     createjs.Ticker.addEventListener("tick", function () {
