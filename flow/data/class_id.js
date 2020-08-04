@@ -41,21 +41,11 @@ parts["class_id"] = {
     7: {
         type: "process",
         name: "print('NO')",
-        next: 10
-    },
-    10: {
-        type: "process",
-        name: "print('大きすぎ')",
         next: 9
     },
     8: {
         type: "process",
         name: "print('NO')",
-        next: 11
-    },
-    11: {
-        type: "process",
-        name: "print('小さすぎ')",
         next: 9
     },
     9: {
@@ -64,7 +54,8 @@ parts["class_id"] = {
     }
 };
 options["class_id"] = {
-    title: "サンプル5",
+    title: "ID判定",
     vals: ["a"],
-    exp: "学年、組、出席番号によって構成される4桁の数字を考えます。この数字が自分のクラスに含まれているかどうかを判定しましょう。"
+    exp: "学年、組、出席番号によって構成される4桁の数字を考えます。この数字が自分のクラスに含まれているかどうかを判定しましょう。<br/>"
+        + "条件文を2つ使う必要があるため、少し処理が複雑になっています。"
 };

@@ -2,26 +2,24 @@ parts["process_test"] = {
     1: {
         type: "terminal-start",
         name: "start",
-        x: 100,
-        y: 20,
-        next: "2"
+        next: 2
     },
     2: {
-        type: "process",
-        name: "print(3**2)",
-        x: 100,
-        y: 100,
-        next: "3"
+        type: "process-any",
+        next: 3
     },
     3: {
+        type: "process-any",
+        next: 4
+    },
+    4: {
         type: "terminal-end",
         name: "end",
-        x: 100,
-        y: 180
     }
 };
 options["process_test"] = {
-    title: "サンプル1",
-    width: 400,
-    height: 250
+    title: "練習1",
+    vals: ["a"],
+    exp: "①変数aを好きな初期値で定義し、aの2乗を出力するフローチャートを書きましょう。<br/>"
+        + "②変数aを好きな初期値(自然数)で定義し、1からaまでの自然数の和を出力するフローチャートを書きましょう。"
 };

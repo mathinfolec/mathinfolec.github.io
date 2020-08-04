@@ -5,50 +5,37 @@ parts["flow_if"] = {
         next: 2
     },
     2: {
-        type: "process-let",
-        prop: {
-            valName: "a",
-            initVal: 5
-        },
-        next: 3
-    },
-    3: {
-        type: "process-let",
-        prop: {
-            valName: "b",
-            initVal: 10
-        },
-        next: 4
-    },
-    4: {
         type: "if-blank",
         prop: {
-            initVal: "a < b"
+            initVal: "3 < 4"
         },
-        next: [5, 6],
-        conv: 7
+        next: [3, 4],
+        conv: 5
+    },
+    3: {
+        type: "process",
+        name: "print('true')",
+        next: 5
+    },
+    4: {
+        type: "process",
+        name: "print('false')",
+        next: 5
     },
     5: {
         type: "process",
-        name: "print('YES')",
-        next: 7
+        name: "print('both')",
+        next: 6
     },
     6: {
-        type: "process",
-        name: "print('NO')",
-        next: 7
-    },
-    7: {
-        type: "process",
-        name: "print(a*b)",
-        next: "8"
-    },
-    8: {
         type: "terminal-end",
         name: "end"
     }
 };
 options["flow_if"] = {
-    title: "サンプル2",
-    vals: ["a", "b"]
+    title: "条件文",
+    exp: "フローチャートでは条件文を使い、「その条件を満たしているかいないか」で次の処理を変えることが出来ます。"
+        + "条件を満たしている場合はtrueの方へ、満たしていない場合はfalseの方へ進みます。<br/>"
+        + "色々な条件式を書いて処理を確認してみましょう。<br/>"
+        + "(例)5の7乗は9の5乗よりも小さいか？"
 };
