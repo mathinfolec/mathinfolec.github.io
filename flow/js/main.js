@@ -1,15 +1,25 @@
-function print(x = "") {
+print = function (x = "") {
     document.getElementById(getOutId(curId)).innerHTML += x + "<br/>";
 }
-function setCurId(id) {
+setCurId = function (id) {
     curId = id;
 }
-function range(a, b) {
+range = function (a, b) {
     let arr = [];
     for (let i = a; i < b; i++) {
         arr.push(i);
     }
     return arr;
+}
+showToc = function () {
+    document.getElementById("toc-ol").style.display = "block";
+    document.getElementById("toc-open").style.display = "none";
+    document.getElementById("toc-close").style.display = "inline-block";
+}
+hideToc = function () {
+    document.getElementById("toc-ol").style.display = "none";
+    document.getElementById("toc-open").style.display = "inline-block";
+    document.getElementById("toc-close").style.display = "none";
 }
 window.addEventListener("load", function () {
     try {

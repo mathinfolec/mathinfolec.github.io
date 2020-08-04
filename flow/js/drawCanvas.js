@@ -18,4 +18,6 @@ drawCanvas = function (id) {
         document.getElementById(this.getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
     }
     //document.getElementById(this.#oId).style.height = (this.#height - 30) + "px";
+    document.getElementById("toc-ol").innerHTML += "<li><a href='#" + id + "'>" + options[id].title + "</a></li>";
+    console.log(document.getElementById("toc-ol").innerHTML)
 }
