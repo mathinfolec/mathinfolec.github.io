@@ -26,6 +26,7 @@ preset = function (id) {
             case "process-let":
             case "process-any":
             case "for-end":
+            case "while-end":
             case "nothing":
                 i = parts[id][pId].next;
                 parts[id][i].depth = parts[id][pId].depth + 1;
@@ -41,6 +42,8 @@ preset = function (id) {
                 break;
             case "for-range":
             case "for-range-blank":
+            case "while":
+            case "while-blank":
                 i = parts[id][pId].next;
                 parts[id][i].depth = parts[id][pId].depth + 1;
                 if (typeof parts[id][i].padding == "undefined") {
@@ -71,7 +74,7 @@ preset = function (id) {
                         remains: []
                     };
                 }
-                else if (parts[id][pId].type = "for-range-blank") {
+                else if (parts[id][pId].type == "for-range-blank") {
                     parts[id][pId].prop.range = null;
                     parts[id][pId].prop.isInited = false;
                     parts[id][pId].prop.remains = [];
@@ -90,6 +93,14 @@ preset = function (id) {
                 queue.push(i);
                 i = parts[id][pId].next[1];
                 if (i == parts[id][pId].conv) {
+                    let nId = getNewId(id);
+                    parts[id][pId].next[1] = nId;
+                    parts[id][nId] = {
+                        type: "nothing",
+                        depth: parts[id][pId].depth + 1,
+                        padding: parts[id][pId].padding + 1,
+                        next: parts[id][pId].conv
+                    };
                     parts[id][i].depth = parts[id][pId].depth + 2;
                     if (typeof parts[id][i].padding == "undefined") {
                         parts[id][i].padding = parts[id][pId].padding;

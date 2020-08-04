@@ -91,7 +91,7 @@ getObj = function (id, pId) {
             document.getElementById(getCanvasAreaId(id)).appendChild(input);
             document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
             document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 10.5 / 2) + "px";
+            document.getElementById(tId).style.width = (fontSize * 12 * 0.9 / 2) + "px";
             document.getElementById(tId).style.height = fontSize + "px";
             break;
         case "nothing":
@@ -106,6 +106,17 @@ getObj = function (id, pId) {
                 .lineTo(0, data.h / 3)
                 .lineTo(data.h / 3, 0);
             t.text = "for(" + data.name + ")";
+            break;
+        case "while":
+            s.graphics.beginFill("lightblue")
+                .moveTo(data.h / 3, 0)
+                .lineTo(data.w - data.h / 3, 0)
+                .lineTo(data.w, data.h / 3)
+                .lineTo(data.w, data.h)
+                .lineTo(0, data.h)
+                .lineTo(0, data.h / 3)
+                .lineTo(data.h / 3, 0);
+            t.text = "while(" + data.name + ")";
             break;
         case "for-range-blank":
             s.graphics.beginFill("lightblue")
@@ -131,10 +142,49 @@ getObj = function (id, pId) {
             document.getElementById(getCanvasAreaId(id)).appendChild(input);
             document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
             document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 8) * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 5 / 2) + "px";
+            document.getElementById(tId).style.width = (fontSize * 6 * 0.9 / 2) + "px";
+            document.getElementById(tId).style.height = fontSize + "px";
+            break;
+        case "while-blank":
+            console.log("draw while-blank");
+            s.graphics.beginFill("lightblue")
+                .moveTo(data.h / 3, 0)
+                .lineTo(data.w - data.h / 3, 0)
+                .lineTo(data.w, data.h / 3)
+                .lineTo(data.w, data.h)
+                .lineTo(0, data.h)
+                .lineTo(0, data.h / 3)
+                .lineTo(data.h / 3, 0);
+            t.text = "while(               )";
+            input = document.createElement("input");
+            tId = getInputId(id, pId);
+            input.id = tId;
+            input.setAttribute("type", "text");
+            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
+                input.setAttribute("value", data.prop.initVal);
+            }
+            else {
+                input.setAttribute("value", "true");
+            }
+            input.style.position = "absolute";
+            document.getElementById(getCanvasAreaId(id)).appendChild(input);
+            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
+            document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * fontSize / 2) + "px";
+            document.getElementById(tId).style.width = (fontSize * 15 * 0.9 / 2) + "px";
             document.getElementById(tId).style.height = fontSize + "px";
             break;
         case "for-end":
+            s.graphics.beginFill("lightblue")
+                .moveTo(0, 0)
+                .lineTo(data.w, 0)
+                .lineTo(data.w, data.h - data.h / 3)
+                .lineTo(data.w - data.h / 3, data.h)
+                .lineTo(data.h / 3, data.h)
+                .lineTo(0, data.h - data.h / 3)
+                .lineTo(0, 0);
+            t.text = "";
+            break;
+        case "while-end":
             s.graphics.beginFill("lightblue")
                 .moveTo(0, 0)
                 .lineTo(data.w, 0)

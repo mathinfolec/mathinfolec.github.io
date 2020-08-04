@@ -34,3 +34,16 @@ getW = function () {
 getH = function () {
     return fontSize * 2;
 }
+getNewId = function (id) {
+    let s;
+    while (true) {
+        s = "";
+        for (let i = 0; i < 6; ++i) {
+            s = s + ((10 + Math.floor(Math.random() * 26)).toString(36));
+        }
+        if (typeof parts[id][s] == "undefined") {
+            break;
+        }
+    }
+    return s;
+}

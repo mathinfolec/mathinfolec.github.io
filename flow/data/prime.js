@@ -23,8 +23,8 @@ parts["prime"] = {
         next: 5
     },
     5: {
-        type: "for-range",
-        name: "i of range(2,a)",
+        type: "while",
+        name: "i < a",
         next: 6,
         end: 9
     },
@@ -32,20 +32,26 @@ parts["prime"] = {
         type: "if-else",
         name: "a % i == 0",
         next: [7, 8],
-        conv: 9
+        conv: 8
     },
     7: {
         type: "process",
         name: "flag = 0",
-        next: 9
+        next: 8
     },
-    8: {
+    /*
+    0: {
         type: "nothing",
-        name: "",
+        next: 8
+    },
+    */
+    8: {
+        type: "process",
+        name: "i = i + 1",
         next: 9
     },
     9: {
-        type: "for-end",
+        type: "while-end",
         next: 10
     },
     10: {

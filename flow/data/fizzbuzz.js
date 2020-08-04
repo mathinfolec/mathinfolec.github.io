@@ -10,10 +10,10 @@ parts["fizzbuzz"] = {
         next: 3
     },
     3: {
-        type: "for-range",
-        name: "i of range(1,31)",
+        type: "while",
+        name: "i <= 30",
         next: 4,
-        end: 11
+        end: 12
     },
     4: {
         type: "if-blank",
@@ -52,10 +52,15 @@ parts["fizzbuzz"] = {
         next: 11
     },
     11: {
-        type: "for-end",
+        type: "process",
+        name: "i = i + 1",
         next: 12
     },
     12: {
+        type: "while-end",
+        next: 13
+    },
+    13: {
         type: "terminal-end",
         name: "end",
     }

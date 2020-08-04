@@ -9,6 +9,7 @@ step = function (id) {
         for (let i in objs[id]) {
             objs[id][i].alpha = (i == curpIds[id] ? 1 : 0.5);
         }
+        //console.log(id + ":" + curpIds[id]);
         switch (data.type) {
             case "terminal-start":
                 clearOut(id);
@@ -72,6 +73,29 @@ step = function (id) {
                     curpIds[id] = data.next[1];
                 }
                 break;
+            case "while":
+                f = getIfFunc(id, data.name);
+                if (f()) {
+                    curpIds[id] = data.next;
+                }
+                else {
+                    curpIds[id] = parts[id][data.end].next;
+                }
+                break;
+            case "while-blank":
+                f = getIfFunc(id, getInput(id, curpIds[id]));
+                if (f()) {
+                    curpIds[id] = data.next;
+                }
+                else {
+                    curpIds[id] = parts[id][data.end].next;
+                }
+                break;
+            case "while-end":
+                f = getFunc(id);
+                f();
+                curpIds[id] = data.start;
+                break;
             case "nothing":
                 curpIds[id] = data.next;
                 step(id);
@@ -123,7 +147,7 @@ updateVals = function (id, vals) {
             }
         }
     }
-    console.log(curVals[id]);
+    //console.log(curVals[id]);
 }
 autoStep = function (id) {
     if (id == curId) {
