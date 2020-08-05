@@ -123,13 +123,23 @@ step = function (id) {
                 break;
         }
     } catch (e) {
-        print(e);
+        //print(e);
+        if (e instanceof SyntaxError) {
+            print("ERROR: 空欄が埋まっていないか、正しく入力されていない可能性があります！");
+        }
+        else if (e instanceof ReferenceError) {
+            print("ERROR: 定義していない変数が使われている可能性があります！");
+        }
         isCont = false;
+        isAuto = false;
     } finally {
         return isCont;
     }
 }
 setVal = function (id, name, value) {
+    if (value == undefined) {
+        throw new SyntaxError();
+    }
     curVals[id][name] = value;
 }
 updateVals = function (id, vals) {
@@ -151,10 +161,19 @@ updateVals = function (id, vals) {
 }
 autoStep = function (id) {
     if (id == curId) {
-        isAuto = !isAuto;
+        if (curpIds[id] == options[id].endId) {
+            resetStep(id);
+            isAuto = true;
+        }
+        else {
+            isAuto = !isAuto;
+        }
     }
     else {
         curId = id;
+        if (curpIds[id] == options[id].endId) {
+            resetStep(id);
+        }
         isAuto = true;
     }
 }
@@ -172,5 +191,7 @@ resetStep = function (id) {
         objs[id][i].alpha = 1;
     }
     curVals[id] = {};
-    document.getElementById(getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
+    if (typeof options[id].vals != "undefined") {
+        document.getElementById(getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
+    }
 }

@@ -1,3 +1,61 @@
+setInput = function (id, pId) {
+    let wRate = 1.3;
+    let data = parts[id][pId];
+    let input = document.createElement("input");
+    let tId = getInputId(id, pId);
+    input.id = tId;
+    input.setAttribute("type", "text");
+    if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
+        input.setAttribute("value", data.prop.initVal);
+    }
+    else {
+        let v = "";
+        switch (v) {
+            case "process-let":
+                v = 0;
+                break;
+            case "process-any":
+                v = "";
+                break;
+            case "if-blank":
+            case "while-blank":
+                v = "true";
+                break;
+        }
+        input.setAttribute("value", v);
+    }
+    input.setAttribute("onchange", "addLog('change','" + id + "')");
+    input.style.position = "absolute";
+    document.getElementById(getCanvasAreaId(id)).appendChild(input);
+    document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
+    document.getElementById(tId).style.height = fontSize + "px";
+    let l = 0;
+    let w = 0;
+    switch (data.type) {
+        case "process-let":
+            l = data.x + data.w / 2 + (data.prop.valName.length / 2 + 2) * fontSize / 2;
+            w = fontSize * 6 / 2;
+            break;
+        case "process-any":
+            l = data.x + data.w / 2 - 9 * fontSize / 2;
+            w = fontSize * 9;
+            break;
+        case "if-blank":
+            l = data.x + data.w / 2 - 5 * fontSize / 2;
+            w = fontSize * 12 * 0.9 / 2;
+            break;
+        case "while-blank":
+            l = data.x + data.w / 2 - 4 * fontSize / 2;
+            w = fontSize * 13 * 0.9 / 2;
+            break;
+        case "for-blank":
+            l = data.x + data.w / 2 + (data.prop.valName.length / 2 + 3) * fontSize / 2;
+            w = fontSize * 6 * 0.9 / 2;
+            break;
+    }
+    document.getElementById(tId).style.left = l + "px";
+    document.getElementById(tId).style.width = w + "px";
+}
 getObj = function (id, pId) {
     parts[id][pId].x = getX(parts[id][pId].padding);
     parts[id][pId].y = getY(parts[id][pId].depth);
@@ -23,42 +81,12 @@ getObj = function (id, pId) {
         case "process-let":
             s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
             t.text = "let " + data.prop.valName + " =     ";
-            input = document.createElement("input");
-            tId = getInputId(id, pId);
-            input.id = tId;
-            input.setAttribute("type", "text");
-            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
-                input.setAttribute("value", data.prop.initVal);
-            }
-            else {
-                input.setAttribute("value", 0);
-            }
-            input.style.position = "absolute";
-            document.getElementById(getCanvasAreaId(id)).appendChild(input);
-            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-            document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 4) * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 6 / 2) + "px";
-            document.getElementById(tId).style.height = fontSize + "px";
+            setInput(id, pId);
             break;
         case "process-any":
             s.graphics.beginFill("yellow").drawRect(0, 0, data.w, data.h);
             t.text = "                  ";
-            input = document.createElement("input");
-            tId = getInputId(id, pId);
-            input.id = tId;
-            input.setAttribute("type", "text");
-            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
-                input.setAttribute("value", data.prop.initVal);
-            }
-            else {
-                input.setAttribute("value", "");
-            }
-            input.style.position = "absolute";
-            document.getElementById(getCanvasAreaId(id)).appendChild(input);
-            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-            document.getElementById(tId).style.left = (data.x + data.w / 2 - (t.text.length / 2) * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * t.text.length / 2) + "px";
-            document.getElementById(tId).style.height = fontSize + "px";
+            setInput(id, pId);
             break;
         case "if-else":
             s.graphics.beginFill("lightgreen")
@@ -77,22 +105,7 @@ getObj = function (id, pId) {
                 .lineTo(data.w / 2, data.h + data.h / 10)
                 .lineTo(-data.w / 15, data.h / 2);
             t.text = "if(            )";
-            input = document.createElement("input");
-            tId = getInputId(id, pId);
-            input.id = tId;
-            input.setAttribute("type", "text");
-            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
-                input.setAttribute("value", data.prop.initVal);
-            }
-            else {
-                input.setAttribute("value", "true");
-            }
-            input.style.position = "absolute";
-            document.getElementById(getCanvasAreaId(id)).appendChild(input);
-            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-            document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 12 * 0.9 / 2) + "px";
-            document.getElementById(tId).style.height = fontSize + "px";
+            setInput(id, pId);
             break;
         case "nothing":
             break;
@@ -128,22 +141,7 @@ getObj = function (id, pId) {
                 .lineTo(0, data.h / 3)
                 .lineTo(data.h / 3, 0);
             t.text = "for(" + data.prop.valName + " of range(      ))";
-            input = document.createElement("input");
-            tId = getInputId(id, pId);
-            input.id = tId;
-            input.setAttribute("type", "text");
-            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
-                input.setAttribute("value", data.prop.initVal);
-            }
-            else {
-                input.setAttribute("value", "0,10,1");
-            }
-            input.style.position = "absolute";
-            document.getElementById(getCanvasAreaId(id)).appendChild(input);
-            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-            document.getElementById(tId).style.left = (data.x + data.w / 2 + (t.text.length / 2 - 8) * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 6 * 0.9 / 2) + "px";
-            document.getElementById(tId).style.height = fontSize + "px";
+            setInput(id, pId);
             break;
         case "while-blank":
             console.log("draw while-blank");
@@ -155,23 +153,8 @@ getObj = function (id, pId) {
                 .lineTo(0, data.h)
                 .lineTo(0, data.h / 3)
                 .lineTo(data.h / 3, 0);
-            t.text = "while(               )";
-            input = document.createElement("input");
-            tId = getInputId(id, pId);
-            input.id = tId;
-            input.setAttribute("type", "text");
-            if (typeof data.prop != "undefined" && typeof data.prop.initVal != "undefined") {
-                input.setAttribute("value", data.prop.initVal);
-            }
-            else {
-                input.setAttribute("value", "true");
-            }
-            input.style.position = "absolute";
-            document.getElementById(getCanvasAreaId(id)).appendChild(input);
-            document.getElementById(tId).style.top = (data.y + (data.h - fontSize * wRate) / 2) + "px";
-            document.getElementById(tId).style.left = (data.x + data.w / 2 - 5 * fontSize / 2) + "px";
-            document.getElementById(tId).style.width = (fontSize * 15 * 0.9 / 2) + "px";
-            document.getElementById(tId).style.height = fontSize + "px";
+            t.text = "while(             )";
+            setInput(id, pId);
             break;
         case "for-end":
             s.graphics.beginFill("lightblue")

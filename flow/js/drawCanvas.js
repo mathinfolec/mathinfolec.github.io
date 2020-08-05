@@ -7,9 +7,9 @@ drawCanvas = function (id) {
     d.innerHTML += "<div id='" + getExpId(id) + "'></div>";
     d.innerHTML += "<div id='" + getCanvasAreaId(id) + "' style='position: relative;'></div>";
     d.innerHTML += "<canvas width=" + options[id].width + " height=" + options[id].height + " id='" + getCanvasId(id) + "'></canvas></div>";
-    d.innerHTML += "<button onclick=\"autoStep('" + id + "')\">実行</button>";
-    d.innerHTML += "<button onclick=\"step('" + id + "')\">ステップ</button>";
-    d.innerHTML += "<button onclick=\"resetStep('" + id + "')\">リセット</button>";
+    d.innerHTML += "<button onclick=\"clickAutoStep('" + id + "')\">実行</button>";
+    d.innerHTML += "<button onclick=\"clickStep('" + id + "')\">ステップ</button>";
+    d.innerHTML += "<button onclick=\"clickResetStep('" + id + "')\">リセット</button>";
     d.innerHTML += "<div id='" + getValsId(id) + "' class='out'></div>";
     d.innerHTML += "<hr/>";
     d.innerHTML += "<div id='" + getOutId(id) + "' class='out'></div>";

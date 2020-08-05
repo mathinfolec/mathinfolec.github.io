@@ -8,3 +8,5 @@ let objs = {};
 let stages = {};
 let curpIds = {};
 let fontSize = 16;
+let logs = [];
+let isAddedLog = false;

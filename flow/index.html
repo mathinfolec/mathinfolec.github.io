@@ -13,13 +13,20 @@
     <script src="data/hello.js"></script>
     <script src="data/arith.js"></script>
     <script src="data/val.js"></script>
+    <script src="data/assign.js"></script>
     <script src="data/process_test.js"></script>
     <script src="data/flow_if.js"></script>
     <script src="data/flow_if_val.js"></script>
+    <!--if1つの例題をここに追加(80点で合格)-->
     <script src="data/class_id.js"></script>
+    <!--もっとむずそうな問題をここに追加(80点で合格＋不適な点をはじく)-->
     <script src="data/flow_while.js"></script>
-    <!--<script src="data/flow_for.js"></script>-->
+    <script src="data/while_caution.js"></script>
+    <script src="data/while_prac1.js"></script>
+    <script src="data/while_prac2.js"></script>
+    <!--ここに1問-->
     <script src="data/prime.js"></script>
+    <!--ここに1問-->
     <script src="data/fizzbuzz.js"></script>
     <!--data-->
     <script src="js/setOptions.js"></script>
@@ -36,15 +43,23 @@
     <div id="caution-detail"></div>
     <div id="toc">
         <b>目次</b>
-        <a href="#" onclick="showToc()" id="toc-open" style="display:none;">[開く]</a>
-        <a href="#" onclick="hideToc()" id="toc-close" style="display:inline-block;">[閉じる]</a>
-        <ol id="toc-ol"></ol>
+        <a onclick="showToc()" id="toc-open" style="display:none;">[開く]</a>
+        <a onclick="hideToc()" id="toc-close" style="display:inline-block;">[閉じる]</a>
+        <ol id="toc-ol" style="display:block;"></ol>
+    </div>
+    <div id="opt">
+        <b>オプション</b>
+        <a onclick="showOpt()" id="opt-open" style="display:inline-block;">[開く]</a>
+        <a onclick="hideOpt()" id="opt-close" style="display:none;">[閉じる]</a>
+        <ul id="opt-ul" style="display:none;">
+            <li><a onclick="exportLogs()">活動記録を出力する</a></li>
+        </ul>
     </div>
     <hr />
     <div id="main">
     </div>
     <footer>
-        <p>最終更新日: 2020/08/04</p>
+        <p>最終更新日: 2020/08/05</p>
         <p>
             <a href="../index.html">Back to Main Page</a><br />
             <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">

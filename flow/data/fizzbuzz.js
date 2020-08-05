@@ -5,12 +5,14 @@ parts["fizzbuzz"] = {
         next: 2
     },
     2: {
-        type: "process",
-        name: "let i = 1",
+        type: "process-let",
+        prop: {
+            valName: "i"
+        },
         next: 3
     },
     3: {
-        type: "while",
+        type: "while-blank",
         name: "i <= 30",
         next: 4,
         end: 12
@@ -52,7 +54,7 @@ parts["fizzbuzz"] = {
         next: 11
     },
     11: {
-        type: "process",
+        type: "process-any",
         name: "i = i + 1",
         next: 12
     },
@@ -66,7 +68,7 @@ parts["fizzbuzz"] = {
     }
 };
 options["fizzbuzz"] = {
-    title: "FizzBuzz問題",
+    title: "練習6(FizzBuzz)",
     vals: ["i"],
     exp: "FizzBuzz問題はプログラミングの世界で非常に有名な問題です。これが解けるかどうかで「プログラムを書ける人か」判断されることもあります。<br/>"
         + "次の条件を満たすフローチャートを書いてみましょう。(少し表現を簡単にしています。)"

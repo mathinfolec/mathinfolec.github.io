@@ -26,7 +26,7 @@ getX = function (padding) {
     return 20 + padding * (getW() + 20);
 }
 getY = function (depth) {
-    return 20 + depth * fontSize * 4;
+    return 20 + depth * fontSize * 3.5;
 }
 getW = function () {
     return 190;

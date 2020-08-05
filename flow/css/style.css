@@ -2,6 +2,11 @@ input{
     border-radius:0px;
     border: 0.5px solid black;
 }
+a{
+    cursor:pointer;
+    color: blue;
+    text-decoration: underline;
+}
 canvas {
     float: left;
     margin-right: 10px;

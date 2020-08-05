@@ -76,7 +76,7 @@ parts["prime"] = {
     },
 };
 options["prime"] = {
-    title: "？？？",
+    title: "練習5(フローチャート解読)",
     vals: ["a", "flag", "i"],
     exp: "次のフローチャートは何をしているのか考えましょう。"
 };
