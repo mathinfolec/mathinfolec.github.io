@@ -23,30 +23,38 @@ clickResetStep = function (id) {
     addLog("reset", id);
     resetStep(id);
 }
-addLog = function (name, id) {
+addLog = function (name, id = null) {
     let d = new Date();
     let t = (("0" + d.getHours()).slice(-2)) + ":" + (("0" + d.getMinutes()).slice(-2)) + ":" + (("0" + d.getSeconds()).slice(-2));
     let ins = {};
-    for (let i in parts[id]) {
-        switch (parts[id][i].type) {
-            case "process-any":
-            case "process-let":
-            case "if-blank":
-            case "while-blank":
-            case "for-range-blank":
-                ins[i] = getInput(id, i);
-                break;
-            default:
-                break;
-        }
+    if (name == "load" || name == "export") {
+        logs.push({
+            name: name,
+            date: t
+        });
     }
-    logs.push({
-        name: name,
-        id: id,
-        date: t,
-        input: ins
-    });
-    isAddedLog = true;
+    else {
+        for (let i in parts[id]) {
+            switch (parts[id][i].type) {
+                case "process-any":
+                case "process-let":
+                case "if-blank":
+                case "while-blank":
+                case "for-range-blank":
+                    ins[i] = getInput(id, i);
+                    break;
+                default:
+                    break;
+            }
+        }
+        logs.push({
+            name: name,
+            id: id,
+            date: t,
+            input: ins
+        });
+        isAddedLog = true;
+    }
 }
 showToc = function () {
     document.getElementById("toc-ol").style.display = "block";
@@ -71,6 +79,7 @@ hideOpt = function () {
 exportLogs = function () {
     let v = window.prompt("学年,組,出席番号で構成される4桁のIDを半角で入力してください。\n(例)5年1組3番:5103");
     if (v != null && v.match(/^[0-9]{4}$/)) {
+        addLog("export");
         let blob = new Blob([JSON.stringify(logs)], { type: "text/plain" });
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -85,6 +94,7 @@ exportLogs = function () {
 }
 window.addEventListener("load", function () {
     try {
+        addLog("load");
         for (let i in parts) {
             setOptions(i);
             drawCanvas(i);

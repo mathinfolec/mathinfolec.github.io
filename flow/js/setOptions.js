@@ -15,8 +15,7 @@ preset = function (id) {
     let queue = [options[id].startId];
     parts[id][options[id].startId].depth = 0;
     parts[id][options[id].startId].padding = 0;
-    let maxDepth = 0;
-    let maxPadding = 0;
+
     while (queue.length) {
         let pId = queue.shift();
         let i;
@@ -36,8 +35,6 @@ preset = function (id) {
                 else {
                     parts[id][i].padding = Math.min(parts[id][i].padding, parts[id][pId].padding);
                 }
-                maxDepth = parts[id][i].depth;
-                maxPadding = Math.max(maxPadding, parts[id][i].padding);
                 queue.push(i);
                 break;
             case "for-range":
@@ -52,8 +49,6 @@ preset = function (id) {
                 else {
                     parts[id][i].padding = Math.min(parts[id][i].padding, parts[id][pId].padding);
                 }
-                maxDepth = parts[id][i].depth;
-                maxPadding = Math.max(maxPadding, parts[id][i].padding);
                 queue.push(i);
                 // connect for-range and for-end
                 i = parts[id][pId].end;
@@ -118,8 +113,6 @@ preset = function (id) {
                         parts[id][i].padding = Math.min(parts[id][i].padding, parts[id][pId].padding + 1);
                     }
                 }
-                maxDepth = parts[id][i].depth;
-                maxPadding = Math.max(maxPadding, parts[id][i].padding);
                 queue.push(i);
                 break;
             case "terminal-end":
@@ -142,7 +135,6 @@ preset = function (id) {
                     if (parts[id][i].depth == parts[id][j].depth) {
                         if (parts[id][i].padding < parts[id][j].padding) {
                             parts[id][j].padding += 1;
-                            maxPadding = Math.max(maxPadding, parts[id][j].padding);
                         }
                     }
                 }
@@ -154,9 +146,14 @@ preset = function (id) {
             if (i == j) continue;
             if (parts[id][i].depth == parts[id][j].depth && parts[id][i].padding == parts[id][j].padding) {
                 parts[id][j].padding++;
-                maxPadding = Math.max(maxPadding, parts[id][j].padding);
             }
         }
+    }
+    let maxDepth = 0;
+    let maxPadding = 0;
+    for (let i in parts[id]) {
+        maxDepth = Math.max(maxDepth, parts[id][i].depth);
+        maxPadding = Math.max(maxPadding, parts[id][i].padding);
     }
     options[id].maxDepth = maxDepth;
     options[id].maxPadding = maxPadding;
