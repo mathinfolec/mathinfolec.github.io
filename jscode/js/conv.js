@@ -5,7 +5,17 @@ const conv = function () {
     valNum = 0;
     let stack = [];
     //let dArr = document.getElementById("code_textarea").value.split("\n");
-    let dArr = document.getElementById("code_textarea").value.replace(/\n/g, "").replace(/(;|\{|\})/g, "$1\n").split("\n");
+    let dTmpArr = document.getElementById("code_textarea").value.replace(/\n/g, "").replace(/(;|\{|\})/g, "$1\n").split("\n");
+    let dArr = [];
+    for (let i = 0; i < dTmpArr.length; ++i) {
+        if (dTmpArr[i].trim().match(/^for\(/)) {
+            dArr.push(dTmpArr[i] + dTmpArr[i + 1] + dTmpArr[i + 2]);
+            i += 2;
+        }
+        else {
+            dArr.push(dTmpArr[i]);
+        }
+    }
     let curIndent = 0;
     try {
         flow[0] = {
@@ -50,6 +60,20 @@ const conv = function () {
                     id: i
                 });
             }
+            else if (d.match(/^for/)) {
+                flow[i] = {
+                    type: "for-start",
+                    original: d,
+                    isFirst: true,
+                    name: d.replace(/^for *\((.+)\) *\{$/, "$1").split(";"),
+                    indent: curIndent++,
+                    next: i + 1
+                };
+                stack.push({
+                    type: "for",
+                    id: i
+                });
+            }
             else if (d.match(/^if/)) {
                 flow[i] = {
                     type: "if-start",
@@ -69,6 +93,16 @@ const conv = function () {
                     flow[ps.id].end = i;
                     flow[i] = {
                         type: "while-end",
+                        original: d,
+                        start: ps.id,
+                        indent: --curIndent,
+                        next: i + 1
+                    };
+                }
+                else if (ps.type == "for") {
+                    flow[ps.id].end = i;
+                    flow[i] = {
+                        type: "for-end",
                         original: d,
                         start: ps.id,
                         indent: --curIndent,

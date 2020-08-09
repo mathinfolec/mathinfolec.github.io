@@ -36,6 +36,20 @@ const step = function () {
                     curpId = flow[fl.end].next;
                 }
                 break;
+            case "for-start":
+                if (fl.isFirst) {
+                    f = getFunc(fl.name[0]);
+                    f();
+                    fl.isFirst = false;
+                }
+                f = getIfFunc(fl.name[1]);
+                if (f()) {
+                    curpId = fl.next;
+                }
+                else {
+                    curpId = flow[fl.end].next;
+                }
+                break;
             case "if-start":
                 f = getIfFunc(fl.name);
                 if (f()) {
@@ -46,6 +60,11 @@ const step = function () {
                 }
                 break;
             case "while-end":
+                curpId = fl.start;
+                break;
+            case "for-end":
+                f = getFunc(flow[fl.start].name[2]);
+                f();
                 curpId = fl.start;
                 break;
             case "else":
@@ -164,6 +183,11 @@ const resetStep = function () {
     clearOut();
     clearValOut(valNum);
     isAuto = false;
+    for (let i = 0; i < flow.length; ++i) {
+        if (flow[i].type == "for-start") {
+            flow[i].isFirst = false;
+        }
+    }
     document.getElementById("button_auto").disabled = false;
     document.getElementById("button_step").disabled = false;
     document.getElementById("button_reset").disabled = false;
