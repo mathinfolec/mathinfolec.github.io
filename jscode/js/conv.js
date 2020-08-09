@@ -1,6 +1,6 @@
 let flow = [];
 let valNum = 0;
-let conv = function () {
+const conv = function () {
     flow = [];
     valNum = 0;
     let stack = [];
@@ -141,10 +141,10 @@ let conv = function () {
         window.alert(e);
     }
 }
-let getDivId = function (id) {
+const getDivId = function (id) {
     return "code" + id;
 }
-let reqConv = function () {
+const reqConv = function () {
     document.getElementById("button_auto").disabled = true;
     document.getElementById("button_step").disabled = true;
     document.getElementById("button_reset").disabled = true;

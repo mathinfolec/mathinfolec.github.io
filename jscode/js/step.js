@@ -1,7 +1,7 @@
 let curpId = 0;
 let curVals = [];
 let isAuto = false;
-let step = function () {
+const step = function () {
     let fl = flow[curpId];
     console.log(curpId + ":" + fl.original);
     let f;
@@ -60,26 +60,42 @@ let step = function () {
                 break;
             default:
                 isCont = false;
-                throw SyntaxError("構文解読に失敗しました");
+                throw SyntaxError();
         }
     } catch (e) {
-        print(e);
+        if (e instanceof SyntaxError) {
+            print("ERROR: コードが正しく入力されていない可能性があります。カッコの位置などを再確認してください。");
+        }
+        else if (e instanceof ReferenceError) {
+            print("ERROR: 定義していない変数が使われている可能性があります。正しく変数を定義できているか確認してください。");
+        }
+        else if (e instanceof TypeError) {
+            print("ERROR: 使えない変数名を指定している可能性があります。")
+        }
+        else {
+            console.log(e);
+        }
+        document.getElementById("button_auto").disabled = true;
+        document.getElementById("button_step").disabled = true;
+        isCont = false;
+        isAuto = false;
+    } finally {
+        return isCont;
     }
-    return isCont;
 }
-let print = function (x) {
+const print = function (x) {
     document.getElementById("out").innerHTML += x + "<br/>";
 }
-let clearOut = function () {
+const clearOut = function () {
     document.getElementById("out").innerHTML = "";
 }
-let clearValOut = function (n = 0) {
+const clearValOut = function (n = 0) {
     document.getElementById("val").innerHTML = "<br/>".repeat(n);
 }
-let getFunc = function (str = "") {
+const getFunc = function (str = "") {
     return Function("\"use strict\";" + getInitValsStr() + str + ";" + getUpdateValsStr());
 }
-let getIfFunc = function (str) {
+const getIfFunc = function (str) {
     let tmpName;
     while (true) {
         tmpName = "v" + Math.floor((Math.random() * 1000)) + "i";
@@ -89,7 +105,7 @@ let getIfFunc = function (str) {
     }
     return Function("\"use strict\";" + getInitValsStr() + "let " + tmpName + "=(" + str + ");" + getUpdateValsStr() + "return " + tmpName + ";");
 }
-let getInitValsStr = function () {
+const getInitValsStr = function () {
     let arr = [];
     for (let i in curVals) {
         arr.push(i + "=" + curVals[i]);
@@ -101,14 +117,14 @@ let getInitValsStr = function () {
         return "";
     }
 }
-let getUpdateValsStr = function () {
+const getUpdateValsStr = function () {
     let arr = [];
     for (let i in curVals) {
         arr.push("\"" + i + "\": " + i);
     }
     return "updateVals({" + arr.join(",") + "});";
 }
-let updateVals = function (vals) {
+const updateVals = function (vals) {
     clearValOut();
     console.log(vals);
     let d = document.getElementById("val");
@@ -122,14 +138,14 @@ let updateVals = function (vals) {
         d.innerHTML += "<br/>".repeat(valNum - len);
     }
 }
-let setVal = function (name, value) {
+const setVal = function (name, value) {
     curVals[name] = value;
 }
-let clickStep = function () {
+const clickStep = function () {
     if (isAuto) return;
     step();
 }
-let clickAuto = function () {
+const clickAuto = function () {
     if (flow[curpId].type == "terminal-end") {
         resetStep();
         isAuto = true;
@@ -139,10 +155,10 @@ let clickAuto = function () {
     }
     document.getElementById("button_step").disabled = isAuto;
 }
-let clickReset = function () {
+const clickReset = function () {
     resetStep();
 }
-let resetStep = function () {
+const resetStep = function () {
     curpId = 0;
     curVals = [];
     clearOut();
@@ -153,7 +169,7 @@ let resetStep = function () {
     document.getElementById("button_reset").disabled = false;
     highlight(-1);
 }
-let highlight = function (id) {
+const highlight = function (id) {
     for (let i = 0; i < flow.length; ++i) {
         document.getElementById(getDivId(i)).style.color = (i == id ? "red" : "black");
     }

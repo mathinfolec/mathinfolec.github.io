@@ -1,3 +1,4 @@
+"use strict";
 window.addEventListener("load", function () {
     document.getElementById("button_auto").disabled = true;
     document.getElementById("button_step").disabled = true;
