@@ -1,4 +1,4 @@
-step = function (id) {
+const step = function (id) {
     let isCont = true;
     try {
         setCurId(id);
@@ -130,19 +130,22 @@ step = function (id) {
         else if (e instanceof ReferenceError) {
             print("ERROR: 定義していない変数が使われている可能性があります！");
         }
+        else {
+            console.log(e);
+        }
         isCont = false;
         isAuto = false;
     } finally {
         return isCont;
     }
 }
-setVal = function (id, name, value) {
+const setVal = function (id, name, value) {
     if (value == undefined) {
         throw new SyntaxError();
     }
     curVals[id][name] = value;
 }
-updateVals = function (id, vals) {
+const updateVals = function (id, vals) {
     for (let i in vals) {
         curVals[id][i] = vals[i];
     }
@@ -159,7 +162,7 @@ updateVals = function (id, vals) {
     }
     //console.log(curVals[id]);
 }
-autoStep = function (id) {
+const autoStep = function (id) {
     if (id == curId) {
         if (curpIds[id] == options[id].endId) {
             resetStep(id);
@@ -177,7 +180,7 @@ autoStep = function (id) {
         isAuto = true;
     }
 }
-resetStep = function (id) {
+const resetStep = function (id) {
     curpIds[id] = options[id].startId;
     clearOut(id);
     isAuto = false;

@@ -1,4 +1,4 @@
-setOptions = function (id) {
+const setOptions = function (id) {
     for (let i in parts[id]) {
         if (parts[id][i].type == "terminal-start") {
             options[id].startId = i;
@@ -11,7 +11,7 @@ setOptions = function (id) {
     }
     preset(id);
 }
-preset = function (id) {
+const preset = function (id) {
     let queue = [options[id].startId];
     parts[id][options[id].startId].depth = 0;
     parts[id][options[id].startId].padding = 0;

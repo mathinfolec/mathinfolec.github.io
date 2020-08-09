@@ -1,4 +1,4 @@
-drawCanvas = function (id) {
+const drawCanvas = function (id) {
     options[id].width = getX(options[id].maxPadding) + getW() + 20;
     options[id].height = getY(options[id].maxDepth) + getH() + 20;
     document.getElementById("main").innerHTML += "<div id='" + id + "'></div><div class='clear'><hr/>";
@@ -14,7 +14,7 @@ drawCanvas = function (id) {
     d.innerHTML += "<hr/>";
     d.innerHTML += "<div id='" + getOutId(id) + "' class='out'></div>";
     if (typeof options[id].vals != "undefined") {
-        document.getElementById(this.getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
+        document.getElementById(getValsId(id)).innerHTML = "<br/>".repeat(options[id].vals.length);
     }
     document.getElementById("toc-ol").innerHTML += "<li><a href='#" + id + "'>" + options[id].title + "</a></li>";
 }

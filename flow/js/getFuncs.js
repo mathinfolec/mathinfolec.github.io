@@ -1,7 +1,7 @@
-getFunc = function (id, str = "") {
+const getFunc = function (id, str = "") {
     return Function("\"use strict\";" + getInitValsStr(id) + str + ";" + getUpdateValsStr(id));
 }
-getIfFunc = function (id, str) {
+const getIfFunc = function (id, str) {
     let tmpName;
     while (true) {
         tmpName = "v" + Math.floor((Math.random() * 1000)) + "i";
@@ -11,7 +11,7 @@ getIfFunc = function (id, str) {
     }
     return Function("\"use strict\";" + getInitValsStr(id) + "let " + tmpName + "=(" + str + ");" + getUpdateValsStr(id) + "return " + tmpName + ";");
 }
-getInitValsStr = function (id) {
+const getInitValsStr = function (id) {
     let arr = [];
     for (let i in curVals[id]) {
         arr.push(i + "=" + curVals[id][i]);
@@ -23,17 +23,17 @@ getInitValsStr = function (id) {
         return "";
     }
 }
-getUpdateValsStr = function (id) {
+const getUpdateValsStr = function (id) {
     let arr = [];
     for (let i in curVals[id]) {
         arr.push("\"" + i + "\": " + i);
     }
     return "updateVals('" + id + "',{" + arr.join(",") + "});";
 }
-clearValsOut = function (id) {
+const clearValsOut = function (id) {
     document.getElementById(getValsId(id)).innerHTML = "";
 }
-clearOut = function (id) {
+const clearOut = function (id) {
     document.getElementById(getValsId(id)).innerHTML = "";
     document.getElementById(getOutId(id)).innerHTML = "";
 }

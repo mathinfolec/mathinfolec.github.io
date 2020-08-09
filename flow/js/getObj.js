@@ -1,4 +1,4 @@
-setInput = function (id, pId) {
+const setInput = function (id, pId) {
     let wRate = 1.3;
     let data = parts[id][pId];
     let input = document.createElement("input");
@@ -56,7 +56,7 @@ setInput = function (id, pId) {
     document.getElementById(tId).style.left = l + "px";
     document.getElementById(tId).style.width = w + "px";
 }
-getObj = function (id, pId) {
+const getObj = function (id, pId) {
     parts[id][pId].x = getX(parts[id][pId].padding);
     parts[id][pId].y = getY(parts[id][pId].depth);
     parts[id][pId].w = getW();

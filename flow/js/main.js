@@ -1,29 +1,29 @@
-print = function (x = "") {
+const print = function (x = "") {
     document.getElementById(getOutId(curId)).innerHTML += x + "<br/>";
 }
-setCurId = function (id) {
+const setCurId = function (id) {
     curId = id;
 }
-range = function (a, b) {
+const range = function (a, b) {
     let arr = [];
     for (let i = a; i < b; i++) {
         arr.push(i);
     }
     return arr;
 }
-clickAutoStep = function (id) {
+const clickAutoStep = function (id) {
     addLog("auto", id);
     autoStep(id);
 }
-clickStep = function (id) {
+const clickStep = function (id) {
     addLog("step", id);
     step(id);
 }
-clickResetStep = function (id) {
+const clickResetStep = function (id) {
     addLog("reset", id);
     resetStep(id);
 }
-addLog = function (name, id = null) {
+const addLog = function (name, id = null) {
     let d = new Date();
     let t = (("0" + d.getHours()).slice(-2)) + ":" + (("0" + d.getMinutes()).slice(-2)) + ":" + (("0" + d.getSeconds()).slice(-2));
     let ins = {};
@@ -56,27 +56,27 @@ addLog = function (name, id = null) {
         isAddedLog = true;
     }
 }
-showToc = function () {
+const showToc = function () {
     document.getElementById("toc-ol").style.display = "block";
     document.getElementById("toc-open").style.display = "none";
     document.getElementById("toc-close").style.display = "inline-block";
 }
-hideToc = function () {
+const hideToc = function () {
     document.getElementById("toc-ol").style.display = "none";
     document.getElementById("toc-open").style.display = "inline-block";
     document.getElementById("toc-close").style.display = "none";
 }
-showOpt = function () {
+const showOpt = function () {
     document.getElementById("opt-ul").style.display = "block";
     document.getElementById("opt-open").style.display = "none";
     document.getElementById("opt-close").style.display = "inline-block";
 }
-hideOpt = function () {
+const hideOpt = function () {
     document.getElementById("opt-ul").style.display = "none";
     document.getElementById("opt-open").style.display = "inline-block";
     document.getElementById("opt-close").style.display = "none";
 }
-exportLogs = function () {
+const exportLogs = function () {
     let v = window.prompt("学年,組,出席番号で構成される4桁のIDを半角で入力してください。\n(例)5年1組3番:5103");
     if (v != null && v.match(/^[0-9]{4}$/)) {
         addLog("export");

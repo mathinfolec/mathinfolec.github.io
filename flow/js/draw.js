@@ -1,4 +1,4 @@
-draw = function (id) {
+const draw = function (id) {
     stages[id] = new createjs.Stage(getCanvasId(id));
     console.log("create stage " + getCanvasId(id));
     let bg = new createjs.Shape();
@@ -47,7 +47,7 @@ draw = function (id) {
     console.log("finish initialization " + id);
     stages[id].update();
 }
-drawLine = function (id, fpId, tpId, tf = null) {
+const drawLine = function (id, fpId, tpId, tf = null) {
     let fd = parts[id][fpId].depth;
     let td = parts[id][tpId].depth;
     let fp = parts[id][fpId].padding;
