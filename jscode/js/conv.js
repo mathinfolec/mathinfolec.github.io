@@ -1,11 +1,14 @@
 let flow = [];
 let valNum = 0;
+const getCode = function () {
+    return document.getElementById("code_textarea").value;
+}
 const conv = function () {
     flow = [];
     valNum = 0;
     let stack = [];
     //let dArr = document.getElementById("code_textarea").value.split("\n");
-    let dTmpArr = document.getElementById("code_textarea").value.replace(/\n/g, "").replace(/(;|\{|\})/g, "$1\n").split("\n");
+    let dTmpArr = getCode().replace(/\n/g, "").replace(/(;|\{|\})/g, "$1\n").split("\n");
     let dArr = [];
     for (let i = 0; i < dTmpArr.length; ++i) {
         if (dTmpArr[i].trim().match(/^for\(/)) {
@@ -27,7 +30,7 @@ const conv = function () {
         }
         for (let i = 1; i <= dArr.length; ++i) {
             let d = dArr[i - 1].replace(/;$/, "").trim();
-            console.log(d);
+            //console.log(d);
             if (d.match(/^let /)) {
                 let props = d.replace(/^let /, "").split("=");
                 props[0] = props[0].trim();

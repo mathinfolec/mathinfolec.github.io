@@ -1,4 +1,5 @@
 "use strict";
+let prevCode = "";
 window.addEventListener("load", function () {
     document.getElementById("button_auto").disabled = true;
     document.getElementById("button_step").disabled = true;
@@ -8,5 +9,17 @@ window.addEventListener("load", function () {
         if (isAuto) {
             isAuto = step();
         }
-    }, 50);
+    }, 60);
+    setInterval(function () {
+        if (prevCode != getCode()) {
+            addLog("change");
+            prevCode = getCode();
+        }
+    }, 1000);
+    window.onbeforeunload = function (e) {
+        if (isAddedLog) {
+            e.returnValue = "活動記録がファイルに出力されていません。ページを閉じますか？";
+        }
+    }
+    addLog("load");
 })

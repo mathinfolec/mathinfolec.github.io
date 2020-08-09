@@ -8,17 +8,18 @@
     <script src="js/conv.js"></script>
     <script src="js/step.js"></script>
     <script src="js/disp.js"></script>
+    <script src="js/click.js"></script>
 </head>
 
 <body>
     <h1>JavaScriptプログラミング演習</h1>
-    <p><a href="../flow/" target="_blank">フローチャート演習</a>(別ウィンドウ)</p>
+    <p><a onclick="exportLog()">活動記録を出力する</a></p>
     <div id="code_in">
         <b>コード入力欄</b>
-        <a onclick="showTextArea()" id="ta-open" style="display:none;">[開く]</a>
-        <button id="button_conv" onclick="conv()">変換</button><br />
+        <a onclick="clickShowTextArea()" id="ta-open" style="display:none;">[開く]</a>
+        <button id="button_conv" onclick="clickConv()">変換</button><br />
         <div id="ta-code">
-            <textarea id="code_textarea" rows="15" cols="100" onchange="reqConv()">
+            <textarea id="code_textarea" rows="15" cols="100">
             </textarea>
             <br />
             <hr />

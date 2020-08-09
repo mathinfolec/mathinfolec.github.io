@@ -3,7 +3,7 @@ let curVals = [];
 let isAuto = false;
 const step = function () {
     let fl = flow[curpId];
-    console.log(curpId + ":" + fl.original);
+    //console.log(curpId + ":" + fl.original);
     let f;
     isCont = true;
     try {
@@ -21,7 +21,6 @@ const step = function () {
             case "let":
                 f = getFunc("return " + fl.initVal + ";")
                 setVal(fl.valName, f());
-                console.log("setval finish");
                 f = getFunc();
                 f();
                 curpId = fl.next;
@@ -98,6 +97,7 @@ const step = function () {
         document.getElementById("button_step").disabled = true;
         isCont = false;
         isAuto = false;
+        addLog("error");
     } finally {
         return isCont;
     }
@@ -145,7 +145,7 @@ const getUpdateValsStr = function () {
 }
 const updateVals = function (vals) {
     clearValOut();
-    console.log(vals);
+    //console.log(vals);
     let d = document.getElementById("val");
     let len = 0;
     for (let i in vals) {
@@ -160,23 +160,7 @@ const updateVals = function (vals) {
 const setVal = function (name, value) {
     curVals[name] = value;
 }
-const clickStep = function () {
-    if (isAuto) return;
-    step();
-}
-const clickAuto = function () {
-    if (flow[curpId].type == "terminal-end") {
-        resetStep();
-        isAuto = true;
-    }
-    else {
-        isAuto = !isAuto;
-    }
-    document.getElementById("button_step").disabled = isAuto;
-}
-const clickReset = function () {
-    resetStep();
-}
+
 const resetStep = function () {
     curpId = 0;
     curVals = [];
