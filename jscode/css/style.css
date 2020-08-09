@@ -1,0 +1,22 @@
+.code-line{
+    font-family: monospace,sans-serif;
+    font-size:large;
+}
+a{
+    cursor:pointer;
+    color: blue;
+    text-decoration: underline;
+}
+#code{
+    float:left;
+    width:50%;
+    background-color: lightgray;
+    padding: 10px;
+}
+#sim{
+    overflow:auto;
+    padding: 10px;
+}
+.clear-float{
+    clear:both;
+}
