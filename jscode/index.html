@@ -16,31 +16,33 @@
     <p><a onclick="exportLog()">活動記録を出力する</a></p>
     <div id="code_in">
         <b>コード入力欄</b>
-        <a onclick="clickShowTextArea()" id="ta-open" style="display:none;">[開く]</a>
+        <a onclick="clickShowTextArea()" id="ta_open" style="display:none;">[開く]</a>
         <button id="button_conv" onclick="clickConv()">変換</button><br />
-        <div id="ta-code">
+        <div id="ta_code">
             <textarea id="code_textarea" rows="15" cols="100">
             </textarea>
             <br />
             <hr />
         </div>
     </div>
-    <div id="code">[START]<br />[END]</div>
-    <div id="sim">
-        <button id="button_auto" onclick="clickAuto()">実行</button>
-        <button id="button_step" onclick="clickStep()">ステップ</button>
-        <button id="button_reset" onclick="clickReset()">リセット</button>
-        <div id="val">
-        </div>
-        <hr />
-        <div id="out">
+    <div id="code_out" style="display:none;">
+        <div id="code">[START]<br />[END]</div>
+        <div id="sim">
+            <button id="button_auto" onclick="clickAuto()">実行</button>
+            <button id="button_step" onclick="clickStep()">ステップ</button>
+            <button id="button_reset" onclick="clickReset()">リセット</button>
+            <div id="val">
+            </div>
+            <hr />
+            <div id="out">
+            </div>
         </div>
     </div>
     <div class="clear-float">
     </div>
     <hr />
     <footer>
-        <p>最終更新日: 2020/08/09</p>
+        <p>最終更新日: 2020/08/10</p>
         <p>
             <a href="../index.html">Back to Main Page</a><br />
             <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">
