@@ -185,7 +185,7 @@ const resetStep = function () {
     isAuto = false;
     for (let i = 0; i < flow.length; ++i) {
         if (flow[i].type == "for-start") {
-            flow[i].isFirst = false;
+            flow[i].isFirst = true;
         }
     }
     document.getElementById("button_auto").disabled = false;
