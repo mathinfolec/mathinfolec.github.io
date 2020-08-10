@@ -40,12 +40,21 @@
     <div id="code_out" style="display:none;">
         <div id="code">[START]<br />[END]</div>
         <div id="sim">
-            <button id="button_auto" onclick="clickAuto()">実行</button>
-            <button id="button_step" onclick="clickStep()">ステップ</button>
-            <button id="button_reset" onclick="clickReset()">リセット</button>
+            <div id="sim_buttons">
+                <button id="button_auto" onclick="clickAuto()">実行</button>
+                <button id="button_step" onclick="clickStep()">ステップ</button>
+                <button id="button_reset" onclick="clickReset()">リセット</button>
+            </div>
+            <b>入力</b>
+            <div id="in">
+                <input id="code_input" type="text" />
+            </div>
+            <hr />
+            <b>変数一覧</b>
             <div id="val">
             </div>
             <hr />
+            <b>出力</b>
             <div id="out">
             </div>
         </div>

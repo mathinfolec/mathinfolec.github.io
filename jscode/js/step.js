@@ -8,6 +8,7 @@ const step = function () {
         switch (fl.type) {
             case "terminal-start":
                 clearOut();
+                setIns();
                 f = getFunc();
                 f();
                 curpId = fl.next;
@@ -105,11 +106,28 @@ const print = function (x) {
     document.getElementById("out").innerHTML += x + "<br/>";
     curOuts.push(x);
 }
+const read = function () {
+    if (ins.length) {
+        let v = ins.shift();
+        if (isNaN(Number(v))) {
+            return '"' + v + '"';
+        }
+        else {
+            return Number(v);
+        }
+    }
+    else {
+        return undefined;
+    }
+}
 const clearOut = function () {
     document.getElementById("out").innerHTML = "";
 }
 const clearValOut = function (n = 0) {
     document.getElementById("val").innerHTML = "<br/>".repeat(n);
+}
+const setIns = function () {
+    ins = document.getElementById("code_input").value.trim().split(/ +/);
 }
 const getFunc = function (str = "") {
     return Function("\"use strict\";" + getInitValsStr() + str + ";" + getUpdateValsStr());
@@ -127,7 +145,12 @@ const getIfFunc = function (str) {
 const getInitValsStr = function () {
     let arr = [];
     for (let i in curVals) {
-        arr.push(i + "=" + curVals[i]);
+        if (curVals[i] != undefined && isNaN(Number(curVals[i]))) {
+            arr.push(i + "='" + curVals[i] + "'");
+        }
+        else {
+            arr.push(i + "=" + curVals[i]);
+        }
     }
     if (arr.length) {
         return "let " + arr.join(",") + ";";
@@ -150,7 +173,7 @@ const updateVals = function (vals) {
     let len = 0;
     for (let i in vals) {
         curVals[i] = vals[i];
-        d.innerHTML += i + " = " + curVals[i] + "<br/>";
+        d.innerHTML += i + ": " + curVals[i] + "<br/>";
         len += 1;
     }
     if (len < valNum) {

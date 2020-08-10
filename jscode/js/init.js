@@ -6,6 +6,7 @@ let defs = [];
 let tests = [];
 // conv.js
 let flow = [];
+let ins = [];
 let valNum = 0;
 // step.js
 let curpId = 0;

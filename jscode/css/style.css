@@ -15,7 +15,7 @@ a{
 }
 #sim{
     overflow:auto;
-    padding: 10px;
+    padding-left: 10px;
 }
 .clear-float{
     clear:both;

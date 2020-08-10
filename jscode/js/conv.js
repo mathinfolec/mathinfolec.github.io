@@ -174,7 +174,7 @@ const conv = function () {
             let dd = document.createElement("div");
             dd.id = getDivId(i);
             dd.className = "code-line";
-            dd.innerHTML = "&ensp;&ensp;".repeat(flow[i].indent) + flow[i].original;
+            dd.innerHTML = ("&ensp;&ensp;".repeat(flow[i].indent) + flow[i].original).replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
             cd.appendChild(dd);
         }
         resetStep();
