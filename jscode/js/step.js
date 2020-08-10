@@ -203,8 +203,3 @@ const resetStep = function () {
     document.getElementById("button_reset").disabled = false;
     highlight(-1);
 }
-const highlight = function (id) {
-    for (let i = 0; i < flow.length; ++i) {
-        document.getElementById(getDivId(i)).style.color = (i == id ? "red" : "black");
-    }
-}

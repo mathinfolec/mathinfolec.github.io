@@ -1,4 +1,5 @@
 window.addEventListener("load", function () {
+    initQ();
     document.getElementById("button_auto").disabled = true;
     document.getElementById("button_step").disabled = true;
     document.getElementById("button_reset").disabled = true;

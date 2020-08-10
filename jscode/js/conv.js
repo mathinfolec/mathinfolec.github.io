@@ -1,7 +1,3 @@
-
-const getCode = function () {
-    return document.getElementById("code_textarea").value;
-}
 const conv = function () {
     flow = [];
     valNum = 0;
@@ -45,7 +41,6 @@ const conv = function () {
                     }
                     sets[j] = { valName: props[0], initVal: props[1] };
                 }
-                console.log(sets);
                 flow[i] = {
                     type: "let",
                     original: d + ";",
@@ -172,7 +167,7 @@ const conv = function () {
         cd.innerHTML = "";
         for (let i = 0; i < flow.length; ++i) {
             let dd = document.createElement("div");
-            dd.id = getDivId(i);
+            dd.id = getCodeLineDivId(i);
             dd.className = "code-line";
             dd.innerHTML = ("&ensp;&ensp;".repeat(flow[i].indent) + flow[i].original).replace(/\</g, "&lt;").replace(/\>/g, "&gt;");
             cd.appendChild(dd);
@@ -182,12 +177,4 @@ const conv = function () {
     } catch (e) {
         window.alert(e);
     }
-}
-const getDivId = function (id) {
-    return "code" + id;
-}
-const reqConv = function () {
-    document.getElementById("button_auto").disabled = true;
-    document.getElementById("button_step").disabled = true;
-    document.getElementById("button_reset").disabled = true;
 }

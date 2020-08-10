@@ -1,5 +1,8 @@
+textarea{
+    font-size:large;
+}
 .code-line{
-    font-family: monospace,sans-serif;
+    font-family: monospace;
     font-size:large;
 }
 a{
@@ -25,4 +28,26 @@ a{
     padding: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+#question_title{
+    font-size: x-large;
+    font-weight: bold;
+}
+.question_intitle{
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.question_outtitle{
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.question_in{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.question_out{
+    padding-left: 15px;
+    padding-right: 15px;
 }

@@ -34,6 +34,7 @@ const addLog = function (type) {
     log.push({
         time: t,
         type: type,
+        qid: curqId,
         code: getCode()
     });
     if (type != "load" && type != "export") {

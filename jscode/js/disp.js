@@ -11,7 +11,6 @@ const hideTextArea = function () {
     document.getElementById("ta_open").style.display = "inline-block";
     document.getElementById("code_out").style.display = "block";
 }
-
 const showToc = function () {
     document.getElementById("toc_ol").style.display = "block";
     document.getElementById("toc_open").style.display = "none";

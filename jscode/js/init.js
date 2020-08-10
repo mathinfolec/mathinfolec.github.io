@@ -1,9 +1,9 @@
 "use strict";
-// data
-let titles = [];
-let exps = [];
-let defs = [];
-let tests = [];
+// data.js
+let qdata = [];
+let tmpCode = [];
+const sections = ["順接", "分岐", "反復", "総合"];
+let curqId = undefined;
 // conv.js
 let flow = [];
 let ins = [];
