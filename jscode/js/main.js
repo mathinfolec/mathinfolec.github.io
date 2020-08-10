@@ -1,10 +1,9 @@
-"use strict";
-let prevCode = "";
 window.addEventListener("load", function () {
     document.getElementById("button_auto").disabled = true;
     document.getElementById("button_step").disabled = true;
     document.getElementById("button_reset").disabled = true;
     document.getElementById("code_textarea").value = "print('Hello World!');";
+    prevCode = getCode();
     setInterval(function () {
         if (isAuto) {
             isAuto = step();

@@ -1,5 +1,4 @@
-let flow = [];
-let valNum = 0;
+
 const getCode = function () {
     return document.getElementById("code_textarea").value;
 }
@@ -19,6 +18,7 @@ const conv = function () {
             dArr.push(dTmpArr[i]);
         }
     }
+    console.log(dArr);
     let curIndent = 0;
     try {
         flow[0] = {
@@ -32,23 +32,28 @@ const conv = function () {
             let d = dArr[i - 1].replace(/;$/, "").trim();
             //console.log(d);
             if (d.match(/^let /)) {
-                let props = d.replace(/^let /, "").split("=");
-                props[0] = props[0].trim();
-                if (props.length == 1) {
-                    props[1] = undefined;
+                let vals = d.replace(/^let /, "").split(",");
+                let sets = [];
+                for (let j = 0; j < vals.length; ++j) {
+                    let props = vals[j].split("=");
+                    props[0] = props[0].trim();
+                    if (props.length == 1) {
+                        props[1] = undefined;
+                    }
+                    else {
+                        props[1] = props[1].trim();
+                    }
+                    sets[j] = { valName: props[0], initVal: props[1] };
                 }
-                else {
-                    props[1] = props[1].trim();
-                }
+                console.log(sets);
                 flow[i] = {
                     type: "let",
                     original: d + ";",
-                    valName: props[0],
-                    initVal: props[1],
+                    sets: sets,
                     indent: curIndent,
                     next: i + 1
                 };
-                valNum += 1;
+                valNum += sets.length;
             }
             else if (d.match(/^while/)) {
                 flow[i] = {

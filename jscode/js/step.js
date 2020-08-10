@@ -1,6 +1,3 @@
-let curpId = 0;
-let curVals = [];
-let isAuto = false;
 const step = function () {
     let fl = flow[curpId];
     //console.log(curpId + ":" + fl.original);
@@ -19,8 +16,10 @@ const step = function () {
                 isCont = false;
                 break;
             case "let":
-                f = getFunc("return " + fl.initVal + ";")
-                setVal(fl.valName, f());
+                for (let i = 0; i < fl.sets.length; ++i) {
+                    f = getFunc("return " + fl.sets[i].initVal + ";")
+                    setVal(fl.sets[i].valName, f());
+                }
                 f = getFunc();
                 f();
                 curpId = fl.next;
@@ -104,6 +103,7 @@ const step = function () {
 }
 const print = function (x) {
     document.getElementById("out").innerHTML += x + "<br/>";
+    curOuts.push(x);
 }
 const clearOut = function () {
     document.getElementById("out").innerHTML = "";
@@ -158,12 +158,15 @@ const updateVals = function (vals) {
     }
 }
 const setVal = function (name, value) {
+    if (typeof curVals[name] != "undefined") {
+        throw SyntaxError("同じ名前の変数を複数回定義することはできません");
+    }
     curVals[name] = value;
 }
-
 const resetStep = function () {
     curpId = 0;
     curVals = [];
+    curOuts = [];
     clearOut();
     clearValOut(valNum);
     isAuto = false;

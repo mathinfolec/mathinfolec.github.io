@@ -5,6 +5,7 @@
     <meta charset="utf-8" />
     <title>JavaScriptプログラミング演習</title>
     <link rel="stylesheet" href="css/style.css" />
+    <script src="js/init.js"></script>
     <script src="js/conv.js"></script>
     <script src="js/step.js"></script>
     <script src="js/disp.js"></script>
@@ -13,7 +14,18 @@
 
 <body>
     <h1>JavaScriptプログラミング演習</h1>
-    <p><a onclick="exportLog()">活動記録を出力する</a></p>
+    <!--
+    <div id="toc">
+        <b>目次</b>
+        <a id="toc_open" onclick="showToc()" style="display:none;">[開く]</a>
+        <a id="toc_close" onclick="hideToc()">[閉じる]</a>
+        <ol id="toc_ol"></ol>
+    </div>
+    <div id="question">
+        <div id="question_title">問題</div>
+        <div id="question_exp">...</div>
+    </div>
+-->
     <div id="code_in">
         <b>コード入力欄</b>
         <a onclick="clickShowTextArea()" id="ta_open" style="display:none;">[開く]</a>
@@ -42,6 +54,15 @@
     </div>
     <hr />
     <footer>
+        <div id="opt">
+            <b>オプション</b>
+            <a id="opt_open" onclick="showOpt()">[開く]</a>
+            <a id="opt_close" onclick="hideOpt()" style="display:none;">[閉じる]</a>
+            <ul id="opt_ul" style="display:none;">
+                <li><a onclick="exportLog()">活動記録を出力する</a></li>
+            </ul>
+        </div>
+        <hr />
         <p>最終更新日: 2020/08/10</p>
         <p>
             <a href="../index.html">Back to Main Page</a><br />

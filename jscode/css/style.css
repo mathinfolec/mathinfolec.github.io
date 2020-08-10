@@ -20,3 +20,9 @@ a{
 .clear-float{
     clear:both;
 }
+#question{
+    background-color: lightpink;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
