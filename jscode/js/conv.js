@@ -51,6 +51,9 @@ const conv = function () {
                 valNum += sets.length;
             }
             else if (d.match(/^while/)) {
+                if (!(d.match(/^while *\(.+\) *\{$/))) {
+                    throw SyntaxError("while文のカッコ{が抜けているか、記法が間違っている可能性があります。");
+                }
                 flow[i] = {
                     type: "while-start",
                     original: d,
@@ -64,6 +67,9 @@ const conv = function () {
                 });
             }
             else if (d.match(/^for/)) {
+                if (!(d.match(/^for *\(.+\) *\{$/))) {
+                    throw SyntaxError("for文のカッコ{が抜けているか、記法が間違っている可能性があります。");
+                }
                 flow[i] = {
                     type: "for-start",
                     original: d,
@@ -78,6 +84,9 @@ const conv = function () {
                 });
             }
             else if (d.match(/^if/)) {
+                if (!(d.match(/^if *\(.+\) *\{$/))) {
+                    throw SyntaxError("if文のカッコ{が抜けているか、記法が間違っている可能性があります。");
+                }
                 flow[i] = {
                     type: "if-start",
                     original: d,
@@ -90,7 +99,10 @@ const conv = function () {
                     id: i
                 });
             }
-            else if (d.match(/}/)) {
+            else if (d.match(/^}$/)) {
+                if (stack.length == 0) {
+                    throw SyntaxError("カッコの対応付けが取れていません。\"{\"と\"}\"が同じ数あることを確認してください。");
+                }
                 let ps = stack.pop();
                 if (ps.type == "while") {
                     flow[ps.id].end = i;
@@ -130,6 +142,15 @@ const conv = function () {
                     };
                     flow[ps.pre].next = i + 1;
                 }
+                else if (ps.type == "nothing") {
+                    flow[i] = {
+                        type: "process",
+                        original: d,
+                        name: "",
+                        indent: --curIndent,
+                        next: i + 1
+                    };
+                }
             }
             else if (d.match(/^else/)) {
                 flow[i] = {
@@ -143,6 +164,19 @@ const conv = function () {
                     id: i,
                     pre: i - 1
                 });
+            }
+            else if (d.match(/^{$/)) {
+                flow[i] = {
+                    type: "process",
+                    original: d,
+                    name: "",
+                    indent: curIndent++,
+                    next: i + 1
+                };
+                stack.push({
+                    type: "nothing",
+                    id: i
+                })
             }
             else {
                 flow[i] = {
