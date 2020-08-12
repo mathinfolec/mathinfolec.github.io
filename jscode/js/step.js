@@ -83,6 +83,7 @@ const step = function () {
             case "break":
                 f = getFunc();
                 f();
+                flow[fl.loopId].isFirst = true;
                 curpId = flow[flow[fl.loopId].end].next;
                 break;
             default:
