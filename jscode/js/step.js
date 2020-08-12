@@ -9,6 +9,7 @@ const step = function () {
             case "terminal-start":
                 clearOut();
                 setIns();
+                lockIns();
                 f = getFunc();
                 f();
                 curpId = fl.next;
@@ -18,6 +19,8 @@ const step = function () {
                 break;
             case "let":
                 for (let i = 0; i < fl.sets.length; ++i) {
+                    console.log("let");
+                    console.log(fl.sets[i].initVal);
                     f = getFunc("return " + fl.sets[i].initVal + ";")
                     setVal(fl.sets[i].valName, f());
                 }
@@ -46,6 +49,7 @@ const step = function () {
                     curpId = fl.next;
                 }
                 else {
+                    fl.isFirst = true;
                     curpId = flow[fl.end].next;
                 }
                 break;
@@ -75,6 +79,11 @@ const step = function () {
                 f = getFunc(fl.name);
                 f();
                 curpId = fl.next;
+                break;
+            case "break":
+                f = getFunc();
+                f();
+                curpId = flow[flow[fl.loopId].end].next;
                 break;
             default:
                 isCont = false;
@@ -110,7 +119,7 @@ const read = function () {
     if (ins.length) {
         let v = ins.shift();
         if (isNaN(Number(v))) {
-            return '"' + v + '"';
+            return String(v);
         }
         else {
             return Number(v);
@@ -127,7 +136,19 @@ const clearValOut = function (n = 0) {
     document.getElementById("val").innerHTML = "<br/>".repeat(n);
 }
 const setIns = function () {
-    ins = document.getElementById("code_input").value.trim().split(/ +/);
+    let str = document.getElementById("code_input").value.trim();
+    if (str.length == 0) {
+        ins = [];
+    }
+    else {
+        ins = str.split(/ +/);
+    }
+}
+const lockIns = function () {
+    document.getElementById("code_input").disabled = true;
+}
+const freeIns = function () {
+    document.getElementById("code_input").disabled = false;
 }
 const getFunc = function (str = "") {
     return Function("\"use strict\";" + getInitValsStr() + str + ";" + getUpdateValsStr());
@@ -181,6 +202,7 @@ const updateVals = function (vals) {
     }
 }
 const setVal = function (name, value) {
+    console.log("setVal:" + name + "," + value);
     if (typeof curVals[name] != "undefined") {
         throw SyntaxError("同じ名前の変数を複数回定義することはできません");
     }
@@ -201,5 +223,6 @@ const resetStep = function () {
     document.getElementById("button_auto").disabled = false;
     document.getElementById("button_step").disabled = false;
     document.getElementById("button_reset").disabled = false;
+    freeIns();
     highlight(-1);
 }

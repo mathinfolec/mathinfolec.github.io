@@ -2,6 +2,7 @@ const conv = function () {
     flow = [];
     valNum = 0;
     let stack = [];
+    let loopStack = [];
     //let dArr = document.getElementById("code_textarea").value.split("\n");
     let dTmpArr = getCode().replace(/\n/g, "").replace(/(;|\{|\})/g, "$1\n").split("\n");
     let dArr = [];
@@ -65,6 +66,7 @@ const conv = function () {
                     type: "while",
                     id: i
                 });
+                loopStack.push(i);
             }
             else if (d.match(/^for/)) {
                 if (!(d.match(/^for *\(.+\) *\{$/))) {
@@ -82,6 +84,7 @@ const conv = function () {
                     type: "for",
                     id: i
                 });
+                loopStack.push(i);
             }
             else if (d.match(/^if/)) {
                 if (!(d.match(/^if *\(.+\) *\{$/))) {
@@ -113,6 +116,7 @@ const conv = function () {
                         indent: --curIndent,
                         next: i + 1
                     };
+                    loopStack.pop();
                 }
                 else if (ps.type == "for") {
                     flow[ps.id].end = i;
@@ -123,6 +127,7 @@ const conv = function () {
                         indent: --curIndent,
                         next: i + 1
                     };
+                    loopStack.pop();
                 }
                 else if (ps.type == "if") {
                     flow[ps.id].next[1] = i + 1;
@@ -152,7 +157,7 @@ const conv = function () {
                     };
                 }
             }
-            else if (d.match(/^else/)) {
+            else if (d.match(/^else *{/)) {
                 flow[i] = {
                     type: "else",
                     original: d,
@@ -164,6 +169,21 @@ const conv = function () {
                     id: i,
                     pre: i - 1
                 });
+            }
+            else if (d.match(/^break$/)) {
+                if (loopStack.length) {
+                    let lId = loopStack.pop();
+                    flow[i] = {
+                        type: "break",
+                        original: d + ";",
+                        indent: curIndent,
+                        loopId: lId
+                    };
+                    loopStack.push(lId);
+                }
+                else {
+                    throw SyntaxError("ループ以外のところでbreakしています");
+                }
             }
             else if (d.match(/^{$/)) {
                 flow[i] = {
