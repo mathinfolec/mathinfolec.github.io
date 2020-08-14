@@ -29,7 +29,7 @@ const showQ = function (id) {
     qdiv.appendChild(qtitle);
     let qexp = document.createElement("div");
     qexp.id = "question_exp";
-    qexp.innerHTML = q.exp.replace(/\n/g, "<br/>");
+    qexp.innerHTML = q.exp.replace(/\n/g, "<br/>").replace(/ /g, "&ensp;");
     qdiv.appendChild(qexp);
     let qsample = document.createElement("div");
     qsample.id = "question_sample";
