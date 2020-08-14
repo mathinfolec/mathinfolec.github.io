@@ -29,7 +29,7 @@ const showQ = function (id) {
     qdiv.appendChild(qtitle);
     let qexp = document.createElement("div");
     qexp.id = "question_exp";
-    qexp.innerHTML = q.exp;
+    qexp.innerHTML = q.exp.replace(/\n/g, "<br/>");
     qdiv.appendChild(qexp);
     let qsample = document.createElement("div");
     qsample.id = "question_sample";
@@ -48,7 +48,7 @@ const showQ = function (id) {
         qsample.appendChild(qsoutt);
         let qsout = document.createElement("div");
         qsout.className = "question_out";
-        qsout.innerHTML = q.sample[i].out;
+        qsout.innerHTML = q.sample[i].out.replace(/\n/g, "<br/>");
         qsample.appendChild(qsout);
     }
     qdiv.appendChild(qsample);
