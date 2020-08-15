@@ -2,7 +2,13 @@
 // data.js
 let qdata = [];
 let tmpCode = [];
-const sections = ["順接", "分岐", "反復", "総合"];
+const sections = {
+    "sample": "サンプルコード",
+    "seq": "順接(変数や四則演算)",
+    "if": "分岐(if)",
+    "loop": "反復(whileループ)",
+    "ex": "総合問題"
+};
 let curqId = undefined;
 // conv.js
 let flow = [];

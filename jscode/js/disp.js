@@ -12,12 +12,14 @@ const hideTextArea = function () {
     document.getElementById("code_out").style.display = "block";
 }
 const showToc = function () {
-    document.getElementById("toc_ol").style.display = "block";
+    //document.getElementById("toc_ol").style.display = "block";
+    document.getElementById("toc_table").style.display = "block";
     document.getElementById("toc_open").style.display = "none";
     document.getElementById("toc_close").style.display = "inline-block";
 }
 const hideToc = function () {
-    document.getElementById("toc_ol").style.display = "none";
+    //document.getElementById("toc_ol").style.display = "none";
+    document.getElementById("toc_table").style.display = "none";
     document.getElementById("toc_open").style.display = "inline-block";
     document.getElementById("toc_close").style.display = "none";
 }

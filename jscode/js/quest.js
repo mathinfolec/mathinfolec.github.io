@@ -1,4 +1,5 @@
 const initQ = function () {
+    /*
     let dol = document.getElementById("toc_ol");
     for (let i in qdata) {
         let q = qdata[i];
@@ -8,6 +9,52 @@ const initQ = function () {
         a.innerHTML = q.title;
         o.appendChild(a);
         dol.appendChild(o);
+    }
+    */
+    let dt = document.getElementById("toc_table");
+    let dtrArr = [];
+    let dtdArr = [];
+    let dtdundef = document.createElement("td");
+    for (let i in sections) {
+        let dtr = document.createElement("tr");
+        let dth = document.createElement("th");
+        dth.innerHTML = sections[i];
+        dtr.appendChild(dth);
+        dtrArr[i] = dtr;
+        dtdArr[i] = document.createElement("td");
+        dtdArr[i].innerHTML = "";
+    }
+    for (let i in qdata) {
+        let sec = qdata[i].section;
+        let a = document.createElement("a");
+        a.setAttribute("onclick", "showQ('" + i + "')");
+        a.innerHTML = qdata[i].title;
+        let s = document.createElement("span");
+        s.innerHTML = " / ";
+        if (typeof dtdArr[sec] != "undefined") {
+            if (dtdArr[sec].childNodes.length) {
+                dtdArr[sec].appendChild(s);
+            }
+            dtdArr[sec].appendChild(a);
+        }
+        else {
+            if (dtdundef.childNodes.length) {
+                dtdundef.appendChild(s);
+            }
+            dtdundef.appendChild(a);
+        }
+    }
+    for (let i in dtrArr) {
+        dtrArr[i].appendChild(dtdArr[i]);
+        dt.appendChild(dtrArr[i]);
+    }
+    if (dtdundef.childNodes.length) {
+        let dtrundef = document.createElement("tr");
+        let dtd1undef = document.createElement("td");
+        dtd1undef.innerHTML = "未分類";
+        dtrundef.appendChild(dtd1undef);
+        dtrundef.appendChild(dtdundef);
+        dt.appendChild(dtrundef);
     }
 }
 const showQ = function (id) {
