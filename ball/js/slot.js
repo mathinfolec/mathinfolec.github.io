@@ -17,5 +17,6 @@ const changeSlot = function (id) {
     prevInitCodeStr = saveInitCodes[id];
     prevTickCodeStr = saveTickCodes[id];
     logInterval = defLogInterval;
+    getButtonTickId().disabled = true;
     addLog("load");
 }

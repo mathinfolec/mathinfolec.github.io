@@ -28,6 +28,9 @@ const tick = function () {
     getCodeTickId().disabled = true;
     showTickButton(false);
     getButtonInitId().disabled = true;
+    for (let b of getSpanLoadButtonsId().childNodes) {
+        b.disabled = true;
+    }
     isTick = true;
 }
 const stop = function () {
@@ -35,6 +38,9 @@ const stop = function () {
     getCodeInitId().disabled = false;
     getCodeTickId().disabled = false;
     getButtonInitId().disabled = false;
+    for (let b of getSpanLoadButtonsId().childNodes) {
+        b.disabled = false;
+    }
     showTickButton(true);
 }
 const display = function (text, x = 0, y = 0, size = 20) {
@@ -66,11 +72,11 @@ const exit = function (str = "End of the Program") {
 }
 const getInitFunc = function (c) {
     c = c.replace(/(exit\()/, getUpdateStr() + "$1");
-    return Function("'use strict';" + getInitObjStr() + c + ";" + getUpdateStr());
+    return Function("'use strict';" + getInitObjStr(true) + c + ";" + getUpdateStr());
 }
 const getTickFunc = function (c) {
     c = c.replace(/(exit\()/, getUpdateStr() + "$1");
-    return Function("'use strict';" + getInitObjStr() + getInitValsStr() + c + ";" + getUpdateStr());
+    return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + ";" + getUpdateStr());
 }
 const setInitVals = function () {
     curVals = {};
@@ -112,11 +118,16 @@ const getInitValsStr = function () {
         return "";
     }
 }
-const getInitObjStr = function () {
-    let s = "let ball=" + JSON.stringify(ballParam) + ";";
-    s += "let rect=" + JSON.stringify(rectParam) + ";";
-    s += "const cnt=" + cnt + ";";
-    s += "const pi=Math.PI;";
+const getInitObjStr = function (reset = false) {
+    let s = "const cnt=" + cnt + ";const pi=Math.PI;";
+    if (reset) {
+        s += "let ball=" + JSON.stringify(defBallParam) + ";";
+        s += "let rect=" + JSON.stringify(defRectParam) + ";";
+    }
+    else {
+        s += "let ball=" + JSON.stringify(ballParam) + ";";
+        s += "let rect=" + JSON.stringify(rectParam) + ";";
+    }
     let mouse = {
         x: stage.mouseX,
         y: stage.mouseY

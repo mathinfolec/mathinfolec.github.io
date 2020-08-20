@@ -14,6 +14,7 @@ let ballParam = {
     color: "red",
     trace: 0
 };
+const defBallParam = JSON.parse(JSON.stringify(ballParam));
 let rectParam = {
     x: 0,
     y: 0,
@@ -26,7 +27,8 @@ let rectParam = {
     rot: 0,
     color: "blue",
     trace: 0
-}
+};
+const defRectParam = JSON.parse(JSON.stringify(rectParam));
 let curVals = {};
 let cnt = 0;
 let actBall;
