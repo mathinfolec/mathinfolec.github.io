@@ -2,9 +2,6 @@ let stage;
 let bg;
 const w = 500;
 const h = 500;
-const vw = 0;
-let initFunc;
-let tickFunc;
 let isTick = false;
 let ballParam = {
     x: 0,
@@ -37,3 +34,19 @@ let traceBalls = [];
 let traceRects = [];
 let actRect;
 let texts = [];
+
+let errorMes = null;
+
+let logs = [];
+let isAddedLog = false;
+let logInterval = 0;
+const defLogInterval = 20;
+let initCodeStr = "";
+let tickCodeStr = "";
+let prevInitCodeStr = "";
+let prevTickCodeStr = "";
+
+let curSlot = 0;
+let saveInitCodes = [];
+let saveTickCodes = [];
+const maxSlot = 5;

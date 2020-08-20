@@ -12,6 +12,8 @@
     <script src="js/exec.js"></script>
     <script src="js/disp.js"></script>
     <script src="js/click.js"></script>
+    <script src="js/log.js"></script>
+    <script src="js/slot.js"></script>
     <script src="js/main.js"></script>
 </head>
 
@@ -21,6 +23,15 @@
             <canvas width="500" height="500" id="canvas"></canvas>
         </div>
         <div id="div_code">
+            <div id="div_load">
+                セーブスロット(使用中:<span id="span_slot"></span>)
+                <span id="span_load_buttons"></span>
+                <!--
+                <button onclick="clickLoad(0)" id="button_load_1">1</button>
+                <button onclick="clickLoad(1)" id="button_load_1">2</button>
+                -->
+            </div>
+            <hr />
             <div id="div_init">
                 <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
                 <textarea id="code_init" rows="10" cols="50" spellcheck=false></textarea>

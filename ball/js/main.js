@@ -1,10 +1,3 @@
-let errorMes = null;
-let logInterval = 0;
-const defLogInterval = 20;
-let initCodeStr = "";
-let tickCodeStr = "";
-let prevInitCodeStr = "";
-let prevTickCodeStr = "";
 window.addEventListener("load", function () {
     setup();
     window.onbeforeunload = function (e) {
