@@ -7,6 +7,11 @@ let prevInitCodeStr = "";
 let prevTickCodeStr = "";
 window.addEventListener("load", function () {
     setup();
+    window.onbeforeunload = function (e) {
+        if (isAddedLog) {
+            e.returnValue = "活動記録がファイルに出力されていません。ページを閉じますか？";
+        }
+    }
     createjs.Ticker.addEventListener("tick", function () {
         stage.update();
         if (errorMes != null) {

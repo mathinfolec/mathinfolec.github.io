@@ -6,6 +6,7 @@ const init = function () {
         getCodeInitId().disabled = false;
         setInitVals();
         resetTexts();
+        resetTraces();
         let f = getInitFunc(getCodeInitId().value);
         f();
         getButtonTickId().disabled = false;
@@ -48,14 +49,20 @@ const random = function (min, max) {
 const randomInt = function (min, max) {
     return Math.floor(random(min, max));
 }
+const sqrt = function (x) {
+    return Math.sqrt(x);
+}
+const sin = function (x) {
+    return Math.sin(x / 180 * Math.PI);
+}
+const cos = function (x) {
+    return Math.cos(x / 180 * Math.PI);
+}
+const tan = function (x) {
+    return Math.tan(x / 180 * Math.PI);
+}
 const exit = function (str = "End of the Program") {
     throw str;
-}
-const resetTexts = function () {
-    for (let i = 0; i < texts.length; ++i) {
-        stage.removeChild(texts[i]);
-    }
-    texts = [];
 }
 const getInitFunc = function (c) {
     c = c.replace(/(exit\()/, getUpdateStr() + "$1");
@@ -109,6 +116,7 @@ const getInitObjStr = function () {
     let s = "let ball=" + JSON.stringify(ballParam) + ";";
     s += "let rect=" + JSON.stringify(rectParam) + ";";
     s += "const cnt=" + cnt + ";";
+    s += "const pi=Math.PI;";
     let mouse = {
         x: stage.mouseX,
         y: stage.mouseY
@@ -135,19 +143,49 @@ const updateObj = function (ball, rect) {
         rectParam[i] = rect[i];
     }
     stage.removeChild(actBall);
-    actBall = new createjs.Shape();
-    actBall.graphics.beginFill(ballParam.color).drawCircle(0, 0, ballParam.r);
-    actBall.x = ballParam.x;
-    actBall.y = ballParam.y;
+    let b = new createjs.Shape();
+    b = new createjs.Shape();
+    b.graphics.beginFill(ballParam.color).drawCircle(0, 0, ballParam.r);
+    b.x = ballParam.x;
+    b.y = ballParam.y;
     stage.removeChild(actRect);
-    actRect = new createjs.Shape();
-    actRect.graphics.beginFill(rectParam.color).drawRect(0, 0, rectParam.w, rectParam.h);
-    actRect.x = rectParam.x - rectParam.w / 2;
-    actRect.y = rectParam.y - rectParam.h / 2;
-    actRect.regX = rectParam.w / 2;
-    actRect.regY = rectParam.h / 2;
-    actRect.rotation = rectParam.rot;
+    let r = new createjs.Shape();
+    r.graphics.beginFill(rectParam.color).drawRect(0, 0, rectParam.w, rectParam.h);
+    r.x = rectParam.x - rectParam.w / 2;
+    r.y = rectParam.y - rectParam.h / 2;
+    r.regX = rectParam.w / 2;
+    r.regY = rectParam.h / 2;
+    r.rotation = rectParam.rot;
+    if (cnt > 0) {
+        setTraceObj(b, r);
+    }
+    actBall = b;
+    actRect = r;
     updateCanvas();
+}
+const setTraceObj = function (b, r) {
+    if (traceBalls.length > ballParam.trace) {
+        while (traceBalls.length > ballParam.trace) {
+            stage.removeChild(traceBalls[0]);
+            traceBalls.shift();
+        }
+    }
+    let blen = traceBalls.length;
+    for (let i = 0; i < blen; i++) {
+        traceBalls[i].alpha = 1 - (blen - i) / (ballParam.trace + 2);
+    }
+    traceBalls.push(b);
+    if (traceRects.length > rectParam.trace) {
+        while (traceRects.length > rectParam.trace) {
+            stage.removeChild(traceRects[0]);
+            traceRects.shift();
+        }
+    }
+    let rlen = traceRects.length;
+    for (let i = 0; i < rlen; i++) {
+        traceRects[i].alpha = 1 - (rlen - i) / (rectParam.trace + 2);
+    }
+    traceRects.push(r);
 }
 const updateVals = function (vals) {
     for (let i in curVals) {
@@ -155,9 +193,31 @@ const updateVals = function (vals) {
     }
 }
 const updateCanvas = function () {
+    for (let i = 0; i < traceBalls.length - 1; ++i) {
+        stage.addChild(traceBalls[i]);
+    }
+    for (let i = 0; i < traceRects.length - 1; ++i) {
+        stage.addChild(traceRects[i]);
+    }
     stage.addChild(actRect);
     stage.addChild(actBall);
     for (let i = 0; i < texts.length; ++i) {
         stage.addChild(texts[i]);
     }
+}
+const resetTexts = function () {
+    for (let i = 0; i < texts.length; ++i) {
+        stage.removeChild(texts[i]);
+    }
+    texts = [];
+}
+const resetTraces = function () {
+    for (let i = 0; i < traceBalls.length; ++i) {
+        stage.removeChild(traceBalls[i]);
+    }
+    traceBalls = [];
+    for (let i = 0; i < traceRects.length; ++i) {
+        stage.removeChild(traceRects[i]);
+    }
+    traceRects = [];
 }

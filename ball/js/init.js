@@ -15,6 +15,7 @@ let ballParam = {
     ax: 0,
     ay: 0,
     color: "red",
+    trace: 0
 };
 let rectParam = {
     x: 0,
@@ -26,10 +27,13 @@ let rectParam = {
     ax: 0,
     ay: 0,
     rot: 0,
-    color: "blue"
+    color: "blue",
+    trace: 0
 }
 let curVals = {};
 let cnt = 0;
 let actBall;
+let traceBalls = [];
+let traceRects = [];
 let actRect;
 let texts = [];
