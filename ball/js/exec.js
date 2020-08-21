@@ -67,6 +67,12 @@ const cos = function (x) {
 const tan = function (x) {
     return Math.tan(x / 180 * Math.PI);
 }
+const isPressed = function (c) {
+    if (typeof keyList[c] == "undefined") {
+        keyList[c] = false;
+    }
+    return keyList[c];
+}
 const exit = function (str = "End of the Program") {
     throw str;
 }
@@ -162,10 +168,10 @@ const updateObj = function (ball, rect) {
     stage.removeChild(actRect);
     let r = new createjs.Shape();
     r.graphics.beginFill(rectParam.color).drawRect(0, 0, rectParam.w, rectParam.h);
-    r.x = rectParam.x - rectParam.w / 2;
-    r.y = rectParam.y - rectParam.h / 2;
     r.regX = rectParam.w / 2;
     r.regY = rectParam.h / 2;
+    r.x = rectParam.x;
+    r.y = rectParam.y;
     r.rotation = rectParam.rot;
     if (cnt > 0) {
         setTraceObj(b, r);
@@ -204,13 +210,13 @@ const updateVals = function (vals) {
     }
 }
 const updateCanvas = function () {
-    for (let i = 0; i < traceBalls.length - 1; ++i) {
-        stage.addChild(traceBalls[i]);
-    }
     for (let i = 0; i < traceRects.length - 1; ++i) {
         stage.addChild(traceRects[i]);
     }
     stage.addChild(actRect);
+    for (let i = 0; i < traceBalls.length - 1; ++i) {
+        stage.addChild(traceBalls[i]);
+    }
     stage.addChild(actBall);
     for (let i = 0; i < texts.length; ++i) {
         stage.addChild(texts[i]);

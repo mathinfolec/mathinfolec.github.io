@@ -1,3 +1,4 @@
+"use strict";
 let stage;
 let bg;
 const w = 500;
@@ -36,6 +37,8 @@ let traceBalls = [];
 let traceRects = [];
 let actRect;
 let texts = [];
+
+let keyList = [];
 
 let errorMes = null;
 

@@ -5,6 +5,36 @@ window.addEventListener("load", function () {
             e.returnValue = "活動記録がファイルに出力されていません。ページを閉じますか？";
         }
     }
+    window.onkeydown = function (e) {
+        if (isTick) {
+            let code = e.keyCode;
+            switch (code) {
+                case 32:
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                    e.preventDefault();
+                    break;
+            }
+            keyList[code] = true;
+        }
+    }
+    window.onkeyup = function (e) {
+        if (isTick) {
+            let code = e.keyCode;
+            switch (code) {
+                case 32:
+                case 37:
+                case 38:
+                case 39:
+                case 40:
+                    e.preventDefault();
+                    break;
+            }
+            keyList[code] = false;
+        }
+    }
     createjs.Ticker.addEventListener("tick", function () {
         stage.update();
         if (errorMes != null) {
