@@ -7,7 +7,7 @@ let isTick = false;
 let ballParam = {
     x: 0,
     y: 0,
-    r: 10,
+    r: 0,
     vx: 0,
     vy: 0,
     ax: 0,

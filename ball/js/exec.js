@@ -33,13 +33,16 @@ const tick = function () {
     }
     isTick = true;
 }
-const stop = function () {
+const stop = function (isExit = false) {
     isTick = false;
     getCodeInitId().disabled = false;
     getCodeTickId().disabled = false;
     getButtonInitId().disabled = false;
     for (let b of getSpanLoadButtonsId().childNodes) {
         b.disabled = false;
+    }
+    if (isExit) {
+        getButtonTickId().disabled = true;
     }
     showTickButton(true);
 }
@@ -73,6 +76,13 @@ const isPressed = function (c) {
     }
     return keyList[c];
 }
+const rgb = function (dr, dg, db) {
+    let hr = ('00' + dr.toString(16)).slice(-2);
+    let hg = ('00' + dg.toString(16)).slice(-2);
+    let hb = ('00' + db.toString(16)).slice(-2);
+    let s = '#' + hr + hg + hb;
+    return s;
+}
 const exit = function (str = "End of the Program") {
     throw str;
 }
@@ -81,7 +91,7 @@ const getInitFunc = function (c) {
     return Function("'use strict';" + getInitObjStr(true) + c + ";" + getUpdateStr());
 }
 const getTickFunc = function (c) {
-    c = c.replace(/(exit\()/, getUpdateStr() + "$1");
+    c = c.replace(/(exit\()/g, getUpdateStr() + "$1");
     return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + ";" + getUpdateStr());
 }
 const setInitVals = function () {
@@ -148,7 +158,7 @@ const getUpdateStr = function () {
         vArr.push("'" + i + "':" + i);
     }
     if (vArr.length) {
-        s += "updateVals({" + vArr.join(",") + "})";
+        s += "updateVals({" + vArr.join(",") + "});";
     }
     return s;
 }

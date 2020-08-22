@@ -36,11 +36,10 @@ window.addEventListener("load", function () {
         }
     }
     createjs.Ticker.addEventListener("tick", function () {
-        stage.update();
         if (errorMes != null) {
             window.alert(errorMes);
             errorMes = null;
-            stop();
+            stop(true);
         }
         let curInitCodeStr = getCodeInitId().value;
         let curTickCodeStr = getCodeTickId().value;
@@ -56,6 +55,7 @@ window.addEventListener("load", function () {
                 f();
                 cnt++;
             } catch (e) {
+                console.log(e);
                 errorMes = e;
                 if (e instanceof Error) {
                     addLog("error_tick");
@@ -78,5 +78,6 @@ window.addEventListener("load", function () {
                 logInterval--;
             }
         }
+        stage.update();
     });
 });
