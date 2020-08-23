@@ -191,28 +191,32 @@ const updateObj = function (ball, rect) {
     updateCanvas();
 }
 const setTraceObj = function (b, r) {
-    if (traceBalls.length > ballParam.trace) {
-        while (traceBalls.length > ballParam.trace) {
-            stage.removeChild(traceBalls[0]);
-            traceBalls.shift();
+    if (ballParam.trace > 0) {
+        if (traceBalls.length > ballParam.trace) {
+            while (traceBalls.length > ballParam.trace) {
+                stage.removeChild(traceBalls[0]);
+                traceBalls.shift();
+            }
         }
-    }
-    let blen = traceBalls.length;
-    for (let i = 0; i < blen; i++) {
-        traceBalls[i].alpha = 1 - (blen - i) / (ballParam.trace + 2);
-    }
-    traceBalls.push(b);
-    if (traceRects.length > rectParam.trace) {
-        while (traceRects.length > rectParam.trace) {
-            stage.removeChild(traceRects[0]);
-            traceRects.shift();
+        let blen = traceBalls.length;
+        for (let i = 0; i < blen; i++) {
+            traceBalls[i].alpha = 1 - (blen - i) / (ballParam.trace + 2);
         }
+        traceBalls.push(b);
     }
-    let rlen = traceRects.length;
-    for (let i = 0; i < rlen; i++) {
-        traceRects[i].alpha = 1 - (rlen - i) / (rectParam.trace + 2);
+    if (rectParam.trace > 0) {
+        if (traceRects.length > rectParam.trace) {
+            while (traceRects.length > rectParam.trace) {
+                stage.removeChild(traceRects[0]);
+                traceRects.shift();
+            }
+        }
+        let rlen = traceRects.length;
+        for (let i = 0; i < rlen; i++) {
+            traceRects[i].alpha = 1 - (rlen - i) / (rectParam.trace + 2);
+        }
+        traceRects.push(r);
     }
-    traceRects.push(r);
 }
 const updateVals = function (vals) {
     for (let i in curVals) {
