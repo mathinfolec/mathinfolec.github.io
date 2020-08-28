@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Canvas Simulatior</title>
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/getId.js"></script>
+    <script src="js/setup.js"></script>
+    <script src="js/exec.js"></script>
+    <script src="js/disp.js"></script>
+    <script src="js/click.js"></script>
+    <script src="js/log.js"></script>
+    <script src="js/slot.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="div_canvas">
+            <canvas width="500" height="500" id="canvas"></canvas>
+        </div>
+        <div id="div_code">
+            <div id="div_load">
+                セーブスロット(使用中:<span id="span_slot"></span>)
+                <span id="span_load_buttons"></span>
+            </div>
+            <hr />
+            <div id="div_init">
+                <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
+                <textarea id="code_init" rows="10" cols="50" spellcheck=false></textarea>
+            </div>
+            <div id="div_exec">
+                <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
+                <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <textarea id="code_tick" rows="10" cols="50" spellcheck=false></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <footer>
+        <div id="opt">
+            <b>オプション</b>
+            <a onclick="showOpt()" id="opt-open" style="display:inline-block;">[開く]</a>
+            <a onclick="hideOpt()" id="opt-close" style="display:none;">[閉じる]</a>
+            <ul id="opt-ul" style="display:none;">
+                <li><a onclick="exportLogs()">活動記録を出力する</a></li>
+            </ul>
+        </div>
+        <hr />
+        <p>最終更新日: 2020/08/28</p>
+        <p>
+            <a href="../index.html">Back to Main Page</a><br />
+            <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">
+                GitHub(https://github.com/mathinfolec/mathinfolec.github.io)</a>
+        </p>
+    </footer>
+</body>
+
+</html>
