@@ -133,6 +133,9 @@ const getTickFunc = function (c) {
     return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + ";" + getUpdateStr());
 }
 const setInitVals = function () {
+    for (let i in defOptions) {
+        options[i] = defOptions[i];
+    }
     curVals = {};
     let cArr = getCodeInitId().value.split(";");
     for (let c of cArr) {

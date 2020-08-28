@@ -44,6 +44,7 @@ let options = {
     rotation: 0,
     alpha: 1
 };
+const defOptions = JSON.parse(JSON.stringify(options));
 
 let keyList = [];
 
