@@ -76,3 +76,5 @@ const samples = {
     sample3: "作品例③",
     sample4: "作品例④"
 };
+
+let prevURLStr;

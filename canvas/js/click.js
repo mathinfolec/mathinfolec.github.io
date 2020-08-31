@@ -13,6 +13,3 @@ const clickStop = function () {
 const clickLoad = function (id) {
     changeSlot(id);
 }
-const clickSample = function (id) {
-    addLog("sample", id);
-}

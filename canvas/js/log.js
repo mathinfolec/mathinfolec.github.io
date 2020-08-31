@@ -1,7 +1,7 @@
 const addLog = function (type, opt = null) {
     console.log("addLog(" + type + ")");
     let d = new Date();
-    let time = (("0" + d.getHours()).slice(-2)) + ":" + (("0" + d.getMinutes()).slice(-2)) + ":" + (("0" + d.getSeconds()).slice(-2));
+    let time = (("0" + d.getHours()).slice(-2)) + ":" + (("0" + d.getMinutes()).slice(-2)) + ":" + (("0" + d.getSeconds()).slice(-2)) + "." + (("00" + d.getMilliseconds()).slice(-3));
     logs.push({
         time: time,
         type: type,

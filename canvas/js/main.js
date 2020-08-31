@@ -49,6 +49,11 @@ window.addEventListener("load", function () {
             tickCodeStr = curTickCodeStr;
             getButtonTickId().disabled = true;
         }
+        let curURLStr = location.href;
+        if (curURLStr != prevURLStr) {
+            addLog("changeURL", curURLStr);
+            prevURLStr = curURLStr;
+        }
         if (isTick) {
             try {
                 resetTexts();

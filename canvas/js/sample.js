@@ -5,10 +5,12 @@ const setupSamples = function () {
     let u = getUlSamplesId();
     for (let i in samples) {
         let l = document.createElement("li");
-        l.innerHTML = "<a data-fancybox='images' href='img/" + i + ".gif' onclick='clickSample(\"" + i + "\")'>" + samples[i] + "</a>";
+        l.innerHTML = "<a data-fancybox='images' href='img/" + i + ".gif'>" + samples[i] + "</a>";
         u.appendChild(l);
     }
+    $.fancybox.defaults.keyboard = false;
     $.fancybox.defaults.arrows = false;
     $.fancybox.defaults.infobar = false;
     $.fancybox.defaults.buttons = ["download", "close"];
+    $.fancybox.defaults.wheel = false;
 }
