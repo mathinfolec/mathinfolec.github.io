@@ -63,3 +63,14 @@ let curSlot = 0;
 let saveInitCodes = [];
 let saveTickCodes = [];
 const maxSlot = 5;
+
+const samples = {
+    lec1a: "第1回講義サンプル①",
+    lec1b: "第1回講義サンプル②",
+    lec2a: "第2回講義サンプル①",
+    lec2b: "第2回講義サンプル②",
+    sample1: "作品例①",
+    sample2: "作品例②",
+    sample3: "作品例③",
+    sample4: "作品例④"
+};

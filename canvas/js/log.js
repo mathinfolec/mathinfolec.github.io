@@ -1,4 +1,4 @@
-const addLog = function (type) {
+const addLog = function (type, opt = null) {
     console.log("addLog(" + type + ")");
     let d = new Date();
     let time = (("0" + d.getHours()).slice(-2)) + ":" + (("0" + d.getMinutes()).slice(-2)) + ":" + (("0" + d.getSeconds()).slice(-2));
@@ -7,7 +7,8 @@ const addLog = function (type) {
         type: type,
         slot: curSlot,
         init: getCodeInitId().value,
-        tick: getCodeTickId().value
+        tick: getCodeTickId().value,
+        opt: opt
     });
     if (type != "open" && type != "export") {
         isAddedLog = true;

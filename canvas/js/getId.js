@@ -19,3 +19,6 @@ const getSpanSlotId = function () {
 const getSpanLoadButtonsId = function () {
     return document.getElementById("span_load_buttons");
 }
+const getUlSamplesId = function () {
+    return document.getElementById("ul_samples");
+}

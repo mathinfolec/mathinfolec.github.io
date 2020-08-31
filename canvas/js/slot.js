@@ -20,3 +20,14 @@ const changeSlot = function (id) {
     getButtonTickId().disabled = true;
     addLog("load");
 }
+const setupSlots = function () {
+    let d = getSpanLoadButtonsId();
+    for (let i = 1; i <= maxSlot; ++i) {
+        let b = document.createElement("button");
+        b.id = "button_load_" + i;
+        b.setAttribute("onclick", "clickLoad(" + i + ")");
+        b.innerHTML = i;
+        d.appendChild(b);
+    }
+    changeSlot(1);
+}

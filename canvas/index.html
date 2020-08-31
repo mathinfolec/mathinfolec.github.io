@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Canvas Simulatior</title>
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <!-- reference: http://fancyapps.com/fancybox/3/ -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <!---->
     <script src="js/init.js"></script>
     <script src="js/getId.js"></script>
     <script src="js/setup.js"></script>
@@ -14,6 +19,7 @@
     <script src="js/click.js"></script>
     <script src="js/log.js"></script>
     <script src="js/slot.js"></script>
+    <script src="js/sample.js"></script>
     <script src="js/main.js"></script>
 </head>
 
@@ -30,12 +36,12 @@
             <hr />
             <div id="div_init">
                 <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
-                <textarea id="code_init" rows="10" cols="50" spellcheck=false></textarea>
+                <textarea id="code_init" rows="10" cols="50" spellcheck=false placeholder="初期化部分"></textarea>
             </div>
             <div id="div_exec">
                 <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
                 <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
-                <textarea id="code_tick" rows="10" cols="50" spellcheck=false></textarea>
+                <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="ループ部分"></textarea>
             </div>
         </div>
     </div>
@@ -47,10 +53,13 @@
             <a onclick="hideOpt()" id="opt-close" style="display:none;">[閉じる]</a>
             <ul id="opt-ul" style="display:none;">
                 <li><a onclick="exportLogs()">活動記録を出力する</a></li>
+                <li>
+                    サンプルを表示する<ul id="ul_samples"></ul>
+                </li>
             </ul>
         </div>
         <hr />
-        <p>最終更新日: 2020/08/28</p>
+        <p>最終更新日: 2020/08/31</p>
         <p>
             <a href="../index.html">Back to Main Page</a><br />
             <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">
