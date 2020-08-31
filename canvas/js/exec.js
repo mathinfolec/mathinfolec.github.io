@@ -16,10 +16,10 @@ const init = function () {
     } catch (e) {
         window.alert(e);
         if (e instanceof Error) {
-            addLog("error_init");
+            addLog("error_init", String(e));
         }
         else {
-            addLog("exit_init");
+            addLog("exit_init", String(e));
         }
         return false;
     }

@@ -50,16 +50,18 @@ let keyList = [];
 
 let errorMes = null;
 
+const FPS = 30;
+
 let logs = [];
 let isAddedLog = false;
 let logInterval = 0;
-const defLogInterval = 20;
+const defLogInterval = FPS;
 let initCodeStr = "";
 let tickCodeStr = "";
 let prevInitCodeStr = "";
 let prevTickCodeStr = "";
 
-let curSlot = 0;
+let curSlot = 1;
 let saveInitCodes = [];
 let saveTickCodes = [];
 const maxSlot = 5;

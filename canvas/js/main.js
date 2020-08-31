@@ -35,6 +35,7 @@ window.addEventListener("load", function () {
             keyList[code] = false;
         }
     }
+    createjs.Ticker.framerate = FPS;
     createjs.Ticker.addEventListener("tick", function () {
         if (errorMes != null) {
             window.alert(errorMes);
@@ -59,10 +60,10 @@ window.addEventListener("load", function () {
                 console.log(e);
                 errorMes = e;
                 if (e instanceof Error) {
-                    addLog("error_tick");
+                    addLog("error_tick", String(e));
                 }
                 else {
-                    addLog("exit_tick");
+                    addLog("exit_tick", String(e));
                 }
             }
         }

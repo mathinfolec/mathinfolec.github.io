@@ -18,7 +18,22 @@ const exportLogs = function () {
     let v = window.prompt("学年,組,出席番号で構成される4桁のIDを半角で入力してください。\n(例)5年1組3番:5103");
     if (v != null && v.match(/^[0-9]{4}$/)) {
         addLog("export");
-        let blob = new Blob(["logs[" + v + "]=" + JSON.stringify(logs)], { type: "text/plain" });
+        changeSlot(curSlot);
+        let codeArr = {};
+        for (let i = 1; i <= maxSlot; ++i) {
+            codeArr[i] = {
+                init: saveInitCodes[i],
+                tick: saveTickCodes[i]
+            };
+            if (codeArr[i].init == undefined) {
+                codeArr[i].init = "";
+            }
+            if (codeArr[i].tick == undefined) {
+                codeArr[i].tick = "";
+            }
+        }
+        let expArr = ["logs[" + v + "]=" + JSON.stringify(logs) + ";\n" + "codes[" + v + "]=" + JSON.stringify(codeArr) + ";"];
+        let blob = new Blob(expArr, { type: "text/plain" });
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
         link.download = "logs" + v + ".txt";

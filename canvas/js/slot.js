@@ -1,7 +1,4 @@
 const changeSlot = function (id) {
-    if (curSlot == id) {
-        return;
-    }
     saveInitCodes[curSlot] = getCodeInitId().value;
     saveTickCodes[curSlot] = getCodeTickId().value;
     if (typeof saveInitCodes[id] == "undefined") {
@@ -18,7 +15,9 @@ const changeSlot = function (id) {
     prevTickCodeStr = saveTickCodes[id];
     logInterval = defLogInterval;
     getButtonTickId().disabled = true;
-    addLog("load");
+    if (curSlot != id) {
+        addLog("load");
+    }
 }
 const setupSlots = function () {
     let d = getSpanLoadButtonsId();
