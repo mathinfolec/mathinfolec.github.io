@@ -10,7 +10,7 @@ const addLog = function (type, opt = null) {
         tick: getCodeTickId().value,
         opt: opt
     });
-    if (type != "open" && type != "export") {
+    if (type != "open" && type != "export" && type != "import") {
         isAddedLog = true;
     }
 }
@@ -32,11 +32,11 @@ const exportLogs = function () {
                 codeArr[i].tick = "";
             }
         }
-        let expArr = ["logs[" + v + "]=" + JSON.stringify(logs) + ";\n" + "codes[" + v + "]=" + JSON.stringify(codeArr) + ";"];
+        let expArr = ["id=" + v + ";logs=" + JSON.stringify(logs) + ";codes=" + JSON.stringify(codeArr) + ";"];
         let blob = new Blob(expArr, { type: "text/plain" });
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = "logs" + v + ".txt";
+        link.download = "logs" + v + ".log";
         link.click();
         isAddedLog = false;
         window.alert("活動記録をダウンロードしました。");

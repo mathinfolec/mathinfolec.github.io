@@ -66,15 +66,36 @@ let saveInitCodes = [];
 let saveTickCodes = [];
 const maxSlot = 5;
 
-const samples = {
-    lec1a: "第1回講義サンプル①",
-    lec1b: "第1回講義サンプル②",
-    lec2a: "第2回講義サンプル①",
-    lec2b: "第2回講義サンプル②",
-    sample1: "作品例①",
-    sample2: "作品例②",
-    sample3: "作品例③",
-    sample4: "作品例④"
-};
+const refs = [
+    {
+        "slide1.pdf": "第1回授業スライド",
+        "lec1_sample1.gif": "サンプル1",
+        "lec1_sample2.gif": "サンプル2",
+        "lec1_sample3.gif": "サンプル3",
+        "lec1_ex3.gif": "演習3",
+        "lec1_ex4.gif": "演習4"
+    },
+    {
+        "slide2.pdf": "第2回授業スライド",
+        "lec2_sample1.gif": "サンプル1",
+        "lec2_sample2.gif": "サンプル2",
+        "lec2_sample3.gif": "サンプル3",
+        "lec2_ex3.gif": "演習3",
+        "lec2_ex4.gif": "演習4"
+    },
+    {
+        "slide3.pdf": "第3回授業スライド",
+        "lec3_sample1.gif": "サンプル1",
+        "lec3_sample2.gif": "サンプル2",
+        "lec3_ex2.gif": "演習2",
+        "lec3_ex3.gif": "演習3"
+    },
+    {
+        "slide4.pdf": "第4回授業スライド",
+        "funcs.pdf": "シミュレータ機能集"
+    }
+];
+let urls = ["default"];
+const defUrls = JSON.parse(JSON.stringify(urls));
 
 let prevURLStr;

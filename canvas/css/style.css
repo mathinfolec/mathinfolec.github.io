@@ -18,5 +18,12 @@ a{
     text-decoration: underline;
 }
 button{
-    margin-right: 3px;
+    margin-right: 2px;
+    margin-left:2px;
+}
+ul{
+    margin-top: 2px;
+}
+li{
+    margin-top: 2px;
 }

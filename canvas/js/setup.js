@@ -1,4 +1,8 @@
 const setup = function () {
+    let a = location.href.split("?");
+    if (a.length > 1) {
+        location.href = a[0];
+    }
     stage = new createjs.Stage("canvas");
     bg = new createjs.Shape();
     bg.graphics.beginFill("black").drawRect(0, 0, w, h);

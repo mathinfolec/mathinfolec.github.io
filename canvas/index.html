@@ -6,18 +6,18 @@
     <link rel="stylesheet" href="css/style.css" />
     <title>Canvas Simulatior</title>
     <!-- online -->
-    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <!--<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>-->
     <!-- reference: http://fancyapps.com/fancybox/3/ -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
-    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>-->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />-->
+    <!--<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>-->
     <!-- end of reference -->
     <!-- end of online -->
     <!-- offline -->
-    <!--<script src="../local/createjs.min.js"></script>-->
-    <!--<script src="../local/jquery.min.js"></script>-->
-    <!--<link rel="stylesheet" href="../local/jquery.fancybox.min.css" />-->
-    <!--<script src="../local/jquery.fancybox.min.js"></script>-->
+    <script src="../local/createjs.min.js"></script>
+    <script src="../local/jquery.min.js"></script>
+    <link rel="stylesheet" href="../local/jquery.fancybox.min.css" />
+    <script src="../local/jquery.fancybox.min.js"></script>
     <!-- end of offline -->
     <script src="js/init.js"></script>
     <script src="js/getId.js"></script>
@@ -58,17 +58,28 @@
     <footer>
         <div id="opt">
             <b>オプション</b>
-            <a onclick="showOpt()" id="opt-open" style="display:inline-block;">[開く]</a>
-            <a onclick="hideOpt()" id="opt-close" style="display:none;">[閉じる]</a>
-            <ul id="opt-ul" style="display:none;">
-                <li><a onclick="exportLogs()">活動記録を出力する</a></li>
+            <a onclick="showOpt()" id="opt-open" style="display:none;">[開く]</a>
+            <a onclick="hideOpt()" id="opt-close" style="display:inline-block;">[閉じる]</a>
+            <ul id="opt-ul" style="display:block;">
                 <li>
-                    サンプルを表示する<ul id="ul_samples"></ul>
+                    活動記録を出力する
+                    <ul>
+                        <li><button onclick="exportLogs()">出力</button></li>
+                    </ul>
+                </li>
+                <li>
+                    以前のコードを復元する
+                    <ul>
+                        <li><input id="import" type="file" accept=".log" /></li>
+                    </ul>
+                </li>
+                <li>
+                    授業資料を表示する<ul id="ul_samples"></ul>
                 </li>
             </ul>
         </div>
         <hr />
-        <p>最終更新日: 2020/09/06</p>
+        <p>最終更新日: 2020/09/14</p>
         <p>
             <a href="../index.html">Back to Main Page</a><br />
             <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">

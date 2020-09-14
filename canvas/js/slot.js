@@ -30,3 +30,12 @@ const setupSlots = function () {
     }
     changeSlot(1);
 }
+const importSlot = function (codes) {
+    console.log(codes);
+    getCodeInitId().value = codes[curSlot].init;
+    getCodeTickId().value = codes[curSlot].tick;
+    for (let i = 1; i <= maxSlot; ++i) {
+        saveInitCodes[i] = codes[i].init;
+        saveTickCodes[i] = codes[i].tick;
+    }
+}

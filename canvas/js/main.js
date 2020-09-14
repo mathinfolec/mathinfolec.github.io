@@ -1,5 +1,25 @@
 window.addEventListener("load", function () {
     setup();
+    document.getElementById("import").addEventListener("change", function (e) {
+        try {
+            let fs = e.target.files;
+            let reader = new FileReader();
+            reader.readAsText(fs[0]);
+            reader.onload = function () {
+                let str = reader.result;
+                console.log(str);
+                if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
+                    let f0str = "'use strict';let id,logs,codes;";
+                    let f1str = "importSlot(codes);";
+                    let func = Function(f0str + str + f1str);
+                    func();
+                    addLog("import");
+                }
+            }
+        } catch (e) {
+            window.alert(e);
+        }
+    });
     window.onbeforeunload = function (e) {
         if (isAddedLog) {
             e.returnValue = "活動記録がファイルに出力されていません。ページを閉じますか？";
@@ -51,7 +71,7 @@ window.addEventListener("load", function () {
         }
         let curURLStr = location.href;
         if (curURLStr != prevURLStr) {
-            addLog("changeURL", curURLStr);
+            addLog("changeURL", getRefName(curURLStr));
             prevURLStr = curURLStr;
         }
         if (isTick) {
