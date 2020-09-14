@@ -86,7 +86,6 @@ const refs = [
     {
         "slide3.pdf": "第3回授業スライド",
         "lec3_sample1.gif": "サンプル1",
-        "lec3_sample2.gif": "サンプル2",
         "lec3_ex2.gif": "演習2",
         "lec3_ex3.gif": "演習3"
     },
