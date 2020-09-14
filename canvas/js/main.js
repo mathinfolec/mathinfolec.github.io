@@ -1,5 +1,6 @@
 window.addEventListener("load", function () {
     setup();
+    document.getElementById("lastmodified").innerHTML = document.lastModified;
     document.getElementById("import").addEventListener("change", function (e) {
         try {
             let fs = e.target.files;
