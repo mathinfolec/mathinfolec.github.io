@@ -5,9 +5,9 @@ const init = function () {
         getCodeInitId().disabled = false;
         getCodeInitId().disabled = false;
         setInitVals();
-        resetTexts();
+        //resetTexts();
         resetShapes();
-        resetTraces();
+        //resetTraces();
         let f = getInitFunc(getCodeInitId().value);
         f();
         getButtonTickId().disabled = false;
@@ -85,10 +85,11 @@ const setAlpha = function (a) {
     options.alpha = a;
 }
 const display = function (text, x = 0, y = 0, size = 20) {
-    let t = new createjs.Text(text, size + "px sans-serif", "white");
+    let t = new createjs.Text(text, size + "px sans-serif", options.color);
     t.x = x;
     t.y = y;
-    texts.push(t);
+    stage.addChild(t);
+    shapes.push(t);
 }
 const random = function (min, max) {
     return min + Math.random() * (max - min);
@@ -115,6 +116,9 @@ const isPressed = function (c) {
     return keyList[c];
 }
 const rgb = function (dr, dg, db) {
+    dr = Math.min(255, Math.max(0, dr));
+    dg = Math.min(255, Math.max(0, dg));
+    db = Math.min(255, Math.max(0, db));
     let hr = ('00' + dr.toString(16)).slice(-2);
     let hg = ('00' + dg.toString(16)).slice(-2);
     let hb = ('00' + db.toString(16)).slice(-2);
@@ -177,6 +181,7 @@ const getInitValsStr = function () {
 }
 const getInitObjStr = function (reset = false) {
     let s = "const cnt=" + cnt + ";const pi=Math.PI;";
+    /*
     if (reset) {
         s += "let ball=" + JSON.stringify(defBallParam) + ";";
         s += "let rect=" + JSON.stringify(defRectParam) + ";";
@@ -184,16 +189,13 @@ const getInitObjStr = function (reset = false) {
     else {
         s += "let ball=" + JSON.stringify(ballParam) + ";";
         s += "let rect=" + JSON.stringify(rectParam) + ";";
-    }
-    let mouse = {
-        x: stage.mouseX,
-        y: stage.mouseY
-    };
-    s += "const mouse=" + JSON.stringify(mouse) + ";";
+    }*/
+    s += "const mouseX=" + stage.mouseX + ",mouseY=" + stage.mouseY + ";";
     return s;
 }
 const getUpdateStr = function () {
-    let s = "updateObj(ball,rect);"
+    let s = "";
+    //let s = "updateObj(ball,rect);"
     let vArr = [];
     for (let i in curVals) {
         vArr.push("'" + i + "':" + i);
@@ -203,6 +205,7 @@ const getUpdateStr = function () {
     }
     return s;
 }
+/*
 const updateObj = function (ball, rect) {
     for (let i in ballParam) {
         ballParam[i] = ball[i];
@@ -259,11 +262,13 @@ const setTraceObj = function (b, r) {
         traceRects.push(r);
     }
 }
+*/
 const updateVals = function (vals) {
     for (let i in curVals) {
         curVals[i] = vals[i];
     }
 }
+/*
 const updateCanvas = function () {
     for (let i = 0; i < traceRects.length - 1; ++i) {
         stage.addChild(traceRects[i]);
@@ -293,6 +298,7 @@ const resetTraces = function () {
     }
     traceRects = [];
 }
+*/
 const resetShapes = function () {
     for (let i = 0; i < shapes.length; ++i) {
         stage.removeChild(shapes[i]);

@@ -7,15 +7,7 @@ window.addEventListener("load", function () {
             let reader = new FileReader();
             reader.readAsText(fs[0]);
             reader.onload = function () {
-                let str = reader.result;
-                console.log(str);
-                if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
-                    let f0str = "'use strict';let id,logs,codes;";
-                    let f1str = "importSlot(codes);";
-                    let func = Function(f0str + str + f1str);
-                    func();
-                    addLog("import");
-                }
+                importLogs(reader.result);
             }
         } catch (e) {
             window.alert(e);
@@ -77,7 +69,7 @@ window.addEventListener("load", function () {
         }
         if (isTick) {
             try {
-                resetTexts();
+                //resetTexts();
                 resetShapes();
                 let f = getTickFunc(getCodeTickId().value);
                 f();

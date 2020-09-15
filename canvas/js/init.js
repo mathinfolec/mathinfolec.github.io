@@ -4,6 +4,7 @@ let bg;
 const w = 500;
 const h = 500;
 let isTick = false;
+/*
 let ballParam = {
     x: 0,
     y: 0,
@@ -30,13 +31,14 @@ let rectParam = {
     trace: 0
 };
 const defRectParam = JSON.parse(JSON.stringify(rectParam));
+*/
 let curVals = {};
 let cnt = 0;
-let actBall;
-let traceBalls = [];
-let traceRects = [];
-let actRect;
-let texts = [];
+//let actBall;
+//let traceBalls = [];
+//let traceRects = [];
+//let actRect;
+//let texts = [];
 
 let shapes = [];
 let options = {
@@ -67,32 +69,108 @@ let saveTickCodes = [];
 const maxSlot = 5;
 
 const refs = [
-    {
-        "slide1.pdf": "第1回授業スライド",
-        "lec1_sample1.gif": "サンプル1",
-        "lec1_sample2.gif": "サンプル2",
-        "lec1_sample3.gif": "サンプル3",
-        "lec1_ex3.gif": "演習3",
-        "lec1_ex4.gif": "演習4"
-    },
-    {
-        "slide2.pdf": "第2回授業スライド",
-        "lec2_sample1.gif": "サンプル1",
-        "lec2_sample2.gif": "サンプル2",
-        "lec2_sample3.gif": "サンプル3",
-        "lec2_ex3.gif": "演習3",
-        "lec2_ex4.gif": "演習4"
-    },
-    {
-        "slide3.pdf": "第3回授業スライド",
-        "lec3_sample1.gif": "サンプル1",
-        "lec3_ex2.gif": "演習2",
-        "lec3_ex3.gif": "演習3"
-    },
-    {
-        "slide4.pdf": "第4回授業スライド",
-        "funcs.pdf": "シミュレータ機能集"
-    }
+    [
+        {
+            url: "slide1.pdf",
+            name: "第1回授業スライド"
+        },
+        {
+            url: "lec1_sample1.gif",
+            name: "サンプル1"
+        },
+        {
+            url: "lec1_sample2.gif",
+            name: "サンプル2"
+        },
+        {
+            url: "lec1_sample3.gif",
+            name: "サンプル3"
+        },
+        {
+            url: "lec1_ex3.gif",
+            name: "演習3"
+        },
+        {
+            url: "lec1_ex4.gif",
+            name: "演習4"
+        }
+    ],
+    [
+        {
+            url: "slide2.pdf",
+            name: "第2回授業スライド"
+        },
+        {
+            url: "lec2_sample1.gif",
+            name: "サンプル1"
+        },
+        {
+            url: "lec2_sample2.gif",
+            name: "サンプル2"
+        },
+        {
+            url: "lec2_sample3.gif",
+            name: "サンプル3"
+        },
+        {
+            url: "lec2_ex3.gif",
+            name: "演習3"
+        },
+        {
+            url: "lec2_ex4.gif",
+            name: "演習4"
+        }
+    ],
+    [
+        {
+            url: "slide3.pdf",
+            name: "第3回授業スライド"
+        },
+        {
+            url: "lec3_sample1.gif",
+            name: "サンプル1"
+        },
+        {
+            url: "lec3_ex2.gif",
+            name: "演習2"
+        },
+        {
+            url: "lec3_ex3.gif",
+            name: "演習3"
+        }
+    ],
+    [
+        {
+            url: "slide4.pdf",
+            name: "第4回,第5回授業スライド"
+        },
+        {
+            url: "funcs.pdf",
+            name: "シミュレータ機能集"
+        }
+    ],
+    [
+        {
+            url: "work1.gif",
+            name: "作品例1"
+        },
+        {
+            url: "work2.gif",
+            name: "作品例2"
+        },
+        {
+            url: "work3.gif",
+            name: "作品例3"
+        },
+        {
+            url: "work4.gif",
+            name: "作品例4"
+        },
+        {
+            url: "work5.gif",
+            name: "作品例5"
+        }
+    ]
 ];
 let urls = ["default"];
 const defUrls = JSON.parse(JSON.stringify(urls));

@@ -8,9 +8,17 @@ const setupSamples = function () {
     for (let r of refs) {
         let l = document.createElement("li");
         let iArr = [];
-        for (let i in r) {
-            iArr.push("<a data-touch='false' data-fancybox='images' href='ref/" + i + "'>" + r[i] + "</a>");
-            urls[++ind] = i;
+        for (let x of r) {
+            let str = "<a data-touch='false' data-fancybox='images'";
+            str += " href='ref/" + x.url + "'";
+            if (typeof x.caption != "undefined") {
+                str += " data-caption='" + x.caption + "'";
+            }
+            str += ">";
+            str += x.name;
+            str += "</a>";
+            iArr.push(str);
+            urls[++ind] = x.url;
         }
         l.innerHTML = iArr.join("&ensp;/&ensp;");
         u.appendChild(l);
