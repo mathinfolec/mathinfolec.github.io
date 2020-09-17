@@ -15,8 +15,8 @@ const addLog = function (type, opt = null) {
     }
 }
 const exportLogs = function () {
-    let v = window.prompt("学年,組,出席番号で構成される4桁のIDを半角で入力してください。\n(例)5年1組3番:5103");
-    if (v != null && v.match(/^[0-9]{4}$/)) {
+    let v = window.prompt("5桁のIDを入力してください。");
+    if (v != null && v.match(/^[0-9]{5}$/)) {
         addLog("export");
         changeSlot(curSlot);
         let codeArr = {};
@@ -36,7 +36,9 @@ const exportLogs = function () {
         let blob = new Blob(expArr, { type: "text/plain" });
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.download = "logs" + v + ".log";
+        let d = new Date();
+        let dStr = (("0" + (d.getMonth() + 1)).slice(-2)) + (("0" + d.getDate()).slice(-2));
+        link.download = "logs" + v + "_" + dStr + ".log";
         link.click();
         isAddedLog = false;
         window.alert("活動記録をダウンロードしました。");
