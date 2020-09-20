@@ -32,7 +32,8 @@ const exportLogs = function () {
                 codeArr[i].tick = "";
             }
         }
-        let expArr = ["id=" + v + ";logs=" + JSON.stringify(logs) + ";codes=" + JSON.stringify(codeArr) + ";"];
+        let exStr = "id=" + v + ";logs=" + JSON.stringify(logs) + "codes=" + JSON.stringify(codeArr) + ";"
+        let expArr = [btoa(exStr)];
         let blob = new Blob(expArr, { type: "text/plain" });
         let link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
@@ -51,7 +52,7 @@ const importLogs = function (str) {
     if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
         let f0str = "'use strict';let id,logs,codes;";
         let f1str = "importSlot(codes);";
-        let func = Function(f0str + str + f1str);
+        let func = Function(f0str + atob(str) + f1str);
         func();
         addLog("import");
     }

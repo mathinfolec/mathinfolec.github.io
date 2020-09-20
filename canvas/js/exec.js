@@ -130,11 +130,13 @@ const exit = function (str = "End of the Program") {
 }
 const getInitFunc = function (c) {
     c = c.replace(/(exit\()/, getUpdateStr() + "$1");
-    return Function("'use strict';" + getInitObjStr(true) + c + ";" + getUpdateStr());
+    c = c.replace(/\n/g, "");
+    return Function("'use strict';" + getInitObjStr(true) + c + getUpdateStr());
 }
 const getTickFunc = function (c) {
     c = c.replace(/(exit\()/g, getUpdateStr() + "$1");
-    return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + ";" + getUpdateStr());
+    c = c.replace(/\n/g, "");
+    return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + getUpdateStr());
 }
 const setInitVals = function () {
     for (let i in defOptions) {
@@ -170,7 +172,12 @@ const setInitVals = function () {
 const getInitValsStr = function () {
     let vArr = [];
     for (let i in curVals) {
-        vArr.push(i + "=" + curVals[i]);
+        if (isNaN(Number(curVals[i]))) {
+            vArr.push(i + "=\"" + curVals[i] + "\"");
+        }
+        else {
+            vArr.push(i + "=" + curVals[i]);
+        }
     }
     if (vArr.length) {
         return "let " + vArr.join(",") + ";";
