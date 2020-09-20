@@ -72,7 +72,6 @@ window.addEventListener("load", function () {
                 //resetTexts();
                 resetShapes();
                 let f = getTickFunc(getCodeTickId().value);
-                console.log(f);
                 f();
                 cnt++;
             } catch (e) {
