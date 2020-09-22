@@ -79,6 +79,10 @@ const refs = [
             name: "サンプル1"
         },
         {
+            url: "lec1_ex2.gif",
+            name: "演習2"
+        },
+        {
             url: "lec1_ex3.gif",
             name: "演習3"
         }
