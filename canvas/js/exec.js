@@ -6,7 +6,7 @@ const init = function () {
         getCodeInitId().disabled = false;
         setInitVals();
         //resetTexts();
-        resetShapes();
+        //resetShapes();
         //resetTraces();
         let f = getInitFunc(getCodeInitId().value);
         f();
@@ -131,12 +131,12 @@ const exit = function (str = "End of the Program") {
 const getInitFunc = function (c) {
     c = c.replace(/(exit\()/, getUpdateStr() + "$1");
     c = c.replace(/\n/g, "");
-    return Function("'use strict';" + getInitObjStr(true) + c + getUpdateStr());
+    return Function("'use strict';" + getInitObjStr() + c + getUpdateStr() + getResetCanvasStr());
 }
 const getTickFunc = function (c) {
     c = c.replace(/(exit\()/g, getUpdateStr() + "$1");
     c = c.replace(/\n/g, "");
-    return Function("'use strict';" + getInitObjStr(false) + getInitValsStr() + c + getUpdateStr());
+    return Function("'use strict';" + getResetCanvasStr() + getInitValsStr() + getInitObjStr() + c + getUpdateStr());
 }
 const setInitVals = function () {
     for (let i in defOptions) {
@@ -170,6 +170,7 @@ const setInitVals = function () {
     }
 }
 const getInitValsStr = function () {
+    let s = "";
     let vArr = [];
     for (let i in curVals) {
         if (isNaN(Number(curVals[i]))) {
@@ -180,14 +181,15 @@ const getInitValsStr = function () {
         }
     }
     if (vArr.length) {
-        return "let " + vArr.join(",") + ";";
+        s += "let " + vArr.join(",") + ";";
     }
-    else {
-        return "";
-    }
+
+    return s;
 }
-const getInitObjStr = function (reset = false) {
-    let s = "const cnt=" + cnt + ";const pi=Math.PI;";
+const getInitObjStr = function () {
+    let s = "";
+    s += "const cnt=" + cnt + ";const pi=Math.PI;";
+    s += "const mouseX=" + stage.mouseX + ",mouseY=" + stage.mouseY + ";";
     /*
     if (reset) {
         s += "let ball=" + JSON.stringify(defBallParam) + ";";
@@ -197,7 +199,6 @@ const getInitObjStr = function (reset = false) {
         s += "let ball=" + JSON.stringify(ballParam) + ";";
         s += "let rect=" + JSON.stringify(rectParam) + ";";
     }*/
-    s += "const mouseX=" + stage.mouseX + ",mouseY=" + stage.mouseY + ";";
     return s;
 }
 const getUpdateStr = function () {
@@ -211,6 +212,9 @@ const getUpdateStr = function () {
         s += "updateVals({" + vArr.join(",") + "});";
     }
     return s;
+}
+const getResetCanvasStr = function () {
+    return "setColor('black');resetShapes();";
 }
 /*
 const updateObj = function (ball, rect) {

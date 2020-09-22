@@ -70,7 +70,7 @@ window.addEventListener("load", function () {
         if (isTick) {
             try {
                 //resetTexts();
-                resetShapes();
+                //resetShapes();
                 let f = getTickFunc(getCodeTickId().value);
                 f();
                 cnt++;
