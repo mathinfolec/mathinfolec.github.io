@@ -172,3 +172,6 @@ let urls = ["default"];
 const defUrls = JSON.parse(JSON.stringify(urls));
 
 let prevURLStr;
+
+let isAdmin = false;
+let admLogs = {};

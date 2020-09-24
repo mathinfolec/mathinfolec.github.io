@@ -7,7 +7,8 @@ window.addEventListener("load", function () {
             let reader = new FileReader();
             reader.readAsText(fs[0]);
             reader.onload = function () {
-                importLogs(reader.result);
+                console.log(reader.result);
+                importLogs(reader.result, isAdmin);
             }
         } catch (e) {
             window.alert(e);

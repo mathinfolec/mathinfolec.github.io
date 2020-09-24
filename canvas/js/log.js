@@ -32,7 +32,7 @@ const exportLogs = function () {
                 codeArr[i].tick = "";
             }
         }
-        let exStr = "id=" + v + ";logs=" + JSON.stringify(logs) + "codes=" + JSON.stringify(codeArr) + ";"
+        let exStr = "id=" + v + ";logs=" + JSON.stringify(logs) + ";codes=" + JSON.stringify(codeArr) + ";"
         let expArr = [btoa(exStr)];
         let blob = new Blob(expArr, { type: "text/plain" });
         let link = document.createElement("a");
@@ -48,12 +48,23 @@ const exportLogs = function () {
         window.alert("IDが正しくないためダウンロードできませんでした。");
     }
 }
-const importLogs = function (str) {
-    if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
-        let f0str = "'use strict';let id,logs,codes;";
-        let f1str = "importSlot(codes);";
-        let func = Function(f0str + atob(str) + f1str);
+const importLogs = function (str, adm) {
+    let f0str = "'use strict';let id,logs,codes;"
+    let f1str = "importSlot(codes);";
+    let f2str = "setAdmin(logs);";
+    let func;
+    if (adm) {
+        console.log(atob(str));
+        func = Function(f0str + atob(str) + f1str + f2str);
+        console.log(func);
         func();
         addLog("import");
+    }
+    else {
+        if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
+            func = Function(f0str + atob(str) + f1str);
+            func();
+            addLog("import");
+        }
     }
 }
