@@ -1,28 +1,101 @@
 <!DOCTYPE HTML>
+<html>
 
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>MathInfoLec</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Canvas Simulatior</title>
+    <!-- online -->
+    <!-- reference: http://fancyapps.com/fancybox/3/ -->
+    <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <!-- end of reference -->
+    <!-- end of online -->
+    <!-- offline -->
+    <!--
+    <script src="../local/createjs.min.js"></script>
+    <script src="../local/jquery.min.js"></script>
+    <link rel="stylesheet" href="../local/jquery.fancybox.min.css" />
+    <script src="../local/jquery.fancybox.min.js"></script>
+    -->
+    <!-- end of offline -->
+    <script src="js/init.js"></script>
+    <script src="js/getId.js"></script>
+    <script src="js/setup.js"></script>
+    <script src="js/exec.js"></script>
+    <script src="js/disp.js"></script>
+    <script src="js/click.js"></script>
+    <script src="js/log.js"></script>
+    <script src="js/slot.js"></script>
+    <script src="js/sample.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
 </head>
 
-<body>
-    <h1>MathInfoLec Page</h1>
-    <h2>Lessons</h2>
-    <ul>
-        <li><a href="./canvas">Canvas Simulating Lesson</a></li>
-        <li><a href="./ball/">Ball Simulating Lesson (Old Ver. of Canvas)</a></li>
-        <li><a href="./flow/">Flow Chart Lesson</a></li>
-        <li><a href="./jscode/">JavaScript Programming Lesson</a></li>
-    </ul>
-    <h2>Tools</h2>
-    <ul>
-        <li><a href="./2d_graph">2D Graph Simulator</a></li>
-        <li><a href="./bezier/">Bezier Curve Simulator</a></li>
-        <li><a href="./fourier/">Fourier Simulator</a></li>
-    </ul>
-    <hr />
+<body oncontextmenu="return false;">
+    <div id="main">
+        <div id="div_canvas">
+            <canvas width="500" height="500" id="canvas"></canvas>
+        </div>
+        <div id="div_code">
+            <div id="div_load">
+                セーブスロット(使用中:<span id="span_slot"></span>)
+                <span id="span_load_buttons"></span>
+            </div>
+            <div id="admin" style="display:none;">
+            </div>
+            <hr />
+            <div id="div_init">
+                <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
+                <textarea id="code_init" rows="10" cols="50" spellcheck=false placeholder="変数定義エリア"></textarea>
+            </div>
+            <div id="div_exec">
+                <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
+                <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
     <footer>
-        <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">GitHub</a>
+        <div id="opt">
+            <b>オプション</b>
+            <a onclick="showOpt()" id="opt-open" style="display:none;">[開く]</a>
+            <a onclick="hideOpt()" id="opt-close" style="display:inline-block;">[閉じる]</a>
+            <ul id="opt-ul" style="display:block;">
+                <li>
+                    活動記録を出力する
+                    <ul>
+                        <li><button onclick="exportLogs()">出力</button></li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <button onclick="exportLogs(true)">出力結果をコピー</button>※ファイルがダウンロードできない場合に使用
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    以前のコードを復元する
+                    <ul>
+                        <li><input id="import" type="file" accept=".log" /></li>
+                    </ul>
+                </li>
+                <li>
+                    授業資料を表示する<ul id="ul_samples"></ul>
+                </li>
+            </ul>
+        </div>
+        <hr />
+        <p>最終更新: <span id="lastmodified">2020/09/22</span></p>
+        <p>
+            <a href="../index.html">Back to Main Page</a><br />
+            <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">
+                GitHub(https://github.com/mathinfolec/mathinfolec.github.io)</a>
+        </p>
     </footer>
+
 </body>
+
+</html>
