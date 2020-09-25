@@ -125,16 +125,18 @@ const rgb = function (dr, dg, db) {
     let s = '#' + hr + hg + hb;
     return s;
 }
+/*
 const exit = function (str = "End of the Program") {
     throw str;
 }
+*/
 const getInitFunc = function (c) {
-    c = c.replace(/(exit\()/, getUpdateStr() + "$1");
+    //c = c.replace(/(exit\()/, getUpdateStr() + "$1");
     c = c.replace(/\n/g, "");
     return Function("'use strict';" + getInitObjStr() + c + getUpdateStr() + getResetCanvasStr());
 }
 const getTickFunc = function (c) {
-    c = c.replace(/(exit\()/g, getUpdateStr() + "$1");
+    //c = c.replace(/(exit\()/g, getUpdateStr() + "$1");
     c = c.replace(/\n/g, "");
     return Function("'use strict';" + getResetCanvasStr() + getInitValsStr() + getInitObjStr() + c + getUpdateStr());
 }
@@ -208,9 +210,7 @@ const getUpdateStr = function () {
     for (let i in curVals) {
         vArr.push("'" + i + "':" + i);
     }
-    if (vArr.length) {
-        s += "updateVals({" + vArr.join(",") + "});";
-    }
+    s += "updateVals({" + vArr.join(",") + "});";
     return s;
 }
 const getResetCanvasStr = function () {

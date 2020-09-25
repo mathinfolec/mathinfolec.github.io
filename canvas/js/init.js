@@ -175,3 +175,5 @@ let prevURLStr;
 
 let isAdmin = false;
 let admLogs = {};
+let curAdmIds = {};
+let curAdmType = "whole";
