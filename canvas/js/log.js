@@ -34,7 +34,7 @@ const exportLogs = function (isCopy = false) {
                 }
             }
             let rawStr = "id=" + v + ";logs=" + JSON.stringify(logs) + ";codes=" + JSON.stringify(codeArr) + ";";
-            console.log(rawStr);
+            //console.log(rawStr);
             let exStr = rawStr;
             if (isCopy) {
                 execCopy(rawStr);
@@ -95,17 +95,22 @@ const importLogs = function (str, adm) {
     let f1str = "importSlot(codes);";
     let f2str = "setAdmin(logs);";
     let func;
+    if (!(str.match(/^id=/))) {
+        console.log("old version log");
+        str = atob(str);
+    }
     if (adm) {
         //console.log(atob(str));
         //func = Function(f0str + atob(str) + f1str + f2str);
+        //console.log(str);
         func = Function(f0str + str + f1str + f2str);
-        console.log(func);
+        //console.log(func);
         func();
         addLog("import");
     }
     else {
         if (window.confirm("ログファイルを読み込みますか？ 現時点でシミュレータ上に書かれたコードはすべて上書きされます。")) {
-            func = Function(f0str + atob(str) + f1str);
+            func = Function(f0str + str + f1str);
             func();
             addLog("import");
         }

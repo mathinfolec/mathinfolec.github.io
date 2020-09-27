@@ -1,6 +1,12 @@
 const adm = function () {
     isAdmin = !isAdmin;
-    return isAdmin;
+    if (isAdmin) {
+        document.getElementById("admin").style.display = "block";
+    }
+    else {
+        document.getElementById("admin").style.display = "none";
+    }
+    return true;
 }
 const setAdmin = function (logs) {
     let d = document.getElementById("admin");
@@ -62,7 +68,7 @@ const setAdmin = function (logs) {
     applyAdmLog(admLogs.whole[0]);
     changeAdmType("whole");
     d.style.display = "block";
-    console.log(admLogs);
+    //console.log(admLogs);
 }
 const changeAdmType = function (id) {
     curAdmType = id;
