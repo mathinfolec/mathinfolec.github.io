@@ -128,11 +128,15 @@ const refs = [
         },
         {
             url: "lec3_ex3.gif",
-            name: "演習2"
+            name: "演習3"
         },
         {
             url: "lec3_ex4.gif",
-            name: "演習3"
+            name: "演習4"
+        },
+        {
+            url: "lec3_ex5.gif",
+            name: "演習5"
         }
     ],
     [
