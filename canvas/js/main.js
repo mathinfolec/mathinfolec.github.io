@@ -24,6 +24,8 @@ window.addEventListener("load", function () {
             let code = e.keyCode;
             switch (code) {
                 case 32:
+                case 33:
+                case 34:
                 case 37:
                 case 38:
                 case 39:
@@ -39,6 +41,8 @@ window.addEventListener("load", function () {
             let code = e.keyCode;
             switch (code) {
                 case 32:
+                case 33:
+                case 34:
                 case 37:
                 case 38:
                 case 39:

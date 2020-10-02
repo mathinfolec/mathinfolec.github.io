@@ -56,9 +56,21 @@ const drawCircle = function (x, y, r) {
     stage.addChild(c);
     shapes.push(c);
 }
-const drawRect = function (x, y, w, h) {
+const drawEllipse = function (x, y, w, h) {
     let c = new createjs.Shape();
-    c.graphics.beginFill(options.color).drawRect(0, 0, w, h);
+    c.graphics.beginFill(options.color).drawEllipse(0, 0, w, h);
+    c.regX = w / 2;
+    c.regY = h / 2;
+    c.x = x;
+    c.y = y;
+    c.rotation = options.rotation;
+    c.alpha = options.alpha;
+    stage.addChild(c);
+    shapes.push(c);
+}
+const drawRect = function (x, y, w, h, rw = 0, rh = 0) {
+    let c = new createjs.Shape();
+    c.graphics.beginFill(options.color).drawRect(0, 0, w, h, rw, rh);
     c.regX = w / 2;
     c.regY = h / 2;
     c.x = x;
@@ -71,6 +83,51 @@ const drawRect = function (x, y, w, h) {
 const drawLine = function (x0, y0, x1, y1) {
     let c = new createjs.Shape();
     c.graphics.beginStroke(options.color).moveTo(x0, y0).lineTo(x1, y1);
+    c.alpha = options.alpha;
+    stage.addChild(c);
+    shapes.push(c);
+}
+const drawQuadraticCurve = function (x0, y0, x1, y1, x2, y2) {
+    let c = new createjs.Shape();
+    c.graphics.beginStroke(options.color).moveTo(x0, y0);
+    c.graphics.quadraticCurveTo(x1, y1, x2, y2);
+    c.alpha = options.alpha;
+    stage.addChild(c);
+    shapes.push(c);
+}
+const drawBezierCurve = function (x0, y0, x1, y1, x2, y2, x3, y3) {
+    let c = new createjs.Shape();
+    c.graphics.beginStroke(options.color).moveTo(x0, y0);
+    c.graphics.bezierCurveTo(x1, y1, x2, y2, x3, y3);
+    c.alpha = options.alpha;
+    stage.addChild(c);
+    shapes.push(c);
+}
+const drawPoly = function () {
+    if (arguments.length % 2 != 0) {
+        return;
+    }
+    let c = new createjs.Shape();
+    let sx = arguments[0];
+    let sy = arguments[1];
+    for (let i = 1; i < arguments.length / 2; ++i) {
+        sx += arguments[2 * i];
+        sy += arguments[2 * i + 1];
+    }
+    sx /= (arguments.length / 2);
+    sy /= (arguments.length / 2);
+    console.log(sx, sy);
+    c.graphics.beginFill(options.color);
+    c.graphics.moveTo(arguments[0], arguments[1]);
+    for (let i = 1; i < arguments.length / 2; ++i) {
+        c.graphics.lineTo(arguments[2 * i], arguments[2 * i + 1]);
+    }
+    c.graphics.lineTo(arguments[0], arguments[1]);
+    c.regX = sx;
+    c.regY = sy;
+    c.x = sx;
+    c.y = sy;
+    c.rotation = options.rotation;
     c.alpha = options.alpha;
     stage.addChild(c);
     shapes.push(c);
