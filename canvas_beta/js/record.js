@@ -19,7 +19,7 @@ const stopRec = function (isSuccess) {
     encoder.start();
     */
     worker.postMessage({ type: "start", fps: FPS, w: w, h: h });
-    for (i = 0; i < curCtxs.length; ++i) {
+    for (let i = 0; i < curCtxs.length; ++i) {
         console.log("loading...(" + (i + 1) + "/" + curCtxs.length + ")");
         worker.postMessage({ type: "addFrame", data: curCtxs[i] });
         /*
