@@ -1,17 +1,18 @@
 self.addEventListener("message", function (mes) {
     importScripts("jsgif/LZWEncoder.js", "jsgif/NeuQuant.js", "jsgif/GIFEncoder.js", "jsgif/b64.js");
     importScripts("init.js");
-    console.log(mes.data.type);
-    switch (mes.data.type) {
+    let d = mes.data;
+    console.log(d.type);
+    switch (d.type) {
         case "start":
             encoder = new GIFEncoder();
             encoder.setRepeat(0);
-            encoder.setDelay(1000 / 30);
-            encoder.setSize(w, h);
+            encoder.setDelay(d.fps);
+            encoder.setSize(d.w, d.h);
             encoder.start();
             break;
         case "addFrame":
-            encoder.addFrame(mes.data.data, true);
+            encoder.addFrame(d.data, true);
             break;
         case "finish":
             encoder.finish();
