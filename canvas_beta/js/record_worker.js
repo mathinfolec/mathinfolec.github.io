@@ -3,7 +3,7 @@ if (typeof window == "undefined") {
 }
 onmessage = function (mes) {
     let d = mes.data;
-    console.log(d.type);
+    //console.log(d.type);
     switch (d.type) {
         case "start":
             encoder = new GIFEncoder();
@@ -21,7 +21,7 @@ onmessage = function (mes) {
         case "download":
             let binary_gif = encoder.stream().getData();
             let data_url = "data:image/gif;base64," + encode64(binary_gif);
-            console.log(data_url);
+            //console.log(data_url);
             postMessage({ type: "download", url: data_url });
             break;
     }
