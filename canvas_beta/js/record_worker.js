@@ -19,7 +19,7 @@ onmessage = function (mes) {
             encoder.finish();
             break;
         case "download":
-            postMessage({ type: "download", encoder: encoder });
+            postMessage({ type: "download", encoder: String(encoder) });
             break;
     }
 };

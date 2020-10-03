@@ -35,7 +35,10 @@ const stopRec = function (isSuccess) {
             switch (d.type) {
                 case "download":
                     console.log(d.encoder);
-                    d.encoder.download("img.gif");
+                    let f = Function("return encoder;")
+                    let e = f();
+                    console.log(e);
+                    e.download("img.gif");
                     isRecordable = true;
                     break;
             }
