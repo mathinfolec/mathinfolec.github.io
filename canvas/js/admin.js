@@ -6,6 +6,7 @@ const adm = function () {
     else {
         document.getElementById("admin").style.display = "none";
     }
+    getCheckboxRecId().disabled = !isAdmin;
     return true;
 }
 const setAdmin = function (logs) {

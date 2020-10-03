@@ -1,43 +1,20 @@
 const startRec = function () {
     console.log("startrec");
-    curCtxs = [];
+    let stream = canvas.captureStream();
+    recorder = new MediaRecorder(stream, { mimeType: "video/webm;codecs=vp9" });
+    recorder.start();
 }
 const stopRec = function (isSuccess) {
     console.log("stoprec");
-    document.getElementById("span_dlstat").innerHTML = "loading...";
-    let i = 0;
-
-    let worker = new Worker("js/record_worker.js");
-    /*
-    encoder = new GIFEncoder();
-    encoder.setRepeat(0);
-    encoder.setDelay(1000 / 30);
-    encoder.setSize(w, h);
-    encoder.start();
-    */
-    worker.postMessage({ type: "start" });
-    for (let c of curCtxs) {
-        worker.postMessage({ type: "addFrame", data: c });
-        /*
-        encoder.addFrame(c, true);
-        t.text = "loading...(" + (++i) + "/" + curCtxs.length + ")";
-        c2.update();
-        console.log("loading...(" + (++i) + "/" + curCtxs.length + ")");
-        */
-    }
-    document.getElementById("span_dlstat").innerHTML = "";
-    worker.postMessage({ type: "finish" });
-    //encoder.finish();
+    recorder.stop();
     if (isSuccess) {
-        worker.postMessage({ type: "download" });
-        /*
-        let bin = new Uint8Array(encoder.stream().bin);
-        let blob = new Blob([bin.buffer], { type: 'image/gif' });
-        let link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'img.gif';
-        link.click();
-        */
+        recorder.ondataavailable = function (e) {
+            let a = document.createElement("a");
+            let b = new Blob([e.data], { type: e.data.type });
+            a.download = "movie.webm";
+            a.href = URL.createObjectURL(b);
+            a.click();
+        }
+        addLog("export_video");
     }
-    worker.terminate();
 }

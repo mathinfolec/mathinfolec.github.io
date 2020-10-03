@@ -21,12 +21,6 @@
     <script src="../local/jquery.fancybox.min.js"></script>
     -->
     <!-- end of offline -->
-    <!-- reference: https://github.com/antimatter15/jsgif -->
-    <script type="text/javascript" src="js/jsgif/LZWEncoder.js"></script>
-    <script type="text/javascript" src="js/jsgif/NeuQuant.js"></script>
-    <script type="text/javascript" src="js/jsgif/GIFEncoder.js"></script>
-    <script type="text/javascript" src="js/jsgif/b64.js"></script>
-    <!-- end of reference -->
     <script type="text/javascript" src="js/init.js"></script>
     <script type="text/javascript" src="js/getId.js"></script>
     <script type="text/javascript" src="js/setup.js"></script>
@@ -38,7 +32,6 @@
     <script type="text/javascript" src="js/sample.js"></script>
     <script type="text/javascript" src="js/admin.js"></script>
     <script type="text/javascript" src="js/record.js"></script>
-    <script type="text/javascript" src="js/record_worker.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 </head>
 
@@ -62,8 +55,9 @@
             <div id="div_exec">
                 <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
                 <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
-                <input type="checkbox" id="checkbox_rec" disabled="true" />
-                <label for="checkbox_rec">GIFファイルとして保存する(Beta版)</label>
+                <input type="checkbox" id="checkbox_rec" />
+                <label for="checkbox_rec">実行結果を出力する(WEBM)</label>
+                &ensp;&ensp;
                 <span id="span_dlstat"></span><br />
                 <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
             </div>
