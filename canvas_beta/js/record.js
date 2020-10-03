@@ -35,7 +35,7 @@ const stopRec = function (isSuccess) {
             switch (d.type) {
                 case "download":
                     console.log(d.encoder);
-                    let f = Function("return encoder;")
+                    let f = Function("'use strict';let encoder=" + encoder + ";return encoder;");
                     let e = f();
                     console.log(e);
                     e.download("img.gif");
