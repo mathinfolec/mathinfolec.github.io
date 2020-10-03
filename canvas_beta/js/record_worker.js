@@ -22,4 +22,4 @@ onmessage = function (mes) {
             postMessage({ type: "download" });
             break;
     }
-});
+};
