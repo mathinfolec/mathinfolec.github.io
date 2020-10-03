@@ -34,8 +34,6 @@ const stopRec = function (isSuccess) {
             let d = mes.data;
             switch (d.type) {
                 case "download":
-                    let bin = new Uint8Array(encoder.stream().bin);
-                    let blob = new Blob([bin.buffer], { type: 'image/gif' });
                     let link = document.createElement('a');
                     link.href = d.url;
                     link.download = 'img.gif';
