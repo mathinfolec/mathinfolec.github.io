@@ -24,7 +24,7 @@ const stopRec = function (isSuccess) {
         worker.postMessage({ type: "addFrame", data: curCtxs[i] });
         /*
         encoder.addFrame(c, true);
-        t.text = "loading...(" + (++i) + "/" + curCtxs.length + ")";
+        t.text = "loading...(" + (i + 1) + "/" + curCtxs.length + ")";
         c2.update();
         */
     }
