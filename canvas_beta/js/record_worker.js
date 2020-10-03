@@ -22,7 +22,7 @@ onmessage = function (mes) {
             let binary_gif = encoder.stream().getData();
             let data_url = "data:image/gif;base64," + encode64(binary_gif);
             console.log(data_url);
-            postMessage({ type: "download", encoder: String(encoder) });
+            postMessage({ type: "download", url: data_url });
             break;
     }
 };
