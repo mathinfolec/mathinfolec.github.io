@@ -20,7 +20,7 @@ const stopRec = function (isSuccess) {
     */
     worker.postMessage({ type: "start", fps: FPS, w: w, h: h });
     for (let i = 0; i < curCtxs.length; ++i) {
-        console.log("loading...(" + (i + 1) + "/" + curCtxs.length + ")");
+        //console.log("loading...(" + (i + 1) + "/" + curCtxs.length + ")");
         worker.postMessage({ type: "addFrame", data: curCtxs[i] });
         /*
         encoder.addFrame(c, true);
