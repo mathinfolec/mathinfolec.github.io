@@ -33,7 +33,7 @@ const stopRec = function (isSuccess) {
             let d = mes.data;
             switch (d.type) {
                 case "download":
-                    encoder.download("img.gif");
+                    d.encoder.download("img.gif");
                     break;
             }
         }
