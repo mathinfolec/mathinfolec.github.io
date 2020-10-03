@@ -152,23 +152,24 @@ const refs = [
     [
         {
             url: "work1.gif",
-            name: "作品例1"
+            name: "課題1"
         },
         {
             url: "work2.gif",
-            name: "作品例2"
+            name: "課題2",
+            caption: "右下の十字キーは再現しなくてよい。"
         },
         {
             url: "work3.gif",
-            name: "作品例3"
+            name: "課題3"
         },
         {
             url: "work4.gif",
-            name: "作品例4"
+            name: "課題4"
         },
         {
             url: "work5.gif",
-            name: "作品例5"
+            name: "課題5"
         }
     ]
 ];

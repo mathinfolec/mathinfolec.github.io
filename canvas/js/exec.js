@@ -125,7 +125,6 @@ const drawPoly = function () {
     }
     sx /= (arguments.length / 2);
     sy /= (arguments.length / 2);
-    console.log(sx, sy);
     c.graphics.beginFill(options.color);
     c.graphics.moveTo(arguments[0], arguments[1]);
     for (let i = 1; i < arguments.length / 2; ++i) {
@@ -190,6 +189,23 @@ const rgb = function (dr, dg, db) {
     let hb = ('00' + db.toString(16)).slice(-2);
     let s = '#' + hr + hg + hb;
     return s;
+}
+const max = function () {
+    let m = arguments[0];
+    for (let i of arguments) {
+        m = Math.max(m, i);
+    }
+    return m;
+}
+const min = function () {
+    let m = arguments[0];
+    for (let i of arguments) {
+        m = Math.min(m, i);
+    }
+    return m;
+}
+const abs = function (x) {
+    return Math.abs(x);
 }
 /*
 const exit = function (str = "End of the Program") {
