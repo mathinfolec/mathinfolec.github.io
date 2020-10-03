@@ -13,3 +13,8 @@ const clickStop = function () {
 const clickLoad = function (id) {
     changeSlot(id);
 }
+const clickRec = function () {
+    if (!isRecordable) {
+        getCheckboxRecId().checked = false;
+    }
+}

@@ -185,3 +185,4 @@ let curAdmType = "whole";
 let ctx;
 let encoder;
 let curCtxs = [];
+let isRecordable = true;

@@ -1,6 +1,7 @@
 const startRec = function () {
     console.log("startrec");
     curCtxs = [];
+    isRecordable = false;
 }
 const stopRec = function (isSuccess) {
     console.log("stoprec");
@@ -33,7 +34,9 @@ const stopRec = function (isSuccess) {
             let d = mes.data;
             switch (d.type) {
                 case "download":
+                    console.log(d.encoder);
                     d.encoder.download("img.gif");
+                    isRecordable = true;
                     break;
             }
         }
@@ -45,5 +48,8 @@ const stopRec = function (isSuccess) {
         link.download = 'img.gif';
         link.click();
         */
+    }
+    else {
+        isRecordable = true;
     }
 }
