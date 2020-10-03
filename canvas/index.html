@@ -21,17 +21,25 @@
     <script src="../local/jquery.fancybox.min.js"></script>
     -->
     <!-- end of offline -->
-    <script src="js/init.js"></script>
-    <script src="js/getId.js"></script>
-    <script src="js/setup.js"></script>
-    <script src="js/exec.js"></script>
-    <script src="js/disp.js"></script>
-    <script src="js/click.js"></script>
-    <script src="js/log.js"></script>
-    <script src="js/slot.js"></script>
-    <script src="js/sample.js"></script>
-    <script src="js/admin.js"></script>
-    <script src="js/main.js"></script>
+    <!-- reference: https://github.com/antimatter15/jsgif -->
+    <script type="text/javascript" src="js/jsgif/LZWEncoder.js"></script>
+    <script type="text/javascript" src="js/jsgif/NeuQuant.js"></script>
+    <script type="text/javascript" src="js/jsgif/GIFEncoder.js"></script>
+    <script type="text/javascript" src="js/jsgif/b64.js"></script>
+    <!-- end of reference -->
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/getId.js"></script>
+    <script type="text/javascript" src="js/setup.js"></script>
+    <script type="text/javascript" src="js/exec.js"></script>
+    <script type="text/javascript" src="js/disp.js"></script>
+    <script type="text/javascript" src="js/click.js"></script>
+    <script type="text/javascript" src="js/log.js"></script>
+    <script type="text/javascript" src="js/slot.js"></script>
+    <script type="text/javascript" src="js/sample.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="js/record.js"></script>
+    <script type="text/javascript" src="js/record_worker.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </head>
 
 <body oncontextmenu="return false;">
@@ -54,6 +62,9 @@
             <div id="div_exec">
                 <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
                 <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <input type="checkbox" id="checkbox_rec" disabled="true" />
+                <label for="checkbox_rec">GIFファイルとして保存する(Beta版)</label>
+                <span id="span_dlstat"></span><br />
                 <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
             </div>
         </div>

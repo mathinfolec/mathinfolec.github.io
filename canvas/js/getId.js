@@ -22,3 +22,6 @@ const getSpanLoadButtonsId = function () {
 const getUlSamplesId = function () {
     return document.getElementById("ul_samples");
 }
+const getCheckboxRecId = function () {
+    return document.getElementById("checkbox_rec");
+}

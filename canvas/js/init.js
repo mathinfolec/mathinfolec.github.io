@@ -181,3 +181,7 @@ let isAdmin = false;
 let admLogs = {};
 let curAdmIds = {};
 let curAdmType = "whole";
+
+let ctx;
+let encoder;
+let curCtxs = [];

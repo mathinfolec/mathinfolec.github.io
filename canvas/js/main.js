@@ -79,6 +79,10 @@ window.addEventListener("load", function () {
                 let f = getTickFunc(getCodeTickId().value);
                 f();
                 cnt++;
+                if (getCheckboxRecId().checked) {
+                    curCtxs.push(ctx.getImageData(0, 0, w, h).data);
+                    //encoder.addFrame(ctx);
+                }
             } catch (e) {
                 console.log(e);
                 errorMes = e;

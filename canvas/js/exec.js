@@ -32,6 +32,10 @@ const tick = function () {
     for (let b of getSpanLoadButtonsId().childNodes) {
         b.disabled = true;
     }
+    getCheckboxRecId().disabled = true;
+    if (getCheckboxRecId().checked) {
+        startRec();
+    }
     isTick = true;
 }
 const stop = function (isExit = false) {
@@ -45,6 +49,11 @@ const stop = function (isExit = false) {
     if (isExit) {
         getButtonTickId().disabled = true;
     }
+    if (getCheckboxRecId().checked) {
+        stopRec(!isExit);
+    }
+    getCheckboxRecId().checked = false;
+    getCheckboxRecId().disabled = false;
     showTickButton(true);
 }
 const drawCircle = function (x, y, r) {
