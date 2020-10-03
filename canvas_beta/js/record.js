@@ -8,8 +8,6 @@ const stopRec = function (isSuccess) {
     isRecordable = false;
     console.log("stoprec");
     document.getElementById("span_dlstat").innerHTML = "loading...";
-    curFrameStat = 0;
-    curFrameMax = curCtxs.length;
     let worker = new Worker("js/record_worker.js");
     /*
     encoder = new GIFEncoder();
@@ -19,6 +17,7 @@ const stopRec = function (isSuccess) {
     encoder.start();
     */
     worker.postMessage({ type: "start", fps: FPS, w: w, h: h });
+    console.log("#frame=" + curCtxs.length);
     for (let i = 0; i < curCtxs.length; ++i) {
         //console.log("loading...(" + (i + 1) + "/" + curCtxs.length + ")");
         worker.postMessage({ type: "addFrame", data: curCtxs[i] });

@@ -3,7 +3,7 @@ if (typeof window == "undefined") {
 }
 onmessage = function (mes) {
     let d = mes.data;
-    //console.log(d.type);
+    console.log("rec_" + d.type);
     switch (d.type) {
         case "start":
             encoder = new GIFEncoder();
