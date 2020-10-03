@@ -4,7 +4,8 @@ const setup = function () {
         location.href = a[0];
     }
     stage = new createjs.Stage("canvas");
-    ctx = document.getElementById("canvas").getContext("2d");
+    canvas = document.getElementById("canvas");
+    ctx = canvas.getContext("2d");
     bg = new createjs.Shape();
     bg.graphics.beginFill("black").drawRect(0, 0, w, h);
     bg.x = 0;

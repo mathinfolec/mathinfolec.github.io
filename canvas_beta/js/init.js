@@ -182,7 +182,10 @@ let admLogs = {};
 let curAdmIds = {};
 let curAdmType = "whole";
 
+let canvas;
 let ctx;
 let encoder;
 let curCtxs = [];
 let isRecordable = true;
+let gif;
+let capturer;
