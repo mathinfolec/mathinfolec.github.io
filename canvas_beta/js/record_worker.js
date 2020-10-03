@@ -1,5 +1,5 @@
 self.addEventListener("message", function (mes) {
-    importScripts("js/jsgif/LZWEncoder.js", "js/jsgif/NeuQuant.js", "js/jsgif/GIFEncoder.js", "js/jsgif/b64.js");
+    importScripts("jsgif/LZWEncoder.js", "jsgif/NeuQuant.js", "jsgif/GIFEncoder.js", "jsgif/b64.js");
     console.log(mes.data.type);
     switch (mes.data.type) {
         case "start":
