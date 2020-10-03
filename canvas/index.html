@@ -55,10 +55,6 @@
             <div id="div_exec">
                 <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
                 <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
-                <input type="checkbox" id="checkbox_rec" />
-                <label for="checkbox_rec">実行結果を出力する(WEBM)</label>
-                &ensp;&ensp;
-                <span id="span_dlstat"></span><br />
                 <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
             </div>
         </div>
@@ -86,6 +82,10 @@
                     <ul>
                         <li><input id="import" type="file" accept=".log" /></li>
                     </ul>
+                </li>
+                <li>
+                    <label for="checkbox_rec">次の実行結果をWEBM形式で出力する</label>
+                    <input type="checkbox" id="checkbox_rec" />
                 </li>
                 <li>
                     授業資料を表示する<ul id="ul_samples"></ul>
