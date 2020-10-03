@@ -19,9 +19,9 @@ const stopRec = function (isSuccess) {
     encoder.start();
     */
     worker.postMessage({ type: "start", fps: FPS, w: w, h: h });
-    for (let c of curCtxs) {
-        console.log("loading...(" + (++i) + "/" + curCtxs.length + ")");
-        worker.postMessage({ type: "addFrame", data: c });
+    for (i = 0; i < curCtxs.length; ++i) {
+        console.log("loading...(" + (i + 1) + "/" + curCtxs.length + ")");
+        worker.postMessage({ type: "addFrame", data: curCtxs[i] });
         /*
         encoder.addFrame(c, true);
         t.text = "loading...(" + (++i) + "/" + curCtxs.length + ")";
