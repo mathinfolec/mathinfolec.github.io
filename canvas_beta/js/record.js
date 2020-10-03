@@ -2,20 +2,11 @@ const startRec = function () {
     console.log("startrec");
     curCtxs = [];
 }
-const newWorkerViaBlob = function (relativePath) {
-    var baseURL = window.location.href.replace(/\\/g, '/').replace(/\/[^\/]*$/, '/');
-    var array = ['importScripts("' + baseURL + relativePath + '");'];
-    var blob = new Blob(array, { type: 'text/javascript' });
-    var url = window.URL.createObjectURL(blob);
-    return new Worker(url);
-};
 const stopRec = function (isSuccess) {
     console.log("stoprec");
     document.getElementById("span_dlstat").innerHTML = "loading...";
     let i = 0;
-
     let worker = new Worker("js/record_worker.js");
-    //let worker = newWorkerViaBlob("js/record_worker.js");
     /*
     encoder = new GIFEncoder();
     encoder.setRepeat(0);
@@ -38,6 +29,14 @@ const stopRec = function (isSuccess) {
     //encoder.finish();
     if (isSuccess) {
         worker.postMessage({ type: "download" });
+        worker.onmessage = function (mes) {
+            let d = mes.data;
+            switch (d.type) {
+                case "download":
+                    encoder.download("img.gif");
+                    break;
+            }
+        }
         /*
         let bin = new Uint8Array(encoder.stream().bin);
         let blob = new Blob([bin.buffer], { type: 'image/gif' });

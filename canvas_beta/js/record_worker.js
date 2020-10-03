@@ -1,7 +1,7 @@
 if (typeof window == "undefined") {
     importScripts("jsgif/LZWEncoder.js", "jsgif/NeuQuant.js", "jsgif/GIFEncoder.js", "jsgif/b64.js");
 }
-self.addEventListener("message", function (mes) {
+onmessage = function (mes) {
     let d = mes.data;
     console.log(d.type);
     switch (d.type) {
@@ -19,7 +19,7 @@ self.addEventListener("message", function (mes) {
             encoder.finish();
             break;
         case "download":
-            encoder.download("img.gif");
+            postMessage({ type: "download" });
             break;
     }
 });
