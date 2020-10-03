@@ -186,3 +186,5 @@ let ctx;
 let encoder;
 let curCtxs = [];
 let isRecordable = true;
+let curFrameStat = 0;
+let curFrameMax = 0;

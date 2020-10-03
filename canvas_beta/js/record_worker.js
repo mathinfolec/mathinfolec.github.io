@@ -14,6 +14,7 @@ onmessage = function (mes) {
             break;
         case "addFrame":
             encoder.addFrame(d.data, true);
+            postMessage({ type: "addFrame" });
             break;
         case "finish":
             encoder.finish();

@@ -107,6 +107,9 @@ window.addEventListener("load", function () {
                 logInterval--;
             }
         }
+        if (isRecordable && curFrameMax > 0) {
+            document.getElementById("span_dlstat").innerHTML = "loading...(" + curFrameStat + "/" + curFrameMax + ")";
+        }
         stage.update();
     });
 });

@@ -1,12 +1,15 @@
 const startRec = function () {
-    console.log("startrec");
-    curCtxs = [];
-    isRecordable = false;
+    if (isRecordable) {
+        console.log("startrec");
+        curCtxs = [];
+    }
 }
 const stopRec = function (isSuccess) {
+    isRecordable = false;
     console.log("stoprec");
     document.getElementById("span_dlstat").innerHTML = "loading...";
-    let i = 0;
+    curFrameStat = 0;
+    curFrameMax = curCtxs.length;
     let worker = new Worker("js/record_worker.js");
     /*
     encoder = new GIFEncoder();
@@ -33,6 +36,9 @@ const stopRec = function (isSuccess) {
         worker.onmessage = function (mes) {
             let d = mes.data;
             switch (d.type) {
+                case "addFrame":
+                    curFrameStat += 1;
+                    break;
                 case "download":
                     let link = document.createElement('a');
                     link.href = d.url;
