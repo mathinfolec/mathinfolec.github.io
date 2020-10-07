@@ -77,9 +77,21 @@ const drawEllipse = function (x, y, w, h) {
     stage.addChild(c);
     shapes.push(c);
 }
-const drawRect = function (x, y, w, h, rw = 0, rh = 0) {
+const drawRect = function (x, y, w, h) {
     let c = new createjs.Shape();
-    c.graphics.beginFill(options.color).drawRect(0, 0, w, h, rw, rh);
+    c.graphics.beginFill(options.color).drawRect(0, 0, w, h);
+    c.regX = w / 2;
+    c.regY = h / 2;
+    c.x = x;
+    c.y = y;
+    c.rotation = options.rotation;
+    c.alpha = options.alpha;
+    stage.addChild(c);
+    shapes.push(c);
+}
+const drawRoundRect = function (x, y, w, h, rw, rh) {
+    let c = new createjs.Shape();
+    c.graphics.beginFill(options.color).drawRoundRect(0, 0, w, h, rw, rh);
     c.regX = w / 2;
     c.regY = h / 2;
     c.x = x;
