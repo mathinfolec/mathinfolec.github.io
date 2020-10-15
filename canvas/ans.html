@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>プログラミング超入門 解答例</title>
+        <style>
+</style>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="プログラミング超入門-解答例">プログラミング超入門 解答例</h1>
+<h2 id="第1回">第1回</h2>
+<h3 id="演習3">演習3</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">50</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>setColor(<span class="hljs-string">"yellow"</span>);
+drawCircle(x,y,r);
+setColor(<span class="hljs-string">"black"</span>);
+drawCircle(x,y,r/<span class="hljs-number">2</span>);
+</div></code></pre>
+<h3 id="演習4">演習4</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> w=<span class="hljs-number">100</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">15</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>setColor(<span class="hljs-string">"red"</span>);
+drawRect(x,y,w,w);
+drawCircle(x+w/<span class="hljs-number">2</span>,y,r);
+drawCircle(x,y-w/<span class="hljs-number">2</span>,r);
+setColor(<span class="hljs-string">"black"</span>);
+drawCircle(x-w/<span class="hljs-number">2</span>,y,r);
+drawCircle(x,y+w/<span class="hljs-number">2</span>,r);
+</div></code></pre>
+<hr>
+<h2 id="第2回">第2回</h2>
+<h3 id="演習3-1">演習3</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x0=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> y0=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> r0=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> x1=<span class="hljs-number">500</span>;
+<span class="hljs-keyword">let</span> y1=<span class="hljs-number">500</span>;
+<span class="hljs-keyword">let</span> r1=<span class="hljs-number">30</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x0=x0+vx;
+y0=y0+vy;
+x1=x1-vx;
+y1=y1-vy;
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x0,y0,r0);
+setColor(<span class="hljs-string">"yellow"</span>);
+drawCircle(x1,y1,r1);
+</div></code></pre>
+<h3 id="演習4-1">演習4</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> vp=<span class="hljs-number">0.95</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy;
+vx=vx*vp;
+vy=vy*vp;
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+<h3 id="演習5">演習5</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">150</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">-20</span>;
+<span class="hljs-keyword">let</span> ay=<span class="hljs-number">1</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy+ay/<span class="hljs-number">2</span>;
+vy=vy+ay;
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+<hr>
+<h2 id="第3回">第3回</h2>
+<h3 id="演習3-2">演習3</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy;
+<span class="hljs-keyword">if</span>(y&gt;=<span class="hljs-number">500</span>-r){
+  vy=<span class="hljs-number">-1</span>*vy;
+}
+<span class="hljs-keyword">if</span>(x&gt;=<span class="hljs-number">500</span>-r){
+  vx=<span class="hljs-number">-1</span>*vx;
+}
+<span class="hljs-keyword">if</span>(y&lt;=r){
+  vy=<span class="hljs-number">-1</span>*vy;
+}
+<span class="hljs-keyword">if</span>(x&lt;=r){
+  vx=<span class="hljs-number">-1</span>*vx;
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+<h3 id="演習4-2">演習4</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> bound=<span class="hljs-number">0</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy;
+<span class="hljs-keyword">if</span>(y&lt;=r||y&gt;=<span class="hljs-number">500</span>-r){
+  vy=<span class="hljs-number">-1</span>*vy;
+  bound=bound+<span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">if</span>(y&lt;=r||x&gt;=<span class="hljs-number">500</span>-r){
+  vx=<span class="hljs-number">-1</span>*vx;
+  bound=bound+<span class="hljs-number">1</span>;
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+setColor(<span class="hljs-string">"white"</span>);
+display(bound);
+</div></code></pre>
+<h3 id="演習5-1">演習5</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> bx=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> w=<span class="hljs-number">10</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy;
+<span class="hljs-keyword">if</span>(x&lt;=r||x&gt;=<span class="hljs-number">500</span>-r){
+  vx=<span class="hljs-number">-1</span>*vx;
+}
+<span class="hljs-keyword">if</span>(y&lt;=r||y&gt;=<span class="hljs-number">500</span>-r){
+  vy=<span class="hljs-number">-1</span>*vy;
+}
+setColor(<span class="hljs-string">"yellow"</span>);
+<span class="hljs-keyword">if</span>(vy!=<span class="hljs-number">0</span>){
+  bx=x+vx*(-y/vy);
+  <span class="hljs-keyword">if</span>(bx&lt;<span class="hljs-number">0</span>){
+    drawRect(w/<span class="hljs-number">2</span>,<span class="hljs-number">250</span>,w,<span class="hljs-number">500</span>);
+  }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(bx&gt;<span class="hljs-number">500</span>){
+    drawRect(<span class="hljs-number">500</span>-w/<span class="hljs-number">2</span>,<span class="hljs-number">250</span>,w,<span class="hljs-number">500</span>);
+  }
+  <span class="hljs-keyword">else</span>{
+    <span class="hljs-keyword">if</span>(vy&lt;<span class="hljs-number">0</span>){
+      drawRect(<span class="hljs-number">250</span>,w/<span class="hljs-number">2</span>,<span class="hljs-number">500</span>,w);
+    }
+    <span class="hljs-keyword">else</span>{
+      drawRect(<span class="hljs-number">250</span>,<span class="hljs-number">500</span>-w/<span class="hljs-number">2</span>,<span class="hljs-number">500</span>,w);
+    }
+  }
+}
+<span class="hljs-keyword">else</span>{
+  <span class="hljs-keyword">if</span>(vx&lt;<span class="hljs-number">0</span>){
+    drawRect(w/<span class="hljs-number">2</span>,<span class="hljs-number">250</span>,w,<span class="hljs-number">500</span>);
+  }
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(vx&gt;<span class="hljs-number">0</span>){
+    drawRect(<span class="hljs-number">500</span>-w/<span class="hljs-number">2</span>,<span class="hljs-number">250</span>,w,<span class="hljs-number">500</span>);
+  }
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+<hr>
+<h2 id="第4回第5回">第4回,第5回</h2>
+<h3 id="課題1">課題1</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> cx=<span class="hljs-number">250</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>setColor(<span class="hljs-string">"white"</span>);
+drawLine(cx,<span class="hljs-number">0</span>,cx,<span class="hljs-number">500</span>);
+x=x+vx;
+y=y+vy;
+<span class="hljs-keyword">if</span>(x&lt;<span class="hljs-number">0</span>){
+  x=x+<span class="hljs-number">500</span>;
+}
+<span class="hljs-keyword">if</span>(x&gt;=<span class="hljs-number">500</span>){
+  x=x<span class="hljs-number">-500</span>;
+}
+<span class="hljs-keyword">if</span>(y&lt;=r||y&gt;=<span class="hljs-number">500</span>-r){
+  vy=<span class="hljs-number">-1</span>*vy;
+}
+<span class="hljs-keyword">if</span>(x&lt;=cx){
+  setColor(<span class="hljs-string">"red"</span>);
+}
+<span class="hljs-keyword">else</span>{
+  setColor(<span class="hljs-string">"yellow"</span>);
+}
+drawCircle(x,y,r);
+</div></code></pre>
+<h3 id="課題2">課題2</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> w=<span class="hljs-number">40</span>;
+<span class="hljs-keyword">let</span> h=<span class="hljs-number">60</span>;
+<span class="hljs-keyword">let</span> d=<span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">37</span>)){
+  x=max(w/<span class="hljs-number">2</span>,x-d);
+} 
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">38</span>)){
+  y=max(h/<span class="hljs-number">2</span>,y-d);
+} 
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">39</span>)){
+  x=min(<span class="hljs-number">500</span>-w/<span class="hljs-number">2</span>,x+d);
+} 
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">40</span>)){
+  y=min(<span class="hljs-number">500</span>-h/<span class="hljs-number">2</span>,y+d);
+}
+setColor(<span class="hljs-string">"yellow"</span>);
+drawRect(x,y,w,h);
+</div></code></pre>
+<h4 id="十字キーも再現する場合">(十字キーも再現する場合)</h4>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> w=<span class="hljs-number">40</span>;
+<span class="hljs-keyword">let</span> h=<span class="hljs-number">60</span>;
+<span class="hljs-keyword">let</span> d=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> a0=<span class="hljs-number">1</span>,a1=<span class="hljs-number">1</span>,a2=<span class="hljs-number">1</span>,a3=<span class="hljs-number">1</span>;
+<span class="hljs-keyword">let</span> cx=<span class="hljs-number">430</span>,cy=<span class="hljs-number">430</span>,cw=<span class="hljs-number">40</span>,ch=<span class="hljs-number">40</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>a0=<span class="hljs-number">0.5</span>;
+a1=<span class="hljs-number">0.5</span>;
+a2=<span class="hljs-number">0.5</span>;
+a3=<span class="hljs-number">0.5</span>;
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">37</span>)){
+  x=max(w/<span class="hljs-number">2</span>,x-d);
+  a0=<span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">38</span>)){
+  y=max(h/<span class="hljs-number">2</span>,y-d);
+  a1=<span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">39</span>)){
+  x=min(<span class="hljs-number">500</span>-w/<span class="hljs-number">2</span>,x+d);
+  a2=<span class="hljs-number">1</span>;
+}
+<span class="hljs-keyword">if</span>(isPressed(<span class="hljs-number">40</span>)){
+  y=min(<span class="hljs-number">500</span>-h/<span class="hljs-number">2</span>,y+d);
+  a3=<span class="hljs-number">1</span>;
+}
+setAlpha(<span class="hljs-number">1</span>);
+setColor(<span class="hljs-string">"yellow"</span>);
+drawRect(x,y,w,h);
+setAlpha(a0);
+drawPoly(cx-cw/<span class="hljs-number">2</span>,cy-ch/<span class="hljs-number">2</span>,cx-cw/<span class="hljs-number">2</span>,cy+ch/<span class="hljs-number">2</span>,cx-cw/<span class="hljs-number">2</span>-cw,cy);
+setAlpha(a1);
+drawPoly(cx-cw/<span class="hljs-number">2</span>,cy-ch/<span class="hljs-number">2</span>,cx+cw/<span class="hljs-number">2</span>,cy-ch/<span class="hljs-number">2</span>,cx,cy-ch/<span class="hljs-number">2</span>-ch);
+setAlpha(a2);
+drawPoly(cx+cw/<span class="hljs-number">2</span>,cy-ch/<span class="hljs-number">2</span>,cx+cw/<span class="hljs-number">2</span>,cy+ch/<span class="hljs-number">2</span>,cx+cw/<span class="hljs-number">2</span>+cw,cy);
+setAlpha(a3);
+drawPoly(cx-cw/<span class="hljs-number">2</span>,cy+ch/<span class="hljs-number">2</span>,cx+cw/<span class="hljs-number">2</span>,cy+ch/<span class="hljs-number">2</span>,cx,cy+ch/<span class="hljs-number">2</span>+ch);
+</div></code></pre>
+<h3 id="課題3">課題3</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> vx=<span class="hljs-number">5</span>;
+<span class="hljs-keyword">let</span> vy=<span class="hljs-number">10</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> pr=<span class="hljs-number">1.1</span>;
+<span class="hljs-keyword">let</span> mr=<span class="hljs-number">200</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>x=x+vx;
+y=y+vy;
+<span class="hljs-keyword">if</span>(y&gt;=<span class="hljs-number">500</span>-r&amp;&amp;vy&gt;<span class="hljs-number">0</span>){
+  vy=<span class="hljs-number">-1</span>*vy;
+  r=min(mr,r*pr);
+}
+<span class="hljs-keyword">if</span>(x&gt;=<span class="hljs-number">500</span>-r&amp;&amp;vx&gt;<span class="hljs-number">0</span>){
+  vx=<span class="hljs-number">-1</span>*vx;
+  r=min(mr,r*pr);
+}
+<span class="hljs-keyword">if</span>(y&lt;=r&amp;&amp;vy&lt;<span class="hljs-number">0</span>){
+  vy=<span class="hljs-number">-1</span>*vy;
+  r=min(mr,r*pr);
+}
+<span class="hljs-keyword">if</span>(x&lt;=r&amp;&amp;vx&lt;<span class="hljs-number">0</span>){
+  vx=<span class="hljs-number">-1</span>*vx;
+  r=min(mr,r*pr);
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+<h3 id="課題4">課題4</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> t=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> cx=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> cy=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> cr=<span class="hljs-number">60</span>;
+<span class="hljs-keyword">let</span> dist=<span class="hljs-number">150</span>;
+<span class="hljs-keyword">let</span> w=<span class="hljs-number">50</span>;
+<span class="hljs-keyword">let</span> dx=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> dy=<span class="hljs-number">0</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>dx=mouseX<span class="hljs-number">-250</span>;
+dy=mouseY<span class="hljs-number">-250</span>;
+<span class="hljs-keyword">if</span>(dx**<span class="hljs-number">2</span>+dy**<span class="hljs-number">2</span>&lt;=cr**<span class="hljs-number">2</span>){
+  t=t+<span class="hljs-number">2</span>;
+}
+<span class="hljs-keyword">else</span>{
+  t=t<span class="hljs-number">-2</span>;
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(cx,cy,cr);
+setColor(<span class="hljs-string">"pink"</span>);
+setRotation(t*<span class="hljs-number">2</span>);
+drawRect(cx+dist*cos(t),cy+dist*sin(t),w,w);
+drawRect(cx-dist*cos(t),cy-dist*sin(t),w,w);
+</div></code></pre>
+<h3 id="課題5">課題5</h3>
+<p><strong>変数定義エリア</strong></p>
+<pre><code class="language-js"><div><span class="hljs-keyword">let</span> x=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> y=<span class="hljs-number">250</span>;
+<span class="hljs-keyword">let</span> r=<span class="hljs-number">20</span>;
+<span class="hljs-keyword">let</span> dx=<span class="hljs-number">0</span>,dy=<span class="hljs-number">0</span>,d=<span class="hljs-number">0</span>;
+<span class="hljs-keyword">let</span> div=<span class="hljs-number">5</span>;
+</div></code></pre>
+<p><strong>描画エリア</strong></p>
+<pre><code class="language-js"><div>dx=mouseX-x;
+dy=mouseY-y;
+d=sqrt(dx**<span class="hljs-number">2</span>+dy**<span class="hljs-number">2</span>)/div;
+<span class="hljs-keyword">if</span>(d&gt;<span class="hljs-number">1</span>){
+  x=x+dx/d;
+  y=y+dy/d;
+}
+setColor(<span class="hljs-string">"red"</span>);
+drawCircle(x,y,r);
+</div></code></pre>
+
+    </body>
+    </html>
