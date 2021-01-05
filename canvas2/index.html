@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="css/style.css" />
+    <title>Canvas Simulatior Ver.2</title>
+    <!-- online -->
+    <!-- reference: http://fancyapps.com/fancybox/3/ -->
+    <!--<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+    <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+    <!-- end of reference -->
+    <!-- end of online -->
+    <!-- offline -->
+    <!--
+    <script src="../local/createjs.min.js"></script>
+    <script src="../local/jquery.min.js"></script>
+    <link rel="stylesheet" href="../local/jquery.fancybox.min.css" />
+    <script src="../local/jquery.fancybox.min.js"></script>
+    -->
+    <!-- end of offline -->
+    <script type="text/javascript" src="js/init.js"></script>
+    <script type="text/javascript" src="js/getId.js"></script>
+    <script type="text/javascript" src="js/setup.js"></script>
+    <script type="text/javascript" src="js/exec.js"></script>
+    <script type="text/javascript" src="js/illusion.js"></script>
+    <script type="text/javascript" src="js/disp.js"></script>
+    <script type="text/javascript" src="js/click.js"></script>
+    <script type="text/javascript" src="js/log.js"></script>
+    <script type="text/javascript" src="js/slot.js"></script>
+    <script type="text/javascript" src="js/sample.js"></script>
+    <script type="text/javascript" src="js/admin.js"></script>
+    <script type="text/javascript" src="js/record.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+
+<body oncontextmenu="return false;">
+    <div id="main">
+        <div id="div_canvas">
+            <canvas width="500" height="500" id="canvas"></canvas>
+            <canvas width="500" height="500" id="canvas2" style="display:none;"></canvas>
+        </div>
+        <div id="div_code">
+            <div id="div_load">
+                セーブスロット(使用中:<span id="span_slot"></span>)
+                <span id="span_load_buttons"></span>
+            </div>
+            <div id="admin" style="display:none;">
+            </div>
+            <hr />
+            <div id="div_init">
+                <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
+                <textarea id="code_init" rows="10" cols="50" spellcheck=false placeholder="変数定義エリア"></textarea>
+            </div>
+            <div id="div_exec">
+                <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
+                <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <footer>
+        <div id="opt">
+            <b>オプション</b>
+            <a onclick="showOpt()" id="opt-open" style="display:none;">[開く]</a>
+            <a onclick="hideOpt()" id="opt-close" style="display:inline-block;">[閉じる]</a>
+            <ul id="opt-ul" style="display:block;">
+                <li>
+                    活動記録を出力する
+                    <ul>
+                        <li><button onclick="exportLogs()">出力</button></li>
+                    </ul>
+                    <ul>
+                        <li>
+                            <button onclick="exportLogs(true)">出力結果をコピー</button>※ファイルがダウンロードできない場合に使用
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    以前のコードを復元する
+                    <ul>
+                        <li><input id="import" type="file" accept=".log" /></li>
+                    </ul>
+                </li>
+                <li>
+                    <label for="checkbox_rec">次の実行結果をWEBM形式で出力する</label>
+                    <input type="checkbox" id="checkbox_rec" />
+                </li>
+                <li>
+                    資料を表示する<ul id="ul_samples"></ul>
+                </li>
+            </ul>
+        </div>
+        <hr />
+        <p>最終更新: <span id="lastmodified">2021/01/05</span></p>
+        <p>
+            <a href="../index.html">Back to Main Page</a><br />
+            <a href="https://github.com/mathinfolec/mathinfolec.github.io" target="_blank">
+                GitHub(https://github.com/mathinfolec/mathinfolec.github.io)</a>
+        </p>
+    </footer>
+
+</body>
+
+</html>

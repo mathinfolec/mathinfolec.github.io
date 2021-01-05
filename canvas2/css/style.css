@@ -1,0 +1,36 @@
+textarea {
+    font-size: large;
+}
+
+#div_canvas {
+    float: left;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#div_code {
+    overflow: auto;
+}
+
+.clear {
+    clear: both;
+}
+
+a {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+button {
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+ul {
+    margin-top: 2px;
+}
+
+li {
+    margin-top: 2px;
+}
