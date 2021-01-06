@@ -8,7 +8,22 @@ const setupSamples = function () {
     for (let r of refs) {
         let l = document.createElement("li");
         let iArr = [];
+        let flag = false;
         for (let x of r) {
+            if (flag) {
+                let s = document.createElement("span");
+                s.innerHTML = "&ensp;/&ensp;"
+                l.appendChild(s);
+            }
+            else {
+                flag = true;
+            }
+            let a = document.createElement("a");
+            a.href = "ref/" + x.url;
+            a.target = "_blank";
+            a.innerHTML = x.name;
+            l.appendChild(a);
+            /*
             let str = "<a data-touch='false' data-fancybox='images'";
             str += " href='ref/" + x.url + "'";
             if (typeof x.caption != "undefined") {
@@ -19,8 +34,9 @@ const setupSamples = function () {
             str += "</a>";
             iArr.push(str);
             urls[++ind] = x.url;
+            */
         }
-        l.innerHTML = iArr.join("&ensp;/&ensp;");
+        //l.innerHTML = iArr.join("&ensp;/&ensp;");
         u.appendChild(l);
     }
     /*
