@@ -62,6 +62,12 @@ const refs = [
     ],
     [
         {
+            url: "lec2.pdf",
+            name: "資料②"
+        }
+    ],
+    [
+        {
             url: "funcs.pdf",
             name: "シミュレータ機能集"
         }
