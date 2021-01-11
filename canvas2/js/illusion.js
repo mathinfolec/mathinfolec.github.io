@@ -27,6 +27,9 @@ const loadOptions = function () {
         }
     }
 }
+const drawIllusion = function (w, x, c, fx = 0, fy = 0) {
+    drawIllusionC(w, x, c, fx, fy);
+}
 const drawIllusionA = function (w, h, r, span, diff) {
     saveOptions();
     try {

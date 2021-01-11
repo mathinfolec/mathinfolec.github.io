@@ -21,6 +21,7 @@ const setupSamples = function () {
             let a = document.createElement("a");
             a.href = "ref/" + x.url;
             a.target = "_blank";
+            a.rel = "noopener noreferrer";
             a.innerHTML = x.name;
             l.appendChild(a);
             /*
