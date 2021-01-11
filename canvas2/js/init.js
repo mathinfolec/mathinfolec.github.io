@@ -25,7 +25,10 @@ let options = {
 const defOptions = JSON.parse(JSON.stringify(options));
 const bannedValName = ["canvas", "ctx", "c_width", "c_height"];
 
-let keyList = [];
+let keyStrList = {};
+const keyConv = {
+    " ": "Space"
+};
 
 let errorMes = null;
 

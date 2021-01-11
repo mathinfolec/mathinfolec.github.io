@@ -313,10 +313,10 @@ const tan = function (x) {
     return Math.tan(x / 180 * Math.PI);
 }
 const isPressed = function (c) {
-    if (typeof keyList[c] == "undefined") {
-        keyList[c] = false;
+    if (typeof keyStrList[c] == "undefined") {
+        keyStrList[c] = false;
     }
-    return keyList[c];
+    return keyStrList[c];
 }
 const rgb = function (r, g, b) {
     return "rgb(" + r + "," + g + "," + b + ")";

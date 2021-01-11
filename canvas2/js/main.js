@@ -19,40 +19,35 @@ window.addEventListener("load", function () {
             e.returnValue = "活動記録がファイルに出力されていません。ページを閉じますか？";
         }
     }
-    window.onkeydown = function (e) {
+    window.addEventListener("keydown", function (e) {
         if (isTick) {
-            let code = e.keyCode;
-            switch (code) {
-                case 32:
-                case 33:
-                case 34:
-                case 37:
-                case 38:
-                case 39:
-                case 40:
-                    e.preventDefault();
-                    break;
+            e.preventDefault();
+            let key = e.key;
+            if (typeof keyConv[key] != "undefined") {
+                key = keyConv[key];
             }
-            keyList[code] = true;
+            keyStrList[key] = true;
         }
-    }
-    window.onkeyup = function (e) {
+    });
+    window.addEventListener("keyup", function (e) {
         if (isTick) {
-            let code = e.keyCode;
-            switch (code) {
-                case 32:
-                case 33:
-                case 34:
-                case 37:
-                case 38:
-                case 39:
-                case 40:
-                    e.preventDefault();
-                    break;
+            e.preventDefault();
+            let key = e.key;
+            if (typeof keyConv[key] != "undefined") {
+                key = keyConv[key];
             }
-            keyList[code] = false;
+            keyStrList[key] = false;
         }
-    }
+    });
+    window.addEventListener("focus", function (e) {
+        addLog("focus");
+    })
+    window.addEventListener("blur", function (e) {
+        addLog("blur");
+        for (let i in keyStrList) {
+            keyStrList[i] = false;
+        }
+    });
     canvas.addEventListener("mousemove", function (e) {
         let rect = e.target.getBoundingClientRect();
         curMouseX = e.clientX - rect.left;
