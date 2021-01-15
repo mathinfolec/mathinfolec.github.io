@@ -51,12 +51,13 @@
             </div>
             <hr />
             <div id="div_init">
-                <button onclick="clickInit()" id="button_init" style="display:block;">初期化</button>
+                <button onclick="clickExec()" id="button_exec" style="display:block;">実行</button>
+                <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <button onclick="clickInit()" id="button_init" style="display:none;">初期化</button>
                 <textarea id="code_init" rows="10" cols="50" spellcheck=false placeholder="変数定義エリア"></textarea>
             </div>
             <div id="div_exec">
-                <button onclick="clickTick()" id="button_tick" style="display:block;">実行</button>
-                <button onclick="clickStop()" id="button_stop" style="display:none;">停止</button>
+                <button onclick="clickTick()" id="button_tick" style="display:none;">実行</button>
                 <textarea id="code_tick" rows="10" cols="50" spellcheck=false placeholder="描画エリア"></textarea>
             </div>
         </div>

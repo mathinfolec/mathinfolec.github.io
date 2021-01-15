@@ -1,3 +1,13 @@
+const clickExec = function () {
+    addLog("exec");
+    try {
+        if (init()) {
+            tick();
+        }
+    } catch (e) {
+        console.log(e);
+    }
+}
 const clickInit = function () {
     addLog("init");
     init();

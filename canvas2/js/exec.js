@@ -1,5 +1,6 @@
 const init = function () {
     try {
+        redrawBg();
         isTick = false;
         cnt = 0;
         getCodeInitId().disabled = false;
@@ -13,7 +14,8 @@ const init = function () {
         }
         let f = getInitFunc(str);
         f();
-        getButtonTickId().disabled = false;
+        setButton("tick", true);
+        setButton("exec", true);
         showTickButton(true);
         return true;
     } catch (e) {
@@ -31,7 +33,8 @@ const tick = function () {
     getCodeInitId().disabled = true;
     getCodeTickId().disabled = true;
     showTickButton(false);
-    getButtonInitId().disabled = true;
+    setButton("init", false);
+    //getButtonInitId().disabled = true;
     for (let b of getSpanLoadButtonsId().childNodes) {
         b.disabled = true;
     }
@@ -45,12 +48,15 @@ const stop = function (isExit = false) {
     isTick = false;
     getCodeInitId().disabled = false;
     getCodeTickId().disabled = false;
-    getButtonInitId().disabled = false;
+    setButton("init", true);
+    //getButtonInitId().disabled = false;
     for (let b of getSpanLoadButtonsId().childNodes) {
         b.disabled = false;
     }
     if (isExit) {
-        getButtonTickId().disabled = true;
+        setButton("tick", false);
+        //setButton("exec", false);
+        //getButtonTickId().disabled = true;
     }
     if (getCheckboxRecId().checked) {
         stopRec(!isExit);
@@ -342,19 +348,19 @@ const abs = function (x) {
     return Math.abs(x);
 }
 const getInitFunc = function (c) {
-    c = c.replace(/\n/g, "");
-    return Function("'use strict';" + getInitObjStr() + c + getUpdateStr() + getResetCanvasStr());
+    //c = c.replace(/\n/g, "");
+    return Function("'use strict';" + getInitObjStr() + c + "\n" + getUpdateStr() + getResetCanvasStr());
 }
 const getTickFunc = function (c) {
-    c = c.replace(/\n/g, "");
-    return Function("'use strict';" + getResetCanvasStr() + getInitValsStr() + getInitObjStr() + c + getUpdateStr());
+    //c = c.replace(/\n/g, "");
+    return Function("'use strict';" + getResetCanvasStr() + getInitValsStr() + getInitObjStr() + c + "\n" + getUpdateStr());
 }
 const setInitVals = function () {
     for (let i in defOptions) {
         options[i] = defOptions[i];
     }
     curVals = {};
-    let cArr = getCodeInitId().value.split(";");
+    let cArr = getCodeInitId().value.split(/[;\n]/);
     for (let c of cArr) {
         c = c.trim();
         if (c.match(/^let /)) {
@@ -416,7 +422,7 @@ const getUpdateStr = function () {
     return s;
 }
 const getResetCanvasStr = function () {
-    return "setBgColor('black');redrawBg();";
+    return "redrawBg();";
 }
 const updateVals = function (vals) {
     for (let i in curVals) {

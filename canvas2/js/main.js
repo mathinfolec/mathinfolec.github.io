@@ -66,7 +66,8 @@ window.addEventListener("load", function () {
         if (initCodeStr != curInitCodeStr || tickCodeStr != curTickCodeStr) {
             initCodeStr = curInitCodeStr;
             tickCodeStr = curTickCodeStr;
-            getButtonTickId().disabled = true;
+            setButton("tick", false);
+            //getButtonTickId().disabled = true;
         }
         let curURLStr = location.href;
         if (curURLStr != prevURLStr) {

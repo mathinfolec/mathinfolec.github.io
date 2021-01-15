@@ -148,6 +148,95 @@ const drawIllusionC = function (w, h, c, fx = 0, fy = 0) {
         loadOptions();
     }
 }
+const verticalLines = function (color0, color1, w) {
+    saveOptions();
+    try {
+        const cArr2 = [color0, color1];
+        const cl2 = cArr2.length;
+        const lefte = cl2 ** 2;
+        const col = Math.floor(c_width / w) + 1;
+        fx = options.translate[0];
+        fx = mod(fx, w * lefte);
+        setLineWidth(0);
+        const rot = options.rotation;
+        for (let j = -2 * col; j < 2 * col + 1; ++j) {
+            setFillColor(cArr2[mod(j, cl2)]);
+            const ax = w * j + fx + w / 2;
+            const ay = 250;
+            drawRect(rotX(ax, ay, rot), rotY(ax, ay, rot), w, c_height * 2);
+        }
+    } catch (e) {
+        throw (e);
+    } finally {
+        loadOptions();
+    }
+}
+const horizontalLines = function (color0, color1, w, h) {
+    saveOptions();
+    try {
+        const cArr = [color0, color1];
+        const cl = cArr.length;
+        const lefte = cl ** 2;
+        const row = Math.floor(c_height / (h + w)) + 1;
+        const col = Math.floor(c_width / w) + 1;
+        let fx = options.translate[0];
+        let fy = options.translate[1];
+        fx = mod(fx, w * lefte);
+        fy = mod(fy, (w + h) * lefte);
+        setLineWidth(0);
+        const rot = options.rotation;
+        for (let i = -2 * row; i < 2 * row; ++i) {
+            for (let j = -2 * col; j < 2 * col; ++j) {
+                setFillColor(cArr[mod(i + j, cl)]);
+                const bx = w * j + fx;
+                const by = h + (w + h) * i + w / 2 + fy;
+                drawRect(rotX(bx, by, rot), rotY(bx, by, rot), w, w);
+            }
+        }
+    } catch (e) {
+        throw (e);
+    } finally {
+        loadOptions();
+    }
+}
+const intersectionPoints = function (color0, color1, w, h, c) {
+    saveOptions();
+    try {
+        const cArr2 = [color0, color1];
+        const cl2 = cArr2.length;
+        const lefte = cl2 ** 2;
+        const row = Math.floor(c_height / (h + w)) + 1;
+        const col = Math.floor(c_width / w) + 1;
+        let fx = options.translate[0];
+        let fy = options.translate[1];
+        fx = mod(fx, w * lefte);
+        fy = mod(fy, (w + h) * lefte);
+        setLineWidth(0);
+        const rot = options.rotation;
+        const dc = Math.sqrt(2) * c / 4;
+        for (let i = -2 * row; i < 2 * row; ++i) {
+            for (let j = -2 * col; j < 2 * col; ++j) {
+                setFillColor(cArr2[mod(i + j, cl2)]);
+                setRotation(45);
+                const cx = w * j + fx;
+                const cy = h + (w + h) * i + fy;
+                drawRect(rotX(cx - dc, cy, rot), rotY(cx - dc, cy, rot), c / 2, c / 2);
+                drawRect(rotX(cx + dc, cy, rot), rotY(cx + dc, cy, rot), c / 2, c / 2);
+                drawRect(rotX(cx, w + cy - dc, rot), rotY(cx, w + cy - dc, rot), c / 2, c / 2);
+                drawRect(rotX(cx, w + cy + dc, rot), rotY(cx, w + cy + dc, rot), c / 2, c / 2);
+                setFillColor(cArr2[mod(i + j + 1, cl2)]);
+                drawRect(rotX(cx, cy - dc, rot), rotY(cx, cy - dc, rot), c / 2, c / 2);
+                drawRect(rotX(cx, cy + dc, rot), rotY(cx, cy + dc, rot), c / 2, c / 2);
+                drawRect(rotX(cx - dc, w + cy, rot), rotY(cx - dc, w + cy, rot), c / 2, c / 2);
+                drawRect(rotX(cx + dc, w + cy, rot), rotY(cx + dc, w + cy, rot), c / 2, c / 2);
+            }
+        }
+    } catch (e) {
+        throw (e);
+    } finally {
+        loadOptions();
+    }
+}
 const mod = function (a, b) {
     return (a % b + b) % b;
 }

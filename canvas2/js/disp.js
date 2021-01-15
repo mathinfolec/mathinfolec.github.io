@@ -19,15 +19,20 @@ const setButton = function (id, value) {
         case "stop":
             getButtonStopId().disabled = !value;
             break;
+        case "exec":
+            getButtonExecId().disabled = !value;
+            break;
     }
 }
 const showTickButton = function (tf = true) {
     if (tf) {
-        getButtonTickId().style.display = "block";
+        //getButtonTickId().style.display = "block";
+        getButtonExecId().style.display = "block";
         getButtonStopId().style.display = "none";
     }
     else {
         getButtonTickId().style.display = "none";
+        getButtonExecId().style.display = "none";
         getButtonStopId().style.display = "block";
     }
 }

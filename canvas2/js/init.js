@@ -15,9 +15,10 @@ let options = {
     color: "black",
     fillColor: "black",
     strokeColor: "black",
-    bgColor: "black",
+    bgColor: "gray",
     mainColor: ["black", "black"],
     subColor: ["black", "black"],
+    translate: [0, 0],
     lineWidth: 0,
     rotation: 0,
     alpha: 1

@@ -13,6 +13,9 @@ const getButtonTickId = function () {
 const getButtonStopId = function () {
     return document.getElementById("button_stop");
 }
+const getButtonExecId = function () {
+    return document.getElementById("button_exec");
+}
 const getSpanSlotId = function () {
     return document.getElementById("span_slot");
 }
