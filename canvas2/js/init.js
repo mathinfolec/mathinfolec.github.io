@@ -64,12 +64,13 @@ const refs = [
             name: "サンプル2"
         }
     ],
+    /*
     [
         {
             url: "lec2.pdf",
             name: "資料②"
         }
-    ],
+    ],*/
     [
         {
             url: "funcs.pdf",
