@@ -151,6 +151,9 @@ const drawIllusionC = function (w, h, c, fx = 0, fy = 0) {
 const verticalLines = function (color0, color1, w) {
     saveOptions();
     try {
+        if (w <= 0) {
+            throw SyntaxError("width cannot be 0 or negative value");
+        }
         const cArr2 = [color0, color1];
         const cl2 = cArr2.length;
         const lefte = cl2 ** 2;
@@ -174,6 +177,12 @@ const verticalLines = function (color0, color1, w) {
 const horizontalLines = function (color0, color1, w, h) {
     saveOptions();
     try {
+        if (w <= 0) {
+            throw SyntaxError("width cannot be 0 or negative value");
+        }
+        if (h <= 0) {
+            throw SyntaxError("height cannot be 0 or negative value");
+        }
         const cArr = [color0, color1];
         const cl = cArr.length;
         const lefte = cl ** 2;
@@ -202,6 +211,12 @@ const horizontalLines = function (color0, color1, w, h) {
 const intersectionPoints = function (color0, color1, w, h, c) {
     saveOptions();
     try {
+        if (w <= 0) {
+            throw SyntaxError("width cannot be 0 or negative value");
+        }
+        if (h <= 0) {
+            throw SyntaxError("height cannot be 0 or negative value");
+        }
         const cArr2 = [color0, color1];
         const cl2 = cArr2.length;
         const lefte = cl2 ** 2;
@@ -231,6 +246,18 @@ const intersectionPoints = function (color0, color1, w, h, c) {
                 drawRect(rotX(cx + dc, w + cy, rot), rotY(cx + dc, w + cy, rot), c / 2, c / 2);
             }
         }
+    } catch (e) {
+        throw (e);
+    } finally {
+        loadOptions();
+    }
+}
+const horizontalBar = function (c, y, b) {
+    saveOptions();
+    try {
+        setStrokeColor(c);
+        setLineWidth(b);
+        drawLine(0, y, c_width, y);
     } catch (e) {
         throw (e);
     } finally {
