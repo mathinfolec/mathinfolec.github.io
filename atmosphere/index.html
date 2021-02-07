@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Atmosphere Simulator</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/init.js"></script>
+    <script src="js/shapes.js"></script>
+    <script src="js/sliders.js"></script>
+    <script src="js/draw.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas" width="500" height="500"></canvas>
+    <form id="sliders">
+        <div>
+            <b>N</b>
+            <input id="slider_n" type="range" min="1" max="100" value="10" step="1" />
+            <span id="text_n"></span>
+        </div>
+        <div>
+            <b>V</b>
+            <input id="slider_v" type="range" min="1" max="500" value="50" step="1" />
+            <span id="text_v"></span>
+        </div>
+        <div>
+            <b>R</b>
+            <input id="slider_r" type="range" min="1" max="100" value="10" step="1" />
+            <span id="text_r"></span>
+        </div>
+    </form>
+    <div class="clear"></div>
+    <footer>
+        <hr />
+        <p>
+            <a href="../index.html">Back to Main Page</a><br />
+        </p>
+    </footer>
+
+</body>
+
+</html>
